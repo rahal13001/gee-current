@@ -1,4 +1,4 @@
 ﻿test_id=TST-FND-001
 status=PASS_WITH_NOTES
 summary=Required Foundation files exist; large-data directories are ignored.
-utc=2026-08-02T14:07:59.7181561Z
+utc=2026-08-02T23:16:36.1754954Z
