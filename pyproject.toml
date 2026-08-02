@@ -1,0 +1,23 @@
+[project]
+name = "glorys-current-research-teaching-system"
+version = "0.0.0"
+description = "Foundation metadata for the GLORYS12V1 research and teaching system"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+  "unit: deterministic local tests",
+  "synthetic: synthetic data tests",
+  "network: requires approved network access",
+  "earthengine: requires Earth Engine access",
+  "security: security checks",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.black]
+line-length = 100

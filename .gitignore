@@ -1,0 +1,47 @@
+# Secrets and local authentication
+.env
+.env.*
+!.env.example
+**/*credentials*
+**/*credential*
+**/*token*
+**/*private*key*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.jsonl
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local tooling and generated graphs
+graphify-out/
+**/.DS_Store
+
+# Large or generated data
+data/raw/
+data/validated/
+data/converted/
+data/partial/
+data/quarantine/
+outputs/data/
+outputs/setup/
+outputs/security/
+outputs/stage_*/
+runs/
+
+# Local editor and OS files
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# Keep safe directory markers visible when needed
+!outputs/evidence/
+!outputs/evidence/**/.gitkeep

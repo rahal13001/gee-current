@@ -1,0 +1,4 @@
+﻿test_id=TST-FND-005
+status=PASS_WITH_NOTES
+summary=Foundation and PRD requirement anchors are present in traceability.
+utc=2026-08-02T14:08:04.1063418Z
