@@ -24,3 +24,5 @@
 - Menambahkan wrapper `describe` plan-only, validator depth fail-closed, metadata
   compatibility guard, dan evidence Tahap 0; eksekusi metadata aktif tetap ditunda
   sampai network/authentication diizinkan.
+- Menambahkan modul formula metodologi T1 untuk speed, mean/resultant, bearing,
+  persistence, dan perlindungan zero-vector dengan uji sintetis kardinal.

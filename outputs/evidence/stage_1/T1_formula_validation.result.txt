@@ -1,0 +1,6 @@
+test_id=T1-FORMULA-VALIDATION
+status=TESTED
+command=.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+exit_status=0
+evidence=Formula tests cover speed, mean/resultant distinction, four cardinal bearings, persistence, zero-vector NoData, and fail-closed input validation
+limitations=Tests use synthetic values only; no NetCDF, GEE asset, network, or operational computation was used

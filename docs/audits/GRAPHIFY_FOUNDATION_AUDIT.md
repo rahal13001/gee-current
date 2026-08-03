@@ -147,3 +147,13 @@ evidence, Graphify was refreshed again without network access:
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
 - The refresh warned that 12 JSON/config files produced zero code nodes; those files remain outside semantic extraction.
 - Full semantic extraction of changed documents remains intentionally unrun because no LLM backend or credential was available and no network access is permitted.
+
+## Post-T1 formula refresh
+
+After adding `python/common/scientific_formulas.py` and its synthetic tests,
+Graphify was refreshed locally again:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 242 nodes and 323 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 242 nodes, 295 edges, and 38 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; all missing, dangling, self-loop, and collapsed-edge counts were `0`.
+- The same 12 JSON/config files produced zero code nodes; they remain outside semantic extraction. No external backend was used.

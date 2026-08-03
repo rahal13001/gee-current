@@ -62,7 +62,7 @@ The active document paths are the files currently present under `docs/`; the act
 Stage 0–3 documents, ADRs, status, and traceability are registered above. Foundation artifacts and audit reports are local evidence.
 Stage 0–3 documents remain normative inputs; user-reported runtime/setup facts are not independent Cloud or credential audits.
 
-Current reconciliation note: Foundation artifacts and audit reports are local evidence; user-reported runtime/setup facts are not independent Cloud or credential audits.
+Current reconciliation note: Foundation artifacts and audit reports are local evidence; user-reported runtime/setup facts are not independent Cloud or credential audits. The T1 formula baseline is implemented and synthetically tested in `python/common/scientific_formulas.py`; FR-PY operational analytics remain downstream until validated data exist.
 
 ## Explicit ID coverage index
 

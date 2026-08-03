@@ -688,7 +688,7 @@ FR-CONF-01 sampai FR-CONF-06
 | T1-005 | P0 | FR-CONF-05 | Buat config Project ID dan asset root | FND-009 | local example config | tidak memuat credential | `PASS_WITH_NOTES` |
 | T1-006 | P0 | FR-CONF-06 | Validasi tidak ada secret pada config | T1-001..T1-005 | security test | pattern secret gagal validation | `TESTED` |
 | T1-007 | P0 | Methodology | Implementasi config loader typed | T1-001..T1-005 | Python module | error jelas dan fail closed | `PASS_WITH_NOTES` |
-| T1-008 | P0 | Methodology | Implementasi scientific constants | T0-012 | constants module | Product/dataset/formula tidak tersebar | `PASS_WITH_NOTES` |
+| T1-008 | P0 | Methodology | Implementasi scientific constants | T0-012 | constants and formula modules | Product/dataset/formula tidak tersebar | `TESTED` |
 | T1-009 | P1 | Methodology | Buat data dictionary | T0-010,T1-008 | `docs/data_dictionary.md` | unit, dims, labels jelas | `PASS_WITH_NOTES` |
 | T1-010 | P1 | Architecture | Buat architecture manifest | T1-007 | manifest | Python/GEE responsibility jelas | `PASS_WITH_NOTES` |
 | T1-011 | P1 | Guardrail | Buat interactive limits config | FND-013 | limits config | nilai default konservatif dan benchmarkable | `PASS_WITH_NOTES` |

@@ -125,7 +125,8 @@ def render_result(changes: tuple[MetadataChange, ...]) -> str:
         for change in changes:
             lines.append(f"change={change.path}")
     lines.append(
-        "limitations=Comparison uses sanitized canonical JSON; no live metadata or NetCDF was accessed"
+        "limitations=Comparison uses sanitized canonical JSON; "
+        "no live metadata or NetCDF was accessed"
     )
     return "\n".join(lines)
 

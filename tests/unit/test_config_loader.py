@@ -3,8 +3,13 @@ import json
 import unittest
 
 from python.common.config_loader import ConfigError, load_m1_config
-from python.common.depth_metadata import DepthMetadataError, extract_depth_levels, validate_depth_levels
+from python.common.depth_metadata import (
+    DepthMetadataError,
+    extract_depth_levels,
+    validate_depth_levels,
+)
 from python.common.metadata_guard import compare_metadata
+from python.common.scientific_formulas import FormulaError, resultant_direction, vector_statistics
 
 
 CONFIG_ROOT = Path(__file__).parents[2] / "config"
@@ -94,3 +99,22 @@ class ConfigLoaderTests(unittest.TestCase):
             validate_depth_levels(levels[:-1])
         with self.assertRaises(DepthMetadataError):
             extract_depth_levels({"depth": {"full_50_level_extraction": "NOT_RUN"}})
+
+    def test_scientific_formulas_cover_cardinals_and_persistence(self):
+        self.assertEqual(resultant_direction(0, 1), 0.0)
+        self.assertEqual(resultant_direction(1, 0), 90.0)
+        self.assertEqual(resultant_direction(0, -1), 180.0)
+        self.assertEqual(resultant_direction(-1, 0), 270.0)
+
+        stats = vector_statistics((1.0, -1.0), (0.0, 0.0))
+        self.assertEqual(stats["mean_speed"], 1.0)
+        self.assertEqual(stats["resultant_speed"], 0.0)
+        self.assertEqual(stats["persistence_index"], 0.0)
+        self.assertIsNone(stats["resultant_direction"])
+
+    def test_scientific_formulas_fail_closed(self):
+        with self.assertRaises(FormulaError):
+            vector_statistics((1.0,), (1.0, 2.0))
+        with self.assertRaises(FormulaError):
+            vector_statistics((float("nan"),), (0.0,))
+        self.assertIsNone(vector_statistics((0.0,), (0.0,))["persistence_index"])
