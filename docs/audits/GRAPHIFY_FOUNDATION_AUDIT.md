@@ -136,3 +136,14 @@ The repository changed after the prior full semantic audit, so Graphify was refr
 - `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; current graph report contains 182 nodes, 180 edges, and 32 communities.
 - A full semantic update was attempted once and exited `1` because 47 changed documents required an LLM backend. No API key, token, or credential was read or requested.
 - The current Graphify output is therefore a partial offline refresh: code relationships are refreshed, while new/changed documentation is not semantically re-extracted. This does not alter the repository status gates.
+
+## Post-T0 offline code refresh
+
+After adding the T0 wrapper, depth validator, metadata guard, tests, and
+evidence, Graphify was refreshed again without network access:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 217 nodes and 272 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 217 nodes, 246 edges, and 36 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 12 JSON/config files produced zero code nodes; those files remain outside semantic extraction.
+- Full semantic extraction of changed documents remains intentionally unrun because no LLM backend or credential was available and no network access is permitted.

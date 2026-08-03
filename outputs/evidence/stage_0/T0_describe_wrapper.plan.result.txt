@@ -1,0 +1,9 @@
+test_id=T0-001..T0-003
+status=IMPLEMENTED
+command=powershell -NoProfile -ExecutionPolicy Bypass -File tools\describe_copernicus_metadata.ps1 -Scope dataset -DatasetId cmems_mod_glo_phy_my_0.083deg_P1D-m
+exit_status=0
+evidence=Wrapper plan mode resolved the approved local executable and printed the describe command without executing it; product and dataset identifiers are parameterized
+command=powershell -NoProfile -ExecutionPolicy Bypass -File tools\describe_copernicus_metadata.ps1 -Scope product -ProductId GLOBAL_MULTIYEAR_PHY_001_030
+exit_status=0
+evidence=Product plan mode printed network=NOT_PERFORMED and authentication=NOT_PERFORMED
+limitations=Active Copernicus describe was not executed; live JSON evidence remains the prior user-managed read-only audit

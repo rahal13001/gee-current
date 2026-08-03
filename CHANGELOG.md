@@ -20,3 +20,7 @@
   user-managed dicatat tanpa operasi Cloud.
 - Menambahkan baseline konfigurasi Tahap 0–1: AOI pilot, periode analisis, depth,
   statistik, asset naming, schema pilot, metadata snapshot, dan validator offline.
+
+- Menambahkan wrapper `describe` plan-only, validator depth fail-closed, metadata
+  compatibility guard, dan evidence Tahap 0; eksekusi metadata aktif tetap ditunda
+  sampai network/authentication diizinkan.

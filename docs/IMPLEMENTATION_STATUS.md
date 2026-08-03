@@ -24,6 +24,8 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 | Cloud/EECU review | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-010_cost_monitoring_plan.md`; user-managed EECU, quota, billing, IAM, dan resource review tercatat; tidak ada operasi Cloud dijalankan |
 | GitHub security controls | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-019_github_security_review.md`; evidence lokal saja, kontrol remote belum diaudit |
 | PRD/stage traceability | `IMPLEMENTED` | `docs/REQUIREMENTS_TRACEABILITY.md` |
+| Tahap 0 active metadata gate | `IN_PROGRESS` | `outputs/evidence/stage_0/T0-012_stage_report.md`; offline wrappers/guards exist, but active describe and real 50-level extraction remain open |
+| Tahap 1 configuration baseline | `PASS_WITH_NOTES` | `outputs/evidence/stage_1/T1-012_config_report.md`; offline config, schema, loader, and guardrails validated |
 
 ## Foundation task status
 
@@ -56,7 +58,7 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 
 1. Dependency environment telah disetujui dan lock telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.
 2. Monitoring Cloud/EECU, billing, IAM, dan resource aktif telah dicatat melalui proses user-managed; FND-010 `PASS_WITH_NOTES`, tanpa operasi Cloud.
-3. Tahap 0 aktif tetap `IN_PROGRESS`: wrapper metadata aktif, ekstraksi seluruh 50 depth, dan material-change detector belum dijalankan.
+3. Tahap 0 aktif tetap `IN_PROGRESS`: describe wrapper, depth validator, dan material-change guard sudah diimplementasikan offline; active describe dan real 50-level extraction belum dijalankan.
 4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, loader typed, schema, dan guardrail tervalidasi offline; exact polygon/mask, benchmark, dan pilot operasional belum dijalankan.
 5. AOI bbox dan asset root sudah dicatat berdasarkan laporan user; keberadaan asset dan write access belum diverifikasi oleh Codex.
 6. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

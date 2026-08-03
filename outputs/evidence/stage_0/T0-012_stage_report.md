@@ -21,6 +21,16 @@
 ## Decision and limitations
 
 The metadata baseline is accepted with notes for configuration work, but the
-Tahap 0 stage gate remains `IN_PROGRESS`. Full 50-level extraction, raw NetCDF
-validation, checksums, and material-change detection were not run. No download,
-subset, upload, or Cloud operation was performed in this session.
+Tahap 0 stage gate remains `IN_PROGRESS`. The offline describe wrapper,
+synthetic depth validator, and material-change guard are implemented and
+tested, but active describe execution and the real 50-level extraction remain
+open. Raw NetCDF validation and checksums were not run. No download, subset,
+upload, authentication, network, or Cloud operation was performed in this
+session.
+
+## Offline evidence added
+
+- `outputs/evidence/stage_0/T0_describe_wrapper.plan.result.txt`
+- `outputs/evidence/stage_0/T0_depth_validator.result.txt`
+- `outputs/evidence/stage_0/T0_metadata_guard.result.txt`
+- `outputs/evidence/stage_0/research_purpose_metadata.json`

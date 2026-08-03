@@ -1,0 +1,6 @@
+test_id=T0-007
+status=IMPLEMENTED
+command=.venv\Scripts\python.exe -m python.common.depth_metadata --metadata tests/fixtures/synthetic_depth_metadata.json
+exit_status=0
+evidence=Offline validator accepted a labeled synthetic fixture with 50 strictly increasing levels and top depth 0.494025 m
+limitations=The active metadata snapshot does not contain the full 50-level list; no real depth CSV or live metadata was accessed

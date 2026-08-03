@@ -1,7 +1,10 @@
 from pathlib import Path
+import json
 import unittest
 
 from python.common.config_loader import ConfigError, load_m1_config
+from python.common.depth_metadata import DepthMetadataError, extract_depth_levels, validate_depth_levels
+from python.common.metadata_guard import compare_metadata
 
 
 CONFIG_ROOT = Path(__file__).parents[2] / "config"
@@ -58,3 +61,36 @@ class ConfigLoaderTests(unittest.TestCase):
             local.write_text(text, encoding="utf-8")
             with self.assertRaisesRegex(ConfigError, "asset root does not belong"):
                 load_m1_config(destination)
+
+    def test_metadata_guard_accepts_approved_snapshot(self):
+        snapshot_path = (
+            Path(__file__).parents[2]
+            / "outputs"
+            / "evidence"
+            / "stage_0"
+            / "metadata_snapshot_2026-08-02.json"
+        )
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        self.assertEqual(compare_metadata(snapshot, snapshot), ())
+
+    def test_metadata_guard_fails_on_dataset_change(self):
+        snapshot_path = (
+            Path(__file__).parents[2]
+            / "outputs"
+            / "evidence"
+            / "stage_0"
+            / "metadata_snapshot_2026-08-02.json"
+        )
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        candidate = json.loads(json.dumps(snapshot))
+        candidate["datasets"]["daily"]["id"] = "unexpected-dataset"
+        changes = compare_metadata(snapshot, candidate)
+        self.assertTrue(any(change.path == "datasets.daily.id" for change in changes))
+
+    def test_depth_validator_requires_fifty_increasing_levels(self):
+        levels = tuple(0.494025 + (index * 10.0) for index in range(50))
+        validate_depth_levels(levels)
+        with self.assertRaises(DepthMetadataError):
+            validate_depth_levels(levels[:-1])
+        with self.assertRaises(DepthMetadataError):
+            extract_depth_levels({"depth": {"full_50_level_extraction": "NOT_RUN"}})

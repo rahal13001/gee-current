@@ -1,0 +1,6 @@
+test_id=T0-008
+status=TESTED
+command=.venv\Scripts\python.exe -m python.common.metadata_guard --baseline outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json --candidate outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json
+exit_status=0
+evidence=Approved product, dataset, variable, unit, depth, and project-period fields matched; six unit tests passed including a synthetic dataset-change fail-closed case
+limitations=Live metadata comparison was not run; no network, authentication, download, or NetCDF access was performed

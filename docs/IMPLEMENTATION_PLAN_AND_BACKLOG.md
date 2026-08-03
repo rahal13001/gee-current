@@ -643,14 +643,14 @@ GOV-01
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T0-001 | P0 | FR-META-01 | Implementasi wrapper `describe` produk | FND-007 | product JSON | Product ID cocok | `NOT_STARTED` |
-| T0-002 | P0 | FR-META-01 | Implementasi `describe` dataset harian | T0-001 | daily JSON | Dataset ID dan variabel cocok | `NOT_STARTED` |
-| T0-003 | P0 | FR-META-01 | Implementasi `describe` dataset bulanan | T0-001 | monthly JSON | Dataset ID dan variabel cocok | `NOT_STARTED` |
+| T0-001 | P0 | FR-META-01 | Implementasi wrapper `describe` produk | FND-007 | product JSON | Product ID cocok | `IMPLEMENTED` |
+| T0-002 | P0 | FR-META-01 | Implementasi `describe` dataset harian | T0-001 | daily JSON | Dataset ID dan variabel cocok | `IMPLEMENTED` |
+| T0-003 | P0 | FR-META-01 | Implementasi `describe` dataset bulanan | T0-001 | monthly JSON | Dataset ID dan variabel cocok | `IMPLEMENTED` |
 | T0-004 | P0 | FR-META-02 | Simpan snapshot metadata versioned | T0-002,T0-003 | snapshot folder | immutable dan timestamped | `PASS_WITH_NOTES` |
 | T0-005 | P0 | FR-META-03 | Catat versi Toolbox | FND-006 | environment evidence | versi sesuai lock | `PASS_WITH_NOTES` |
 | T0-006 | P0 | FR-META-04 | Ekstrak dataset version dan part | T0-002,T0-003 | metadata summary | nilai tidak kosong atau status eksplisit | `PASS_WITH_NOTES` |
-| T0-007 | P0 | Tahap 0 | Ekstrak seluruh 50 depth levels | T0-002 | depth CSV | count=50; top=0,494025 m dalam toleransi | `NOT_STARTED` |
-| T0-008 | P0 | FR-META-05 | Implementasi material-change detector | T0-004,T0-006 | comparison report | perubahan kritis menghentikan pipeline | `NOT_STARTED` |
+| T0-007 | P0 | Tahap 0 | Ekstrak seluruh 50 depth levels | T0-002 | depth CSV | count=50; top=0,494025 m dalam toleransi | `IMPLEMENTED` |
+| T0-008 | P0 | FR-META-05 | Implementasi material-change detector | T0-004,T0-006 | comparison report | perubahan kritis menghentikan pipeline | `TESTED` |
 | T0-009 | P0 | Tahap 0 | Verifikasi time coverage 2015–2025 | T0-002,T0-003 | coverage report | periode lengkap tersedia | `PASS_WITH_NOTES` |
 | T0-010 | P1 | Tahap 0 | Verifikasi unit, grid, format, calendar | T0-002,T0-003 | data dictionary draft | konsisten dengan sumber | `PASS_WITH_NOTES` |
 | T0-011 | P1 | GOV-01 | Simpan research-purpose metadata | FND-009 | governance metadata | noncommercial_only=true | `PASS_WITH_NOTES` |

@@ -1,0 +1,12 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "source": "user-reported governance record",
+  "earth_engine_project_id": "ee-rahal13001",
+  "noncommercial_only": true,
+  "purpose": "education and noncommercial research on GLORYS12V1 ocean-current analysis",
+  "operational_use": false,
+  "limitations": [
+    "Exact Earth Engine tier and registration date were not independently audited by Codex.",
+    "No authentication, network access, or Cloud operation was performed."
+  ]
+}
