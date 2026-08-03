@@ -1,0 +1,4 @@
+# Direct runtime baseline approved from the existing local .venv.
+# Python baseline: 3.12.13
+copernicusmarine==2.4.1
+earthengine-api==1.7.37

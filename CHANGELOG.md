@@ -8,8 +8,13 @@
 - Merekonsiliasi evidence setup dan governance berdasarkan laporan user: Project ID
   `ee-rahal13001`, registrasi nonkomersial, Earth Engine smoke test, serta versi dependency
   lokal yang dilaporkan; tidak ada login atau autentikasi ulang oleh Codex.
-- Menandai FND-007, FND-009, dan FND-019 sebagai `PASS_WITH_NOTES`; FND-010 tetap `BLOCKED`
-  dan M0 keseluruhan tetap `IN_PROGRESS`.
+- Menandai FND-007, FND-009, FND-010, dan FND-019 sebagai `PASS_WITH_NOTES`; M0
+  menyelesaikan final offline gate sebagai `PASS` dengan catatan.
 - FND-019 hanya mencakup evidence lokal. GitHub push protection, secret scanning, ruleset,
-  dan branch protection remote belum diaudit. Tidak ada data, credential, token, asset,
-  billing, IAM, EECU, exact tier, AOI, atau asset root yang diklaim.
+  dan branch protection remote belum diaudit. Evidence FND-010 berasal dari review user-managed;
+  exact tier, AOI, dan asset root tidak diklaim.
+- Merekam `requirements.txt` dan `requirements-lock.txt` dari `.venv` yang disetujui user;
+  FND-006 menjadi `PASS_WITH_NOTES` setelah `pip check` exit 0. Clean-room reinstall belum dilakukan.
+- Menambahkan mode `-ReadOnly` pada foundation runner dan merekonsiliasi evidence FND-010;
+  quota/EECU usage `0`, project tidak terhubung billing account, IAM `Owner`, dan resource inventory
+  user-managed dicatat tanpa operasi Cloud.

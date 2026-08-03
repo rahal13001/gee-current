@@ -1,4 +1,4 @@
 ﻿test_id=TST-FND-002
 status=PASS
 summary=Root AGENTS.md exists and is non-empty.
-utc=2026-08-02T23:16:36.2383930Z
+utc=2026-08-02T23:39:20.0011036Z

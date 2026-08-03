@@ -1,0 +1,9 @@
+test_id=FND-006
+status=PASS_WITH_NOTES
+command=.\.venv\Scripts\python.exe --version
+exit_status=0
+evidence=Python 3.12.13; requirements.txt and requirements-lock.txt recorded from approved local .venv
+command=.\.venv\Scripts\python.exe -m pip check
+exit_status=0
+evidence=No broken requirements found; 85 installed package versions matched the lock snapshot
+limitations=Clean-room reinstall was not run; no network or dependency installation was performed
