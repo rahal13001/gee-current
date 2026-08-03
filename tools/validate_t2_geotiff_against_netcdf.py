@@ -15,6 +15,7 @@ import xarray as xr
 VARIABLES = ("uo", "vo")
 EXPECTED_DATES = pd.date_range("2020-02-01", "2020-02-29", freq="D")
 ABSOLUTE_TOLERANCE = 1e-6
+NODATA_VALUE = -9999.0
 
 
 def parse_args() -> argparse.Namespace:
@@ -64,11 +65,11 @@ def main() -> int:
                     fail(f"{path.name}: CRS is not EPSG:4326")
                 if tuple(raster.descriptions) != VARIABLES:
                     fail(f"{path.name}: band descriptions are not uo/vo")
-                if not np.isnan(raster.nodata):
-                    fail(f"{path.name}: nodata is not NaN")
+                if raster.nodata != NODATA_VALUE:
+                    fail(f"{path.name}: nodata is not {NODATA_VALUE}")
                 if raster.tags().get("time", "") != timestamp.isoformat():
                     fail(f"{path.name}: time tag mismatch")
-                actual = raster.read().astype(np.float64)
+                actual = raster.read(masked=True).filled(np.nan).astype(np.float64)
                 expected = np.stack(
                     [selected[name].isel(time=index).values for name in VARIABLES]
                 )
@@ -96,7 +97,7 @@ def main() -> int:
                 "band_count": 2,
                 "bands": list(VARIABLES),
                 "crs": "EPSG:4326",
-                "nodata": "NaN",
+                "nodata": NODATA_VALUE,
                 "absolute_tolerance": ABSOLUTE_TOLERANCE,
                 "max_absolute_difference": max_abs_difference,
                 "resampling": "none",

@@ -1,7 +1,7 @@
 """Convert the approved February 2020 pilot NetCDF to two-band GeoTIFFs.
 
 This tool is intentionally offline-only. It reads one user-provided NetCDF,
-decodes CF packing once through xarray, preserves NaN as nodata, performs no
+decodes CF packing once through xarray and writes NaN values as -9999 nodata,
 resampling, and writes one float32 GeoTIFF per daily timestep with bands
 ``uo`` and ``vo``.
 """
@@ -26,6 +26,7 @@ EXPECTED_END = "2020-02-29"
 EXPECTED_TIMESTEPS = 29
 EXPECTED_DEPTH_M = 0.494025
 DEPTH_TOLERANCE_M = 1e-6
+NODATA_VALUE = -9999.0
 
 
 def parse_args() -> argparse.Namespace:
@@ -101,12 +102,12 @@ def convert(input_path: Path, output_dir: Path, prefix: str, overwrite: bool) ->
             frame = selected.isel(time=index).to_array(dim="band").astype("float32")
             frame = frame.rio.set_spatial_dims(x_dim="longitude", y_dim="latitude")
             frame = frame.rio.write_crs("EPSG:4326")
-            frame = frame.rio.write_nodata(np.nan)
+            frame = frame.rio.write_nodata(NODATA_VALUE)
             frame.rio.to_raster(
                 output_path,
                 driver="GTiff",
                 dtype="float32",
-                nodata=np.nan,
+                nodata=NODATA_VALUE,
                 compress="deflate",
                 predictor=3,
             )
@@ -132,7 +133,7 @@ def convert(input_path: Path, output_dir: Path, prefix: str, overwrite: bool) ->
             "units": EXPECTED_UNIT,
             "depth_m": float(source.depth.values[0]),
             "crs": "EPSG:4326",
-            "nodata": "NaN",
+            "nodata": NODATA_VALUE,
             "resampling": "none",
             "limitations": [
                 "No Earth Engine upload or computation was performed.",
