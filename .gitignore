@@ -26,6 +26,7 @@ graphify-out/
 
 # Large or generated data
 data/raw/
+data/geotiff/
 data/validated/
 data/converted/
 data/partial/

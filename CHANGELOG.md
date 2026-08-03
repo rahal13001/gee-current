@@ -30,3 +30,21 @@
   eksplisit; threshold tetap `TBD` dan belum dipakai pada data operasional.
 - Memperketat validasi konfigurasi lintas-file untuk dataset IDs, periode JFM,
   depth selection, daftar statistik, timezone, dan status parameter terbuka.
+- Merekam hasil user-managed active describe product/daily dan 50 depth levels
+  nyata; validator depth kini menerima urutan monotonic ascending maupun
+  descending positive-down tanpa mengubah target `0.494025 m`.
+- Mencatat unduhan user-managed NetCDF pilot dan validasi lokal T2-004–T2-011:
+  retry menghasilkan tepat 29 timestep Februari 2020; variabel, unit, depth,
+  grid, mask, CF packing, dan range tervalidasi dengan `PASS_WITH_NOTES`.
+  GeoTIFF, upload, dan operasi Earth Engine belum dijalankan; M0 tetap `IN_PROGRESS`.
+- Mencatat T2-012 sebagai `BLOCKED` setelah preflight lokal menemukan
+  `rasterio`, `rioxarray`, dan GDAL tidak tersedia pada approved `.venv`;
+  dependency installation tidak dilakukan.
+- Setelah persetujuan user, menambahkan `rasterio==1.5.0` dan
+  `rioxarray==0.23.0`, memperbarui lock menjadi 91 package versions, membuat
+  konverter GeoTIFF reusable, menghasilkan 29 GeoTIFF, dan memvalidasi
+  NetCDF–GeoTIFF dengan maksimum selisih absolut `2.98e-08`.
+- Menutup T0-012 sebagai `PASS_WITH_NOTES` setelah product, daily, monthly,
+  depth, dan material-change evidence user-managed lengkap tercatat.
+- Menetapkan AOI `pilot_001` dan menambahkan T2 offline preflight/dry-run yang
+  memvalidasi 29 tanggal Februari 2020 tanpa download atau upload.

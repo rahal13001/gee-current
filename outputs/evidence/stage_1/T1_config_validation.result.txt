@@ -2,5 +2,5 @@ test_id=T1-CONFIG-VALIDATION
 status=PASS_WITH_NOTES
 command=powershell -NoProfile -ExecutionPolicy Bypass -File tools/validate_m1_config.ps1 -ConfigRoot config
 exit_status=0
-evidence=AOI ordering, EPSG:4326, period/JFM fields, depth selection metadata, statistic fields, dataset IDs, timezone, asset-root prefix, and open thresholds validated
+evidence=AOI ordering, EPSG:4326, period/JFM fields, verified 50-level depth status, statistic fields, dataset IDs, timezone, asset-root prefix, and open thresholds validated
 limitations=No network, authentication, asset existence check, or operational computation was performed

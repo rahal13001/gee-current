@@ -1,0 +1,16 @@
+test_ids=T2-012,T2-013
+status=PASS_WITH_NOTES
+dependency_command=.\.venv\Scripts\python.exe -m pip install rasterio rioxarray
+dependency_exit_status=0
+installed_dependencies=rasterio==1.5.0;rioxarray==0.23.0;pyproj==3.7.2;affine==2.4.0;attrs==26.1.0;cligj==0.7.2
+pip_check_command=.\.venv\Scripts\python.exe -m pip check
+pip_check_exit_status=0
+conversion_command=.\.venv\Scripts\python.exe tools\convert_t2_pilot_to_geotiff.py --input data\raw\glorys12v1_daily_surface_20200201_20200229_pilot_retry.nc --output-dir data\geotiff --prefix glorys12v1_daily_surface --overwrite
+conversion_exit_status=0
+conversion_evidence=29 float32 GeoTIFFs; two bands uo/vo; EPSG:4326; NaN nodata; no resampling
+validation_command=.\.venv\Scripts\python.exe tools\validate_t2_geotiff_against_netcdf.py --netcdf data\raw\glorys12v1_daily_surface_20200201_20200229_pilot_retry.nc --geotiff-dir data\geotiff --prefix glorys12v1_daily_surface
+validation_exit_status=0
+comparison_evidence=29/29 files matched; band descriptions, timestamps, CRS, NaN mask, and dimensions matched; maximum absolute difference=2.9802322387695312e-08; tolerance=1e-06
+tools=tools\convert_t2_pilot_to_geotiff.py;tools\validate_t2_geotiff_against_netcdf.py
+limitations=No Earth Engine upload or computation; exact polygon/water mask and Cloud validation remain downstream
+network_note=Package installation used package index once after explicit user approval; no credential or authentication data was read

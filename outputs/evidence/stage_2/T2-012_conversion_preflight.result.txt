@@ -1,0 +1,8 @@
+test_id=T2-012
+status=BLOCKED
+command=.\.venv\Scripts\python.exe -c importlib.util availability check for rasterio,rioxarray,GDAL,netCDF4,h5netcdf,xarray
+exit_status=0
+evidence=xarray=True;h5netcdf=True;netCDF4=False;rasterio=False;rioxarray=False;GDAL_cli=NOT_FOUND
+limitations=No GeoTIFF conversion was attempted; no dependency was installed, upgraded, or removed; no alternative conversion implementation was authorized
+next_gate=Dependency change or approved conversion alternative requires explicit change control
+network_authentication=NOT_PERFORMED

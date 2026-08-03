@@ -220,9 +220,9 @@ Codex dilarang menyamakan dua status tersebut.
 | Tahap | Status awal |
 |---|---|
 | Foundation | `NOT_STARTED` |
-| Tahap 0 aktif | `IN_PROGRESS` |
+| Tahap 0 aktif | `PASS_WITH_NOTES` |
 | Tahap 1 implementasi config | `PASS_WITH_NOTES` |
-| Tahap 2 pilot data asli | `NOT_STARTED` |
+| Tahap 2 pilot data asli | `IN_PROGRESS` |
 | Tahap 3 otomasi dan batch | `NOT_STARTED` |
 | Tahap 4 | `NOT_STARTED` |
 | Tahap 5 | `NOT_STARTED` |
@@ -649,12 +649,12 @@ GOV-01
 | T0-004 | P0 | FR-META-02 | Simpan snapshot metadata versioned | T0-002,T0-003 | snapshot folder | immutable dan timestamped | `PASS_WITH_NOTES` |
 | T0-005 | P0 | FR-META-03 | Catat versi Toolbox | FND-006 | environment evidence | versi sesuai lock | `PASS_WITH_NOTES` |
 | T0-006 | P0 | FR-META-04 | Ekstrak dataset version dan part | T0-002,T0-003 | metadata summary | nilai tidak kosong atau status eksplisit | `PASS_WITH_NOTES` |
-| T0-007 | P0 | Tahap 0 | Ekstrak seluruh 50 depth levels | T0-002 | depth CSV | count=50; top=0,494025 m dalam toleransi | `IMPLEMENTED` |
+| T0-007 | P0 | Tahap 0 | Ekstrak seluruh 50 depth levels | T0-002 | depth snapshot | count=50; top=0,494025 m dalam toleransi; order positive-down tercatat | `PASS_WITH_NOTES` |
 | T0-008 | P0 | FR-META-05 | Implementasi material-change detector | T0-004,T0-006 | comparison report | perubahan kritis menghentikan pipeline | `TESTED` |
 | T0-009 | P0 | Tahap 0 | Verifikasi time coverage 2015–2025 | T0-002,T0-003 | coverage report | periode lengkap tersedia | `PASS_WITH_NOTES` |
 | T0-010 | P1 | Tahap 0 | Verifikasi unit, grid, format, calendar | T0-002,T0-003 | data dictionary draft | konsisten dengan sumber | `PASS_WITH_NOTES` |
 | T0-011 | P1 | GOV-01 | Simpan research-purpose metadata | FND-009 | governance metadata | noncommercial_only=true | `PASS_WITH_NOTES` |
-| T0-012 | P0 | Stage gate | Buat laporan Tahap 0 operasional | T0-001..T0-011 | report | keputusan `PASS`/`FAIL` berbukti | `IN_PROGRESS` |
+| T0-012 | P0 | Stage gate | Buat laporan Tahap 0 operasional | T0-001..T0-011 | report | keputusan `PASS`/`FAIL` berbukti | `PASS_WITH_NOTES` |
 
 ---
 
@@ -732,18 +732,18 @@ Benchmark B1–B6
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
 | T2-001 | P0 | Setup | Tetapkan AOI pilot terdokumentasi | T1-001 | AOI config | sumber batas dan ID tersedia | `PASS_WITH_NOTES` |
-| T2-002 | P0 | FR-META-01 | Jalankan metadata preflight pilot | T0-012,T2-001 | preflight report | metadata konsisten | `NOT_STARTED` |
-| T2-003 | P0 | Pilot | Dry run subset Februari 2020 | T2-002 | request plan | 29 hari dan depth benar | `NOT_STARTED` |
-| T2-004 | P0 | Pilot | Unduh NetCDF pilot asli | T2-003 | raw NetCDF | file dapat dibuka | `NOT_STARTED` |
-| T2-005 | P0 | FR-VAL-01,02 | Validasi `uo`, `vo`, dan unit | T2-004 | validation JSON | band/unit benar | `NOT_STARTED` |
-| T2-006 | P0 | FR-VAL-03 | Validasi depth | T2-004 | depth evidence | 0,494025 m dalam toleransi 1e-6 | `NOT_STARTED` |
-| T2-007 | P0 | FR-VAL-04 | Validasi 29 timestamp | T2-004 | time report | count=29; tanggal benar | `NOT_STARTED` |
-| T2-008 | P0 | FR-VAL-05 | Validasi mask dan valid pixels | T2-004 | mask report | daratan bukan nol buatan | `NOT_STARTED` |
-| T2-009 | P0 | FR-VAL-06 | Validasi orientasi latitude | T2-004 | coordinate report | transform output benar | `NOT_STARTED` |
-| T2-010 | P0 | FR-VAL-07 | Bandingkan raw vs CF-decoded | T2-004 | encoding report | scale/offset tidak ganda | `NOT_STARTED` |
-| T2-011 | P0 | FR-VAL-08 | Pemeriksaan nilai tidak masuk akal | T2-005 | range report | tidak ada sentinel sebagai data valid | `NOT_STARTED` |
-| T2-012 | P0 | FR-CONV-01..06 | Konversi 29 GeoTIFF dua-band | T2-005..T2-010 | 29 TIFF | float32, mask, CRS, metadata benar | `NOT_STARTED` |
-| T2-013 | P0 | FR-CONV-07 | Validasi NetCDF–GeoTIFF | T2-012 | comparison CSV | 29/29 dalam abs tolerance 1e-6 | `NOT_STARTED` |
+| T2-002 | P0 | FR-META-01 | Jalankan metadata preflight pilot | T0-012,T2-001 | preflight report | metadata konsisten | `PASS_WITH_NOTES` |
+| T2-003 | P0 | Pilot | Dry run subset Februari 2020 | T2-002 | request plan | 29 hari dan depth benar | `PASS_WITH_NOTES` |
+| T2-004 | P0 | Pilot | Unduh NetCDF pilot asli | T2-003 | raw NetCDF | file dapat dibuka | `PASS_WITH_NOTES` |
+| T2-005 | P0 | FR-VAL-01,02 | Validasi `uo`, `vo`, dan unit | T2-004 | validation JSON | band/unit benar | `PASS_WITH_NOTES` |
+| T2-006 | P0 | FR-VAL-03 | Validasi depth | T2-004 | depth evidence | 0,494025 m dalam toleransi 1e-6 | `PASS_WITH_NOTES` |
+| T2-007 | P0 | FR-VAL-04 | Validasi 29 timestamp | T2-004 | time report | count=29; tanggal benar | `PASS_WITH_NOTES` |
+| T2-008 | P0 | FR-VAL-05 | Validasi mask dan valid pixels | T2-004 | mask report | daratan bukan nol buatan | `PASS_WITH_NOTES` |
+| T2-009 | P0 | FR-VAL-06 | Validasi orientasi latitude | T2-004 | coordinate report | transform output benar | `PASS_WITH_NOTES` |
+| T2-010 | P0 | FR-VAL-07 | Bandingkan raw vs CF-decoded | T2-004 | encoding report | scale/offset tidak ganda | `PASS_WITH_NOTES` |
+| T2-011 | P0 | FR-VAL-08 | Pemeriksaan nilai tidak masuk akal | T2-005 | range report | tidak ada sentinel sebagai data valid | `PASS_WITH_NOTES` |
+| T2-012 | P0 | FR-CONV-01..06 | Konversi 29 GeoTIFF dua-band | T2-005..T2-010 | 29 TIFF | float32, mask, CRS, metadata benar | `PASS_WITH_NOTES` |
+| T2-013 | P0 | FR-CONV-07 | Validasi NetCDF–GeoTIFF | T2-012 | comparison CSV | 29/29 dalam abs tolerance 1e-6 | `PASS_WITH_NOTES` |
 | T2-014 | P0 | FR-GEE-01 | Buat/upload tiga aset sampel | T2-013 | asset IDs | band/time/mask terbaca | `NOT_STARTED` |
 | T2-015 | P0 | FR-GEE-02..06 | Uji filter dan statistik AOI ringan | T2-014 | GEE report | nilai cocok Python | `NOT_STARTED` |
 | T2-016 | P0 | FR-VEC-01,02 | Uji arah kardinal Python dan GEE | T2-014 | test result | 0/90/180/270 tepat | `NOT_STARTED` |
@@ -1134,7 +1134,7 @@ Open decision tidak boleh diisi oleh Codex tanpa data atau persetujuan.
 
 | Decision ID | Pertanyaan | Dibutuhkan sebelum | Status |
 |---|---|---|---|
-| OD-001 | AOI pilot dan sumber batas | T2-001 | `OPEN` |
+| OD-001 | AOI pilot dan sumber batas | T2-001 | `RESOLVED_WITH_NOTES` |
 | OD-002 | Project ID aktual | FND-009 | `OPEN` |
 | OD-003 | Community atau Contributor Tier | FND-009/T2 benchmark | `OPEN` |
 | OD-004 | Threshold kecepatan dan sumbernya | T5-017 | `OPEN` |

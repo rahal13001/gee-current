@@ -108,9 +108,10 @@ class ConfigLoaderTests(unittest.TestCase):
         changes = compare_metadata(snapshot, candidate)
         self.assertTrue(any(change.path == "datasets.daily.id" for change in changes))
 
-    def test_depth_validator_requires_fifty_increasing_levels(self):
+    def test_depth_validator_requires_fifty_monotonic_levels(self):
         levels = tuple(0.494025 + (index * 10.0) for index in range(50))
         validate_depth_levels(levels)
+        validate_depth_levels(tuple(reversed(levels)))
         with self.assertRaises(DepthMetadataError):
             validate_depth_levels(levels[:-1])
         with self.assertRaises(DepthMetadataError):

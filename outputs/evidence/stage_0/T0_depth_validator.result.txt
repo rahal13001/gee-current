@@ -1,6 +1,6 @@
 test_id=T0-007
-status=IMPLEMENTED
-command=.venv\Scripts\python.exe -m python.common.depth_metadata --metadata tests/fixtures/synthetic_depth_metadata.json
+status=PASS_WITH_NOTES
+command=.venv\Scripts\python.exe -m python.common.depth_metadata --metadata outputs/evidence/stage_0/metadata_snapshot_2026-08-03.json
 exit_status=0
-evidence=Offline validator accepted a labeled synthetic fixture with 50 strictly increasing levels and top depth 0.494025 m
-limitations=The active metadata snapshot does not contain the full 50-level list; no real depth CSV or live metadata was accessed
+evidence=User-managed active describe supplied 50 real monotonic depth levels in descending positive-down order; shallowest/top model layer 0.49402499198913574 m matches 0.494025 m within 1e-6
+limitations=Active Copernicus describe and authentication were performed by the user; Codex did not access network or credential contents; no NetCDF was downloaded or validated

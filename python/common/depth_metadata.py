@@ -47,14 +47,17 @@ def validate_depth_levels(
     target_depth_m: float = ANALYSIS_DEPTH_M,
     tolerance_m: float = DEPTH_TOLERANCE_M,
 ) -> None:
-    """Validate count, ordering, and approved top-layer target."""
+    """Validate count, monotonic ordering, and approved top-layer target."""
 
     if len(levels) != expected_count:
         raise DepthMetadataError(f"expected {expected_count} depth levels, observed {len(levels)}")
-    if any(left >= right for left, right in zip(levels, levels[1:])):
-        raise DepthMetadataError("depth levels must be strictly increasing")
-    if abs(levels[0] - target_depth_m) > tolerance_m:
-        raise DepthMetadataError("top depth does not match approved target within tolerance")
+    increasing = all(left < right for left, right in zip(levels, levels[1:]))
+    decreasing = all(left > right for left, right in zip(levels, levels[1:]))
+    if not (increasing or decreasing):
+        raise DepthMetadataError("depth levels must be strictly monotonic")
+    top_depth = min(levels)
+    if abs(top_depth - target_depth_m) > tolerance_m:
+        raise DepthMetadataError("shallowest depth does not match approved target within tolerance")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -67,9 +70,13 @@ def main(argv: list[str] | None = None) -> int:
     except (OSError, json.JSONDecodeError, DepthMetadataError) as exc:
         print(f"status=BLOCKED\nerror={exc}")
         return 2
+    order = "ascending" if levels[0] < levels[-1] else "descending"
     print("status=PASS_WITH_NOTES")
-    print(f"evidence=validated_depth_count={len(levels)}; top_depth_m={levels[0]:.9f}")
-    print("limitations=Validation is local; no active metadata or NetCDF was accessed")
+    print(
+        f"evidence=validated_depth_count={len(levels)}; "
+        f"top_depth_m={min(levels):.9f}; coordinate_order={order}"
+    )
+    print("limitations=Depth validation uses active sanitized metadata; no NetCDF was accessed")
     return 0
 
 

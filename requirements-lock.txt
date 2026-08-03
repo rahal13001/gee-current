@@ -1,14 +1,17 @@
 # Foundation/M0 dependency lock snapshot.
-# Source: existing local .venv; no install, upgrade, authentication, or network access.
+# Source: existing local .venv; refreshed after user-approved one-time conversion dependency installation.
 # Python baseline: 3.12.13
+affine==2.4.0
 annotated-types==0.8.0
 arcosparse==0.5.1
+attrs==26.1.0
 boto3==1.43.62
 botocore==1.43.62
 certifi==2026.7.22
 cffi==2.1.0
 charset-normalizer==3.4.9
 click==8.4.2
+cligj==0.7.2
 cloudpickle==3.1.2
 colorama==0.4.6
 copernicusmarine==2.4.1
@@ -47,6 +50,7 @@ pycparser==3.0
 pydantic==2.13.4
 pydantic-core==2.46.4
 pyparsing==3.3.2
+pyproj==3.7.2
 pystac==1.15.2
 pystac-core==1.15.2
 pystac-ext-classification==2.0.0
@@ -74,6 +78,8 @@ pystac-ext-xarray-assets==1.0.0
 python-dateutil==2.9.0.post0
 PyYAML==6.0.3
 requests==2.34.2
+rasterio==1.5.0
+rioxarray==0.23.0
 s3transfer==0.19.2
 semver==3.0.4
 six==1.17.0

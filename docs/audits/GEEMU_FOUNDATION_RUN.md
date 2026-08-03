@@ -6,7 +6,7 @@ Status: `READ_ONLY` dengan user-reported runtime smoke; bukan Earth Engine analy
 
 | Decision | Choice | Suggested by local knowledge | Reason | Needs confirmation |
 |---|---|---|---|---|
-| Study area | Perairan Sorong dan sekitarnya; AOI/bbox belum disahkan | Tidak dipilih otomatis | Tahap 2 melarang AOI tebakan | Ya |
+| Study area | `pilot_001`, user-defined bbox di `EPSG:4326` | Tidak dipilih otomatis | AOI ditetapkan langsung oleh pengguna; exact polygon/water mask tetap downstream | Tidak untuk pilot bbox |
 | Analysis scale | native sekitar 1/12°; nilai final harus mengikuti metadata aktif | Jangan gunakan resolusi lebih halus sebagai akurasi | Menjaga makna grid model | Ya, setelah metadata aktif |
 | Output target | Python validation/products lalu GEE selected assets/light visualization | Hibrida Python–GEE | Sesuai PRD/ADR-004 | Ya |
 
@@ -26,7 +26,8 @@ Status: `READ_ONLY` dengan user-reported runtime smoke; bukan Earth Engine analy
 ## Boundary/performance
 
 Project ID: `ee-rahal13001` (user-reported). Noncommercial registration: user-reported completed.
-AOI, export target, exact Earth Engine tier, IAM, billing, asset root, and EECU target remain `UNKNOWN/OPEN`.
+AOI pilot bbox sudah ditetapkan user; exact polygon/water mask, export target, exact Earth Engine tier, IAM, billing,
+asset existence/write access, and EECU target remain `UNKNOWN/OPEN`.
 No GEE code, export, asset upload, or batch task was run by Codex. The only runtime evidence is the
 user-reported smoke test `ee.Initialize(project='ee-rahal13001')` plus `ee.Number(1).getInfo()` returning `1`.
 

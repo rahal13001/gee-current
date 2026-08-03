@@ -6,7 +6,7 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Status: `PASS`
+- Status: `IN_PROGRESS`
 - Owner: Codex under user scope and approval gates
 - Stage 0–3: dokumenter tersedia; tidak ada klaim kelulusan operasional
 
@@ -24,8 +24,11 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 | Cloud/EECU review | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-010_cost_monitoring_plan.md`; user-managed EECU, quota, billing, IAM, dan resource review tercatat; tidak ada operasi Cloud dijalankan |
 | GitHub security controls | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-019_github_security_review.md`; evidence lokal saja, kontrol remote belum diaudit |
 | PRD/stage traceability | `IMPLEMENTED` | `docs/REQUIREMENTS_TRACEABILITY.md` |
-| Tahap 0 active metadata gate | `IN_PROGRESS` | `outputs/evidence/stage_0/T0-012_stage_report.md`; offline wrappers/guards exist, but active describe and real 50-level extraction remain open |
+| Tahap 0 active metadata gate | `PASS_WITH_NOTES` | `outputs/evidence/stage_0/T0-012_stage_report.md`; user-managed product/daily/monthly describe, real 50-level extraction, and sanitized material-change comparison recorded |
 | Tahap 1 configuration baseline | `PASS_WITH_NOTES` | `outputs/evidence/stage_1/T1-012_config_report.md`; offline config, schema, loader, and guardrails validated |
+| Tahap 2 pilot preflight/dry-run | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-002_003_pilot_preflight_and_dry_run.result.txt`; 29-day plan validated offline; user-managed download is recorded in the downstream NetCDF evidence |
+| Tahap 2 pilot NetCDF and core validation | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-004_011_netcdf_validation.result.txt`; user-managed retry contains 29 timestamps and local validation covers variables, units, depth, time, grid, mask, encoding, and range |
+| Tahap 2 GeoTIFF conversion and comparison | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-012_013_geotiff_validation.result.txt`; 29 two-band GeoTIFFs generated and compared to NetCDF within `2.98e-08` maximum absolute difference |
 
 ## Foundation task status
 
@@ -36,7 +39,7 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 | FND-003 | `IMPLEMENTED` | safe ignore rules added |
 | FND-004 | `TESTED` | offline sanitized scan executed; no value printed |
 | FND-005 | `IMPLEMENTED` | `pyproject.toml` quality/test configuration added; tools not installed |
-| FND-006 | `PASS_WITH_NOTES` | `requirements.txt` dan `requirements-lock.txt` direkam dari `.venv` yang disetujui user; Python 3.12.13, 85 paket cocok, `pip check` exit 0; clean-room reinstall belum dijalankan |
+| FND-006 | `PASS_WITH_NOTES` | `requirements.txt` dan `requirements-lock.txt` direfresh dari `.venv` yang disetujui user; Python 3.12.13, 91 paket tercatat, `pip check` exit 0; clean-room reinstall belum dijalankan |
 | FND-007 | `PASS_WITH_NOTES` | user melaporkan `.venv`, `earthengine-api 1.7.37`, `copernicusmarine 2.4.1`, login Copernicus, OAuth Earth Engine, dan smoke test `ee.Number(1).getInfo() = 1`; tidak diulang dan tidak membaca credential |
 | FND-008 | `IMPLEMENTED` | user-login/Codex-use policy recorded; no auth operation performed |
 | FND-009 | `PASS_WITH_NOTES` | tujuan nonkomersial, Project ID `ee-rahal13001`, dan registrasi nonkomersial dilaporkan user; exact tier, billing, IAM, EECU, dan asset root tidak diklaim |
@@ -58,7 +61,10 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 
 1. Dependency environment telah disetujui dan lock telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.
 2. Monitoring Cloud/EECU, billing, IAM, dan resource aktif telah dicatat melalui proses user-managed; FND-010 `PASS_WITH_NOTES`, tanpa operasi Cloud.
-3. Tahap 0 aktif tetap `IN_PROGRESS`: describe wrapper, depth validator, dan material-change guard sudah diimplementasikan offline; active describe dan real 50-level extraction belum dijalankan.
+3. Tahap 0 active metadata gate `PASS_WITH_NOTES`: user-managed product/daily/monthly describe, real 50-level extraction, dan sanitized material-change comparison sudah dicatat; raw NetCDF validation tetap downstream.
 4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, cross-file loader validation, formula/statistics baseline, schema, dan guardrail tervalidasi offline; ddof/metode persentil, exact polygon/mask, benchmark, dan pilot operasional belum ditetapkan atau dijalankan.
 5. AOI bbox dan asset root sudah dicatat berdasarkan laporan user; keberadaan asset dan write access belum diverifikasi oleh Codex.
-6. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+6. Tahap 2 preflight/dry-run `PASS_WITH_NOTES`: 29 tanggal Februari 2020, AOI, dataset, variabel, dan depth tervalidasi offline; NetCDF pilot user-managed sudah divalidasi lokal dengan catatan; GeoTIFF, upload, dan operasi Cloud belum dijalankan.
+7. Tahap 2 NetCDF core validation `PASS_WITH_NOTES`: retry berisi tepat 29 timestep; validasi lintas NetCDF–GeoTIFF dan operasi Earth Engine tetap downstream.
+8. T2-012/T2-013 GeoTIFF conversion and comparison `PASS_WITH_NOTES`: dependency conversion ditambahkan atas persetujuan user; upload dan Earth Engine validation tetap downstream.
+9. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

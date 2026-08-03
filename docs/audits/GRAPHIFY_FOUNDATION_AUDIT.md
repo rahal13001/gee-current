@@ -177,3 +177,55 @@ checks, Graphify was refreshed sequentially to avoid concurrent output writes:
 - `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 257 nodes, 323 edges, and 38 communities.
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
 - The refresh was offline and used no semantic LLM backend, credential, or network access.
+
+## Post-T0 active metadata evidence refresh
+
+After recording the user-managed active metadata snapshot and the monotonic
+depth-order validator update, Graphify was refreshed sequentially:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 258 nodes and 355 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 258 nodes, 324 edges, and 39 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
+
+## Post-T2 GeoTIFF tooling refresh
+
+After adding the reusable NetCDF-to-GeoTIFF converter, cross-validator, and
+conversion dependency records, Graphify was refreshed sequentially:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 276 nodes and 392 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 276 nodes, 346 edges, and 42 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
+
+## Post-T2 pilot preflight refresh
+
+After adding the offline T2 pilot-plan validator and its evidence, Graphify
+was refreshed sequentially:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 260 nodes and 356 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 260 nodes, 325 edges, and 40 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
+- This refresh covers repository structure and offline T2 preflight relationships only. It does not evidence Copernicus download, NetCDF validation, Earth Engine computation, or asset upload.
+
+## Post-T2 NetCDF validation refresh
+
+After recording the user-managed pilot NetCDF and local core validation
+evidence, Graphify was refreshed again sequentially:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 260 nodes and 356 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 260 nodes, 325 edges, and 40 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
+- This refresh does not change the operational gates: GeoTIFF conversion, Earth Engine upload/computation, and benchmark classification remain pending.
+
+## Post-T2 conversion preflight refresh
+
+After recording the T2-012 local conversion blocker, Graphify was refreshed
+sequentially:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 260 nodes and 356 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 260 nodes, 325 edges, and 40 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.

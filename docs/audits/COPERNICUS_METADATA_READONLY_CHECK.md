@@ -72,3 +72,17 @@ Command yang digunakan setelah membaca `copernicusmarine describe --help`:
 Command yang sama dijalankan untuk dataset bulanan dengan mengganti
 `--dataset-id`.
 
+## User-managed active follow-up (2026-08-03)
+
+The user ran compact product, daily dataset, and monthly dataset describes
+using the approved local `.venv`. All three commands returned exit status `0`.
+The sanitized follow-up confirms product `GLOBAL_MULTIYEAR_PHY_001_030`,
+metadata version `202311`, part `default`, the approved daily and monthly
+dataset IDs, variables `uo` and `vo`, and units `m s-1`.
+
+The daily response exposed 50 depth levels in descending positive-down order,
+from approximately `5727.9169921875 m` to `0.49402499198913574 m`. The
+shallowest value matches the selected `0.494025 m` within `1e-6 m`.
+
+This is user-managed evidence. Codex did not authenticate, access the network,
+download data, inspect credentials, or run the active describe command.

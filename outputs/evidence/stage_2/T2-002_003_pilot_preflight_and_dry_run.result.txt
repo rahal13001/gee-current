@@ -1,0 +1,12 @@
+test_ids=T2-002,T2-003
+status=PASS_WITH_NOTES
+command=powershell -NoProfile -ExecutionPolicy Bypass -File tools/prepare_t2_pilot_plan.ps1 -ConfigRoot config
+exit_status=0
+mode=DRY_RUN
+evidence=AOI pilot_001, EPSG:4326 bbox, approved product/daily dataset, variables uo/vo, depth 0.494025 m, and exclusive pilot period 2020-02-01 through 2020-03-01 generated exactly 29 planned dates
+network=NOT_PERFORMED
+authentication=NOT_PERFORMED
+download=NOT_PERFORMED
+upload=NOT_PERFORMED
+limitations=Local configuration and date plan only; asset existence/write access, NetCDF content, Copernicus subset, and Cloud operation were not checked
+next_gate=User review and explicit approval are required before any Copernicus subset or download

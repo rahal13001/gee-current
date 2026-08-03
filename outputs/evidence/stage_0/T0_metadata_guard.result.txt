@@ -1,6 +1,6 @@
 test_id=T0-008
-status=TESTED
-command=.venv\Scripts\python.exe -m python.common.metadata_guard --baseline outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json --candidate outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json
+status=PASS_WITH_NOTES
+command=.venv\Scripts\python.exe -m python.common.metadata_guard --baseline outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json --candidate outputs/evidence/stage_0/metadata_snapshot_2026-08-03.json
 exit_status=0
-evidence=Approved product, dataset, variable, unit, depth, and project-period fields matched; six unit tests passed including a synthetic dataset-change fail-closed case
-limitations=Live metadata comparison was not run; no network, authentication, download, or NetCDF access was performed
+evidence=Approved product, dataset, variable, unit, depth, and project-period fields matched across the 2026-08-02 baseline and 2026-08-03 follow-up; six unit tests passed including a synthetic dataset-change fail-closed case
+limitations=Comparison used sanitized user-managed snapshots; no live metadata, NetCDF, credential, or token contents were accessed by Codex

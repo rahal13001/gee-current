@@ -5,5 +5,8 @@ exit_status=0
 evidence=Python 3.12.13; requirements.txt and requirements-lock.txt recorded from approved local .venv
 command=.\.venv\Scripts\python.exe -m pip check
 exit_status=0
-evidence=No broken requirements found; 85 installed package versions matched the lock snapshot
-limitations=Clean-room reinstall was not run; no network or dependency installation was performed
+evidence=Initial approved snapshot contained 85 package versions; current refreshed lock contains 91 package versions after user-approved conversion dependency addition
+command=.\.venv\Scripts\python.exe -m pip list --format=freeze
+exit_status=0
+evidence=91 installed package versions recorded; rasterio==1.5.0 and rioxarray==0.23.0 are available
+limitations=Clean-room reinstall was not run; one-time package-index installation was user-approved; no credential or authentication data was read

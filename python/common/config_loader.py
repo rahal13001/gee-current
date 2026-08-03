@@ -145,8 +145,8 @@ def load_m1_config(config_root: str | Path) -> M1Config:
         raise ConfigError("depth selection method does not match approved baseline")
     if abs(float(depth.get("tolerance_m", -1)) - DEPTH_TOLERANCE_M) > 1e-12:
         raise ConfigError("depth tolerance does not match approved baseline")
-    if depth.get("full_50_level_extraction_status") != "NOT_RUN":
-        raise ConfigError("full depth extraction status must remain explicit")
+    if depth.get("full_50_level_extraction_status") != "VERIFIED_USER_ACTIVE_DESCRIBE":
+        raise ConfigError("full depth extraction status must be verified explicitly")
     if statistics.get("speed_statistics") != list(SPEED_STATISTIC_NAMES):
         raise ConfigError("speed statistic names do not match approved baseline")
     if statistics.get("vector_statistics") != list(VECTOR_STATISTIC_NAMES):
