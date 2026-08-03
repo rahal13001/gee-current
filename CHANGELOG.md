@@ -48,3 +48,6 @@
   depth, dan material-change evidence user-managed lengkap tercatat.
 - Menetapkan AOI `pilot_001` dan menambahkan T2 offline preflight/dry-run yang
   memvalidasi 29 tanggal Februari 2020 tanpa download atau upload.
+- Menambahkan helper `tools/gee_export_corrected_pilot_assets.js` untuk ekspor
+  tiga aset pilot corrected dengan pemetaan band `b1/b2` menjadi `uo/vo`,
+  timestamp eksplisit, dan asset ID literal yang aman untuk task Code Editor.
