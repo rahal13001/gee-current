@@ -157,3 +157,13 @@ Graphify was refreshed locally again:
 - `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 242 nodes, 295 edges, and 38 communities.
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; all missing, dangling, self-loop, and collapsed-edge counts were `0`.
 - The same 12 JSON/config files produced zero code nodes; they remain outside semantic extraction. No external backend was used.
+
+## Post-T1 descriptive-statistics refresh
+
+After adding the explicit-parameter descriptive-statistics module and tests,
+the offline Graphify map was refreshed once more:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code refresh reported 256 nodes and 350 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 256 nodes, 319 edges, and 38 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; all missing, dangling, self-loop, and collapsed-edge counts were `0`.
+- The 12 JSON/config files remain outside semantic extraction because no LLM backend or network access was used.

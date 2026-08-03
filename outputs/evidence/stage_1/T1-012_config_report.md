@@ -21,12 +21,15 @@
 - `python/common/scientific_formulas.py`
 - `docs/methodology_formulas.md`
 - `outputs/evidence/stage_1/T1_formula_validation.result.txt`
+- `python/common/descriptive_statistics.py`
+- `docs/methodology_statistics.md`
+- `outputs/evidence/stage_1/T1_statistics_validation.result.txt`
 
 ## Gate status
 
 The offline configuration and formula baseline is structurally ready for
 review. Thresholds remain empty/TBD and no scientific value was invented. The
-typed loader, constants/formula modules, data dictionary, architecture
+typed loader, constants/formula/statistics modules, data dictionary, architecture
 manifest, and interactive limits baseline are present and locally validated.
 Exact polygon/mask, benchmarking, the operational pilot, and Tahap 2 remain
 downstream work. No network, authentication, asset existence check, upload, or

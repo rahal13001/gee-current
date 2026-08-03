@@ -26,3 +26,5 @@
   sampai network/authentication diizinkan.
 - Menambahkan modul formula metodologi T1 untuk speed, mean/resultant, bearing,
   persistence, dan perlindungan zero-vector dengan uji sintetis kardinal.
+- Menambahkan baseline statistik deskriptif T1 dengan `ddof` dan metode persentil
+  eksplisit; threshold tetap `TBD` dan belum dipakai pada data operasional.

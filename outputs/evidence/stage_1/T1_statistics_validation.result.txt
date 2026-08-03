@@ -1,0 +1,6 @@
+test_id=T1-STATISTICS-VALIDATION
+status=TESTED
+command=.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+exit_status=0
+evidence=Descriptive statistic tests cover count, mean, extrema, median, ddof-controlled variance/standard deviation, linear percentiles, and invalid-method fail-closed behavior
+limitations=No ddof or percentile method has been selected for operational GLORYS processing; tests use synthetic values only

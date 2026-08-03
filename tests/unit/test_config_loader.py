@@ -8,6 +8,7 @@ from python.common.depth_metadata import (
     extract_depth_levels,
     validate_depth_levels,
 )
+from python.common.descriptive_statistics import StatisticsError, summary_statistics
 from python.common.metadata_guard import compare_metadata
 from python.common.scientific_formulas import FormulaError, resultant_direction, vector_statistics
 
@@ -118,3 +119,19 @@ class ConfigLoaderTests(unittest.TestCase):
         with self.assertRaises(FormulaError):
             vector_statistics((float("nan"),), (0.0,))
         self.assertIsNone(vector_statistics((0.0,), (0.0,))["persistence_index"])
+
+    def test_descriptive_statistics_use_explicit_parameters(self):
+        stats = summary_statistics(
+            (1.0, 2.0, 3.0, 4.0), ddof=0, percentile_method="linear"
+        )
+        self.assertEqual(stats["count"], 4)
+        self.assertEqual(stats["median"], 2.5)
+        self.assertAlmostEqual(stats["variance"], 1.25)
+        self.assertAlmostEqual(stats["p10"], 1.3)
+        self.assertAlmostEqual(stats["p99"], 3.97)
+
+    def test_descriptive_statistics_fail_closed_without_method_choice(self):
+        with self.assertRaises(StatisticsError):
+            summary_statistics((1.0, 2.0), ddof=0, percentile_method="nearest")
+        with self.assertRaises(StatisticsError):
+            summary_statistics((1.0,), ddof=1, percentile_method="linear")

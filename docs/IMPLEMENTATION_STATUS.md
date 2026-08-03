@@ -59,6 +59,6 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 1. Dependency environment telah disetujui dan lock telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.
 2. Monitoring Cloud/EECU, billing, IAM, dan resource aktif telah dicatat melalui proses user-managed; FND-010 `PASS_WITH_NOTES`, tanpa operasi Cloud.
 3. Tahap 0 aktif tetap `IN_PROGRESS`: describe wrapper, depth validator, dan material-change guard sudah diimplementasikan offline; active describe dan real 50-level extraction belum dijalankan.
-4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, loader typed, formula inti, schema, dan guardrail tervalidasi offline; exact polygon/mask, benchmark, dan pilot operasional belum dijalankan.
+4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, loader typed, formula/statistics baseline, schema, dan guardrail tervalidasi offline; ddof/metode persentil, exact polygon/mask, benchmark, dan pilot operasional belum ditetapkan atau dijalankan.
 5. AOI bbox dan asset root sudah dicatat berdasarkan laporan user; keberadaan asset dan write access belum diverifikasi oleh Codex.
 6. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
