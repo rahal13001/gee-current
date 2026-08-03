@@ -23,17 +23,17 @@ Evidence is local/offline unless explicitly stated otherwise. User-reported setu
 
 | requirement_id | description | stage | implementation_file | test_file | status | evidence | notes |
 |---|---|---|---|---|---|---|---|
-| FR-CONF-01 | AOI terpisah dari kode | T1 | — | TST-CONF-001..003 | NOT_STARTED | — | downstream |
-| FR-CONF-02 | Tanggal terpisah | T1 | — | TST-CONF-004..005 | NOT_STARTED | — | downstream |
-| FR-CONF-03 | Kedalaman terkonfigurasi | T1 | — | TST-CONF-006..007 | NOT_STARTED | — | downstream |
-| FR-CONF-04 | Threshold terkonfigurasi | T1 | — | TST-CONF-008..009 | NOT_STARTED | — | open decision |
-| FR-CONF-05 | Project ID/asset root | T1 | — | TST-CONF-010..011 | BLOCKED | — | Project ID open |
-| FR-CONF-06 | Tidak ada credential repo | M0 | `.gitignore`, `tools/security/check_secrets.ps1` | TST-CONF-012 | TESTED | FND-004 evidence | checker is baseline, not full secret service |
-| FR-META-01 | Describe produk/dataset | T0 | — | TST-META-001..003 | BLOCKED | — | network + auth approval |
-| FR-META-02 | Snapshot JSON | T0 | — | TST-META-004 | NOT_STARTED | — | |
-| FR-META-03 | Versi Toolbox | T0 | — | TST-META-005 | BLOCKED | — | dependency/setup |
-| FR-META-04 | Dataset version/part | T0 | — | TST-META-006,010 | BLOCKED | — | active metadata |
-| FR-META-05 | Stop on material metadata change | T0 | — | TST-META-007..009 | NOT_STARTED | — | |
+| FR-CONF-01 | AOI terpisah dari kode | T1 | `config/study_area.json`, `config/pilot_config.schema.json`, `python/common/config_loader.py` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | PASS_WITH_NOTES | User-provided pilot bounding box recorded with `EPSG:4326` and `aoi_id=pilot_001`; 3 offline loader tests pass | Exact polygon provenance remains downstream work |
+| FR-CONF-02 | Tanggal terpisah | T1 | `config/analysis_period.json`, `python/common/config_loader.py` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | PASS_WITH_NOTES | 2015–2025 end-exclusive period and 132/993 expected counts recorded and validated | Runtime period tests remain offline-only |
+| FR-CONF-03 | Kedalaman terkonfigurasi | T1 | `config/depth_selection.json`, `python/common/constants.py` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | PASS_WITH_NOTES | `0.494025 m` and `1e-6 m` tolerance recorded and validated | Full 50-level extraction was not run |
+| FR-CONF-04 | Threshold terkonfigurasi | T1 | `config/statistics.json`, `python/common/config_loader.py` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | PASS_WITH_NOTES | Threshold list remains empty/TBD; no value was invented | Threshold decision remains open |
+| FR-CONF-05 | Project ID/asset root | T1 | `config/local.example.json`, `config/asset_naming.json`, `python/common/config_loader.py` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | PASS_WITH_NOTES | Project `ee-rahal13001` and user-created asset root recorded and prefix-validated | Asset existence/write access was user-reported and not independently verified |
+| FR-CONF-06 | Tidak ada credential repo | M0 | `.gitignore`, `tools/security/check_secrets.ps1`, `tools/validate_m1_config.ps1` | `outputs/evidence/stage_1/T1_config_validation.result.txt` | TESTED | Config validation and repository secret scan suppress values | Checker is baseline, not full secret service |
+| FR-META-01 | Describe produk/dataset | T0 | `docs/audits/COPERNICUS_METADATA_READONLY_CHECK.md` | TST-META-001..003 | PASS_WITH_NOTES | Prior read-only describe audit records matching product and dataset IDs | Not rerun in this session; no authentication or network |
+| FR-META-02 | Snapshot JSON | T0 | `outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json` | TST-META-004 | PASS_WITH_NOTES | Sanitized metadata snapshot recorded from prior audit | Raw response/checksum and immutable snapshot workflow remain downstream |
+| FR-META-03 | Versi Toolbox | T0 | `outputs/evidence/foundation/FND-006_dependency_lock.result.txt` | TST-META-005 | PASS_WITH_NOTES | Approved environment records `copernicusmarine==2.4.1` | Runtime import/version was not rerun |
+| FR-META-04 | Dataset version/part | T0 | `outputs/evidence/stage_0/metadata_snapshot_2026-08-02.json` | TST-META-006,010 | PASS_WITH_NOTES | Metadata version `202311` recorded; part explicitly marked not reported | Part remains unavailable in evidence |
+| FR-META-05 | Stop on material metadata change | T0 | — | TST-META-007..009 | NOT_STARTED | — | Detector not implemented; no material-change claim |
 | FR-DL-01 | 132 bulanan | T3 | — | TST-DL-001..002 | NOT_STARTED | — | no data/download |
 | FR-DL-02 | 33 paket JFM | T3 | — | TST-DL-003..004 | NOT_STARTED | — | no data/download |
 | FR-DL-03 | Retry | T3 | — | TST-DL-005..006 | NOT_STARTED | — | |

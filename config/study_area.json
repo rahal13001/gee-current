@@ -1,0 +1,14 @@
+{
+  "aoi_id": "pilot_001",
+  "source_type": "user_provided_bounding_box",
+  "source_reference": "User-provided coordinates, recorded 2026-08-03",
+  "geometry_type": "bbox",
+  "crs": "EPSG:4326",
+  "west": 129.199367,
+  "east": 133.329067,
+  "south": -2.797902,
+  "north": 1.4928,
+  "boundary_mode": "bbox_only_for_subset",
+  "exact_polygon_status": "NOT_PROVIDED",
+  "water_area_polygon_mask": "PENDING_TAHAP_2"
+}

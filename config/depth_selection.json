@@ -1,0 +1,7 @@
+{
+  "analysis_depth_m": 0.494025,
+  "label": "top_model_layer",
+  "selection_method": "exact_after_verification",
+  "tolerance_m": 0.000001,
+  "full_50_level_extraction_status": "NOT_RUN"
+}

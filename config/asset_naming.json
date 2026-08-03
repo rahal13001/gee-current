@@ -1,0 +1,16 @@
+{
+  "earth_engine_project_id": "ee-rahal13001",
+  "earth_engine_asset_root": "projects/ee-rahal13001/assets/glorys_current",
+  "surface_depth_label": "surface_0p494025m",
+  "paths": {
+    "boundaries": "projects/ee-rahal13001/assets/glorys_current/boundaries",
+    "monthly_collection": "projects/ee-rahal13001/assets/glorys_current/surface_0p494025m/monthly_2015_2025",
+    "daily_jfm_collection": "projects/ee-rahal13001/assets/glorys_current/surface_0p494025m/daily_jfm_2015_2025",
+    "derived": "projects/ee-rahal13001/assets/glorys_current/derived",
+    "validation": "projects/ee-rahal13001/assets/glorys_current/validation"
+  },
+  "asset_name_patterns": {
+    "daily": "glorys12v1_d_YYYYMMDD_d0p494025m",
+    "monthly": "glorys12v1_m_YYYYMM_d0p494025m"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "earth_engine_project_id": "ee-rahal13001",
+  "earth_engine_asset_root": "projects/ee-rahal13001/assets/glorys_current",
+  "copernicus_product_id": "GLOBAL_MULTIYEAR_PHY_001_030",
+  "copernicus_daily_dataset_id": "cmems_mod_glo_phy_my_0.083deg_P1D-m",
+  "copernicus_monthly_dataset_id": "cmems_mod_glo_phy_my_0.083deg_P1M-m",
+  "display_timezone": "Asia/Jayapura"
+}

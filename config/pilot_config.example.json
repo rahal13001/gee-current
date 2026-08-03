@@ -1,0 +1,16 @@
+{
+  "aoi_id": "pilot_001",
+  "aoi_source": "user-provided bounding box",
+  "crs": "EPSG:4326",
+  "west": 129.199367,
+  "east": 133.329067,
+  "south": -2.797902,
+  "north": 1.4928,
+  "earth_engine_project_id": "ee-rahal13001",
+  "earth_engine_asset_root": "projects/ee-rahal13001/assets/glorys_current",
+  "pilot_period": {
+    "start": "2020-02-01",
+    "end": "2020-03-01",
+    "end_inclusive": false
+  }
+}

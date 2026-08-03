@@ -1,0 +1,14 @@
+{
+  "active_aoi_count": 1,
+  "daily_interactive": {
+    "maximum_scope": "one_calendar_year_or_one_JFM",
+    "daily_full_2015_2025": "DISABLED"
+  },
+  "full_period_2015_2025": "PRECOMPUTED_PRODUCTS_ONLY",
+  "scale": "native",
+  "long_current_rose": "PYTHON",
+  "long_percentiles": "PYTHON_OR_BATCH",
+  "tile_scale": "BENCHMARK_IN_TAHAP_2",
+  "parallel_scale": "ONLY_IF_RELEVANT_AND_BENCHMARKED",
+  "status": "DESIGN_BASELINE_NOT_BENCHMARKED"
+}

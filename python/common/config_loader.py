@@ -1,0 +1,143 @@
+"""Strict, offline loader for the M1 configuration baseline.
+
+This module only reads local JSON files. It never initializes Earth Engine,
+contacts Copernicus, starts a task, or writes an asset.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+import json
+from pathlib import Path
+from typing import Any
+
+from .constants import (
+    ANALYSIS_DEPTH_M,
+    DAILY_DATASET_ID,
+    DEPTH_TOLERANCE_M,
+    DISPLAY_TIMEZONE,
+    JFM_DAILY_COUNT,
+    MONTHLY_COUNT,
+    MONTHLY_DATASET_ID,
+    PRODUCT_ID,
+    PROJECT_PERIOD_END_EXCLUSIVE,
+    PROJECT_PERIOD_START,
+)
+
+
+class ConfigError(ValueError):
+    """Raised when a configuration is incomplete or internally inconsistent."""
+
+
+@dataclass(frozen=True)
+class StudyArea:
+    aoi_id: str
+    crs: str
+    west: float
+    east: float
+    south: float
+    north: float
+
+
+@dataclass(frozen=True)
+class ProjectConfig:
+    project_id: str
+    asset_root: str
+
+
+@dataclass(frozen=True)
+class M1Config:
+    study_area: StudyArea
+    project: ProjectConfig
+    period: dict[str, Any]
+    depth: dict[str, Any]
+    statistics: dict[str, Any]
+    asset_naming: dict[str, Any]
+
+
+def _read_json(root: Path, name: str) -> dict[str, Any]:
+    path = root / name
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ConfigError(f"missing configuration: {name}") from exc
+    except json.JSONDecodeError as exc:
+        raise ConfigError(f"invalid JSON: {name}") from exc
+    if not isinstance(data, dict):
+        raise ConfigError(f"configuration must be an object: {name}")
+    return data
+
+
+def _project_from(data: dict[str, Any]) -> ProjectConfig:
+    project_id = data.get("earth_engine_project_id")
+    asset_root = data.get("earth_engine_asset_root")
+    if not isinstance(project_id, str) or not project_id:
+        raise ConfigError("earth_engine_project_id is required")
+    if not isinstance(asset_root, str) or not asset_root:
+        raise ConfigError("earth_engine_asset_root is required")
+    expected_prefix = f"projects/{project_id}/assets/"
+    if not asset_root.startswith(expected_prefix):
+        raise ConfigError("asset root does not belong to configured project")
+    return ProjectConfig(project_id=project_id, asset_root=asset_root)
+
+
+def _study_area_from(data: dict[str, Any]) -> StudyArea:
+    try:
+        area = StudyArea(
+            aoi_id=str(data["aoi_id"]),
+            crs=str(data["crs"]),
+            west=float(data["west"]),
+            east=float(data["east"]),
+            south=float(data["south"]),
+            north=float(data["north"]),
+        )
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ConfigError("study area is incomplete") from exc
+    if area.crs != "EPSG:4326":
+        raise ConfigError("study area must use EPSG:4326")
+    if not (-180 <= area.west < area.east <= 180):
+        raise ConfigError("study area requires west < east within longitude bounds")
+    if not (-90 <= area.south < area.north <= 90):
+        raise ConfigError("study area requires south < north within latitude bounds")
+    return area
+
+
+def load_m1_config(config_root: str | Path) -> M1Config:
+    """Load and validate the offline M1 configuration set."""
+
+    root = Path(config_root)
+    study = _read_json(root, "study_area.json")
+    period = _read_json(root, "analysis_period.json")
+    depth = _read_json(root, "depth_selection.json")
+    statistics = _read_json(root, "statistics.json")
+    asset_naming = _read_json(root, "asset_naming.json")
+    project = _project_from(_read_json(root, "local.example.json"))
+    area = _study_area_from(study)
+
+    if period.get("full_period", {}).get("start") != PROJECT_PERIOD_START:
+        raise ConfigError("project period start does not match approved baseline")
+    if period.get("full_period", {}).get("end_exclusive") != PROJECT_PERIOD_END_EXCLUSIVE:
+        raise ConfigError("project period end does not match approved baseline")
+    if period.get("monthly_count_expected") != MONTHLY_COUNT:
+        raise ConfigError("monthly count does not match approved baseline")
+    if period.get("daily_jfm_count_expected") != JFM_DAILY_COUNT:
+        raise ConfigError("daily JFM count does not match approved baseline")
+
+    depth_value = float(depth.get("analysis_depth_m", -1))
+    if abs(depth_value - ANALYSIS_DEPTH_M) > DEPTH_TOLERANCE_M:
+        raise ConfigError("analysis depth does not match approved baseline")
+    if statistics.get("speed_thresholds_mps") != []:
+        raise ConfigError("speed thresholds must remain empty until scientifically approved")
+    if asset_naming.get("earth_engine_project_id") != project.project_id:
+        raise ConfigError("asset naming project does not match local project")
+    if asset_naming.get("earth_engine_asset_root") != project.asset_root:
+        raise ConfigError("asset naming root does not match local asset root")
+
+    return M1Config(
+        study_area=area,
+        project=project,
+        period=period,
+        depth=depth,
+        statistics=statistics,
+        asset_naming=asset_naming,
+    )

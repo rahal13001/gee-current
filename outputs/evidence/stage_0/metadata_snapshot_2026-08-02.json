@@ -1,0 +1,44 @@
+{
+  "evidence_id": "T0-METADATA-2026-08-02",
+  "status": "PASS_WITH_NOTES",
+  "audit_date": "2026-08-02",
+  "source_report": "docs/audits/COPERNICUS_METADATA_READONLY_CHECK.md",
+  "product_id": "GLOBAL_MULTIYEAR_PHY_001_030",
+  "metadata_version": "202311",
+  "dataset_version_part": "part_not_reported_by_audit",
+  "datasets": {
+    "daily": {
+      "id": "cmems_mod_glo_phy_my_0.083deg_P1D-m",
+      "variables": ["uo", "vo"],
+      "units": "m s-1",
+      "catalog_time_start": "1993-01-01",
+      "catalog_time_end": "2026-06-23",
+      "project_daily_jfm_count": 993
+    },
+    "monthly": {
+      "id": "cmems_mod_glo_phy_my_0.083deg_P1M-m",
+      "variables": ["uo", "vo"],
+      "units": "m s-1",
+      "catalog_time_start": "1993-01-01",
+      "catalog_time_end": "2026-05-01",
+      "project_monthly_count": 132
+    }
+  },
+  "project_period": {
+    "start": "2015-01-01",
+    "end_exclusive": "2026-01-01",
+    "years": 11
+  },
+  "depth": {
+    "catalog_value_m": 0.49402499198913574,
+    "selected_value_m": 0.494025,
+    "tolerance_m": 0.000001,
+    "full_50_level_extraction": "NOT_RUN"
+  },
+  "limitations": [
+    "This is a sanitized metadata summary, not a raw response dump.",
+    "No NetCDF download, decode, checksum, or numeric data validation was performed.",
+    "The full 50-level extraction and material-change detector remain incomplete.",
+    "The audit was read-only and user-managed; no authentication was repeated in this session."
+  ]
+}

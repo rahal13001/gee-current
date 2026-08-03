@@ -126,3 +126,13 @@ After adding Foundation artifacts, the final local Graphify graph was reclustere
 - Final god nodes: Epic FND (8), TST-FND (5), IMPLEMENTATION_PLAN_AND_BACKLOG (4), Tahap 1 (4), Tahap 2 (3), Tahap 2 PASS gate (3), FND-SKILL-001 Graphify (3), FND-SKILL-002 GEEMu (3).
 - One genuinely disconnected generated node remains: `README` (degree 0); it is a user-facing orientation file and is not a dependency. This is recorded as a harmless orphan, not silently ignored.
 - The final report flags 11 weakly connected nodes (degree <= 1), mostly boundary/governance artifacts; no dangling references exist.
+
+## Post-T1 local Graphify refresh
+
+The repository changed after the prior full semantic audit, so Graphify was refreshed locally under the no-network boundary.
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code-only refresh reported 182 nodes and 190 edges.
+- The code-only refresh warned that 10 JSON/config files produced zero AST nodes; they remain pending semantic/document extraction.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; current graph report contains 182 nodes, 180 edges, and 32 communities.
+- A full semantic update was attempted once and exited `1` because 47 changed documents required an LLM backend. No API key, token, or credential was read or requested.
+- The current Graphify output is therefore a partial offline refresh: code relationships are refreshed, while new/changed documentation is not semantically re-extracted. This does not alter the repository status gates.

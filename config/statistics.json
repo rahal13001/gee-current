@@ -1,0 +1,29 @@
+{
+  "speed_statistics": [
+    "count",
+    "mean",
+    "min",
+    "max",
+    "median",
+    "standard_deviation",
+    "variance",
+    "p10",
+    "p25",
+    "p50",
+    "p75",
+    "p90",
+    "p95",
+    "p99"
+  ],
+  "vector_statistics": [
+    "mean_u",
+    "mean_v",
+    "resultant_speed",
+    "resultant_direction",
+    "persistence_index"
+  ],
+  "direction_convention": "towards_clockwise_from_north",
+  "speed_thresholds_mps": [],
+  "minimum_valid_percentage": null,
+  "threshold_status": "TBD_NOT_INVENTED"
+}

@@ -18,3 +18,5 @@
 - Menambahkan mode `-ReadOnly` pada foundation runner dan merekonsiliasi evidence FND-010;
   quota/EECU usage `0`, project tidak terhubung billing account, IAM `Owner`, dan resource inventory
   user-managed dicatat tanpa operasi Cloud.
+- Menambahkan baseline konfigurasi Tahap 0–1: AOI pilot, periode analisis, depth,
+  statistik, asset naming, schema pilot, metadata snapshot, dan validator offline.

@@ -220,8 +220,8 @@ Codex dilarang menyamakan dua status tersebut.
 | Tahap | Status awal |
 |---|---|
 | Foundation | `NOT_STARTED` |
-| Tahap 0 aktif | `NOT_STARTED` |
-| Tahap 1 implementasi config | `NOT_STARTED` |
+| Tahap 0 aktif | `IN_PROGRESS` |
+| Tahap 1 implementasi config | `PASS_WITH_NOTES` |
 | Tahap 2 pilot data asli | `NOT_STARTED` |
 | Tahap 3 otomasi dan batch | `NOT_STARTED` |
 | Tahap 4 | `NOT_STARTED` |
@@ -646,15 +646,15 @@ GOV-01
 | T0-001 | P0 | FR-META-01 | Implementasi wrapper `describe` produk | FND-007 | product JSON | Product ID cocok | `NOT_STARTED` |
 | T0-002 | P0 | FR-META-01 | Implementasi `describe` dataset harian | T0-001 | daily JSON | Dataset ID dan variabel cocok | `NOT_STARTED` |
 | T0-003 | P0 | FR-META-01 | Implementasi `describe` dataset bulanan | T0-001 | monthly JSON | Dataset ID dan variabel cocok | `NOT_STARTED` |
-| T0-004 | P0 | FR-META-02 | Simpan snapshot metadata versioned | T0-002,T0-003 | snapshot folder | immutable dan timestamped | `NOT_STARTED` |
-| T0-005 | P0 | FR-META-03 | Catat versi Toolbox | FND-006 | environment evidence | versi sesuai lock | `NOT_STARTED` |
-| T0-006 | P0 | FR-META-04 | Ekstrak dataset version dan part | T0-002,T0-003 | metadata summary | nilai tidak kosong atau status eksplisit | `NOT_STARTED` |
+| T0-004 | P0 | FR-META-02 | Simpan snapshot metadata versioned | T0-002,T0-003 | snapshot folder | immutable dan timestamped | `PASS_WITH_NOTES` |
+| T0-005 | P0 | FR-META-03 | Catat versi Toolbox | FND-006 | environment evidence | versi sesuai lock | `PASS_WITH_NOTES` |
+| T0-006 | P0 | FR-META-04 | Ekstrak dataset version dan part | T0-002,T0-003 | metadata summary | nilai tidak kosong atau status eksplisit | `PASS_WITH_NOTES` |
 | T0-007 | P0 | Tahap 0 | Ekstrak seluruh 50 depth levels | T0-002 | depth CSV | count=50; top=0,494025 m dalam toleransi | `NOT_STARTED` |
 | T0-008 | P0 | FR-META-05 | Implementasi material-change detector | T0-004,T0-006 | comparison report | perubahan kritis menghentikan pipeline | `NOT_STARTED` |
-| T0-009 | P0 | Tahap 0 | Verifikasi time coverage 2015–2025 | T0-002,T0-003 | coverage report | periode lengkap tersedia | `NOT_STARTED` |
-| T0-010 | P1 | Tahap 0 | Verifikasi unit, grid, format, calendar | T0-002,T0-003 | data dictionary draft | konsisten dengan sumber | `NOT_STARTED` |
-| T0-011 | P1 | GOV-01 | Simpan research-purpose metadata | FND-009 | governance metadata | noncommercial_only=true | `NOT_STARTED` |
-| T0-012 | P0 | Stage gate | Buat laporan Tahap 0 operasional | T0-001..T0-011 | report | keputusan `PASS`/`FAIL` berbukti | `NOT_STARTED` |
+| T0-009 | P0 | Tahap 0 | Verifikasi time coverage 2015–2025 | T0-002,T0-003 | coverage report | periode lengkap tersedia | `PASS_WITH_NOTES` |
+| T0-010 | P1 | Tahap 0 | Verifikasi unit, grid, format, calendar | T0-002,T0-003 | data dictionary draft | konsisten dengan sumber | `PASS_WITH_NOTES` |
+| T0-011 | P1 | GOV-01 | Simpan research-purpose metadata | FND-009 | governance metadata | noncommercial_only=true | `PASS_WITH_NOTES` |
+| T0-012 | P0 | Stage gate | Buat laporan Tahap 0 operasional | T0-001..T0-011 | report | keputusan `PASS`/`FAIL` berbukti | `IN_PROGRESS` |
 
 ---
 
@@ -681,18 +681,18 @@ FR-CONF-01 sampai FR-CONF-06
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T1-001 | P0 | FR-CONF-01 | Buat schema AOI | FND-005 | JSON schema | validasi west/east/south/north | `NOT_STARTED` |
-| T1-002 | P0 | FR-CONF-02 | Buat schema periode | FND-005 | period config | 2015–2025 dan JFM benar | `NOT_STARTED` |
-| T1-003 | P0 | FR-CONF-03 | Buat config depth | T0-007 | depth config | exact target + tolerance | `NOT_STARTED` |
-| T1-004 | P0 | FR-CONF-04 | Buat config threshold dan speed bins | FND-005 | statistics config | kosong/TBD diizinkan; tidak ditebak | `NOT_STARTED` |
-| T1-005 | P0 | FR-CONF-05 | Buat config Project ID dan asset root | FND-009 | local example config | tidak memuat credential | `NOT_STARTED` |
-| T1-006 | P0 | FR-CONF-06 | Validasi tidak ada secret pada config | T1-001..T1-005 | security test | pattern secret gagal validation | `NOT_STARTED` |
-| T1-007 | P0 | Methodology | Implementasi config loader typed | T1-001..T1-005 | Python module | error jelas dan fail closed | `NOT_STARTED` |
-| T1-008 | P0 | Methodology | Implementasi scientific constants | T0-012 | constants module | Product/dataset/formula tidak tersebar | `NOT_STARTED` |
-| T1-009 | P1 | Methodology | Buat data dictionary | T0-010,T1-008 | `docs/data_dictionary.md` | unit, dims, labels jelas | `NOT_STARTED` |
-| T1-010 | P1 | Architecture | Buat architecture manifest | T1-007 | manifest | Python/GEE responsibility jelas | `NOT_STARTED` |
-| T1-011 | P1 | Guardrail | Buat interactive limits config | FND-013 | limits config | nilai default konservatif dan benchmarkable | `NOT_STARTED` |
-| T1-012 | P0 | Stage gate | Buat laporan implementasi Tahap 1 | T1-001..T1-011 | report | config dan schema `PASS` | `NOT_STARTED` |
+| T1-001 | P0 | FR-CONF-01 | Buat schema AOI | FND-005 | JSON schema | validasi west/east/south/north | `PASS_WITH_NOTES` |
+| T1-002 | P0 | FR-CONF-02 | Buat schema periode | FND-005 | period config | 2015–2025 dan JFM benar | `PASS_WITH_NOTES` |
+| T1-003 | P0 | FR-CONF-03 | Buat config depth | T0-007 | depth config | exact target + tolerance | `PASS_WITH_NOTES` |
+| T1-004 | P0 | FR-CONF-04 | Buat config threshold dan speed bins | FND-005 | statistics config | kosong/TBD diizinkan; tidak ditebak | `PASS_WITH_NOTES` |
+| T1-005 | P0 | FR-CONF-05 | Buat config Project ID dan asset root | FND-009 | local example config | tidak memuat credential | `PASS_WITH_NOTES` |
+| T1-006 | P0 | FR-CONF-06 | Validasi tidak ada secret pada config | T1-001..T1-005 | security test | pattern secret gagal validation | `TESTED` |
+| T1-007 | P0 | Methodology | Implementasi config loader typed | T1-001..T1-005 | Python module | error jelas dan fail closed | `PASS_WITH_NOTES` |
+| T1-008 | P0 | Methodology | Implementasi scientific constants | T0-012 | constants module | Product/dataset/formula tidak tersebar | `PASS_WITH_NOTES` |
+| T1-009 | P1 | Methodology | Buat data dictionary | T0-010,T1-008 | `docs/data_dictionary.md` | unit, dims, labels jelas | `PASS_WITH_NOTES` |
+| T1-010 | P1 | Architecture | Buat architecture manifest | T1-007 | manifest | Python/GEE responsibility jelas | `PASS_WITH_NOTES` |
+| T1-011 | P1 | Guardrail | Buat interactive limits config | FND-013 | limits config | nilai default konservatif dan benchmarkable | `PASS_WITH_NOTES` |
+| T1-012 | P0 | Stage gate | Buat laporan implementasi Tahap 1 | T1-001..T1-011 | report | config dan schema `PASS` | `PASS_WITH_NOTES` |
 
 ---
 
@@ -731,7 +731,7 @@ Benchmark B1–B6
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T2-001 | P0 | Setup | Tetapkan AOI pilot terdokumentasi | T1-001 | AOI config | sumber batas dan ID tersedia | `BLOCKED` |
+| T2-001 | P0 | Setup | Tetapkan AOI pilot terdokumentasi | T1-001 | AOI config | sumber batas dan ID tersedia | `PASS_WITH_NOTES` |
 | T2-002 | P0 | FR-META-01 | Jalankan metadata preflight pilot | T0-012,T2-001 | preflight report | metadata konsisten | `NOT_STARTED` |
 | T2-003 | P0 | Pilot | Dry run subset Februari 2020 | T2-002 | request plan | 29 hari dan depth benar | `NOT_STARTED` |
 | T2-004 | P0 | Pilot | Unduh NetCDF pilot asli | T2-003 | raw NetCDF | file dapat dibuka | `NOT_STARTED` |

@@ -1,0 +1,22 @@
+{
+  "architecture": "hybrid_python_gee",
+  "project_id": "ee-rahal13001",
+  "python_responsibilities": [
+    "metadata verification",
+    "NetCDF validation",
+    "heavy statistics",
+    "long current rose",
+    "long percentile analysis",
+    "batch planning"
+  ],
+  "earth_engine_responsibilities": [
+    "selected asset storage",
+    "lightweight AOI filtering",
+    "lightweight statistics",
+    "map preview",
+    "bounded interactive teaching workflow"
+  ],
+  "full_daily_default": "DISABLED",
+  "asset_root": "projects/ee-rahal13001/assets/glorys_current",
+  "status": "DESIGN_BASELINE_NOT_OPERATIONAL"
+}

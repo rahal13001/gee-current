@@ -1,0 +1,6 @@
+test_id=T1-CONFIG-VALIDATION
+status=PASS_WITH_NOTES
+command=powershell -NoProfile -ExecutionPolicy Bypass -File tools/validate_m1_config.ps1 -ConfigRoot config
+exit_status=0
+evidence=AOI ordering, EPSG:4326, project period counts, depth target, asset-root prefix, and empty thresholds validated
+limitations=No network, authentication, asset existence check, or operational computation was performed
