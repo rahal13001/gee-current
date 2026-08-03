@@ -167,3 +167,13 @@ the offline Graphify map was refreshed once more:
 - `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 256 nodes, 319 edges, and 38 communities.
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; all missing, dangling, self-loop, and collapsed-edge counts were `0`.
 - The 12 JSON/config files remain outside semantic extraction because no LLM backend or network access was used.
+
+## Post-T1 configuration-consistency refresh
+
+After hardening the offline T1 loader and PowerShell validator with cross-file
+checks, Graphify was refreshed sequentially to avoid concurrent output writes:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; no additional code-graph delta was detected, and the same 12 JSON/config files produced zero code nodes.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 257 nodes, 323 edges, and 38 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh was offline and used no semantic LLM backend, credential, or network access.

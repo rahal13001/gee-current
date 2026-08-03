@@ -7,6 +7,7 @@
 - Asset root: `projects/ee-rahal13001/assets/glorys_current` (user-reported)
 - Offline validator: `tools/validate_m1_config.ps1`
 - Validator exit status: `0`
+- Cross-file consistency: approved dataset IDs, timezone, period/JFM definition, depth-selection metadata, and statistic field lists are fail-closed validated.
 
 ## Artifacts
 

@@ -12,3 +12,27 @@ PROJECT_PERIOD_END_EXCLUSIVE = "2026-01-01"
 JFM_DAILY_COUNT = 993
 MONTHLY_COUNT = 132
 DISPLAY_TIMEZONE = "Asia/Jayapura"
+SPEED_STATISTIC_NAMES = (
+    "count",
+    "mean",
+    "min",
+    "max",
+    "median",
+    "standard_deviation",
+    "variance",
+    "p10",
+    "p25",
+    "p50",
+    "p75",
+    "p90",
+    "p95",
+    "p99",
+)
+VECTOR_STATISTIC_NAMES = (
+    "mean_u",
+    "mean_v",
+    "resultant_speed",
+    "resultant_direction",
+    "persistence_index",
+)
+DIRECTION_CONVENTION = "towards_clockwise_from_north"

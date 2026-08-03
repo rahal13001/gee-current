@@ -28,3 +28,5 @@
   persistence, dan perlindungan zero-vector dengan uji sintetis kardinal.
 - Menambahkan baseline statistik deskriptif T1 dengan `ddof` dan metode persentil
   eksplisit; threshold tetap `TBD` dan belum dipakai pada data operasional.
+- Memperketat validasi konfigurasi lintas-file untuk dataset IDs, periode JFM,
+  depth selection, daftar statistik, timezone, dan status parameter terbuka.

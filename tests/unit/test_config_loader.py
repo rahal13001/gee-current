@@ -68,6 +68,21 @@ class ConfigLoaderTests(unittest.TestCase):
             with self.assertRaisesRegex(ConfigError, "asset root does not belong"):
                 load_m1_config(destination)
 
+    def test_statistics_and_period_drift_fail_closed(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as folder:
+            destination = Path(folder)
+            self.copy_config(destination)
+            statistics = destination / "statistics.json"
+            text = statistics.read_text(encoding="utf-8").replace(
+                '"threshold_status": "TBD_NOT_INVENTED"',
+                '"threshold_status": "invented"',
+            )
+            statistics.write_text(text, encoding="utf-8")
+            with self.assertRaisesRegex(ConfigError, "threshold status"):
+                load_m1_config(destination)
+
     def test_metadata_guard_accepts_approved_snapshot(self):
         snapshot_path = (
             Path(__file__).parents[2]
