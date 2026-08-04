@@ -1,0 +1,47 @@
+test_id=T3-006
+requirement=FR-DL-03
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/retry_classifier.py
+tests=tests/unit/test_stage3_retry_classifier.py
+
+behavior=
+- Retryable: timeout, transient connection failures, HTTP 408/429/5xx, temporary DNS or service unavailability, partial/incomplete files, and dataset-update messages.
+- Permanent: invalid Dataset ID, absent variable, AOI outside bounds, wrong date, invalid credentials, wrong depth, and unsupported format.
+- Unknown or unclassified errors fail closed to permanent.
+- HTTP status can be supplied explicitly or read from a local exception status attribute; no request is made.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+   exit_status=0
+   result=29 tests passed
+2. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+3. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; 2 documented placeholders classified with values suppressed
+4. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+5. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 408 nodes and 640 edges before clustering
+6. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=408 nodes, 564 edges, 51 communities
+7. graphify diagnose multigraph --graph graphify-out\graph.json --json
+   exit_status=0
+   result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+8. graphify export html
+   exit_status=0
+   result=graphify-out/graph.html regenerated
+
+limitations=
+- T3-006 only classifies errors; T3-007 exponential backoff is implemented as a separate offline calculation module, while executor, attempt scheduling, and download are not implemented.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- The Graphify refresh is code-only; 13 JSON/config files produced zero AST nodes and were not semantically extracted.
+- This evidence does not establish operational retry behavior or live service responses.
+- M0 remains IN_PROGRESS; ADR decisions remain PROPOSED; T3-014 through T3-017 remain NOT_STARTED.

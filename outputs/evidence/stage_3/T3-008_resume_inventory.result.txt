@@ -1,0 +1,49 @@
+test_id=T3-008
+requirement=FR-DL-04
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/resume.py
+tests=tests/unit/test_stage3_resume.py
+
+behavior=
+- `ready_for_stage4` and `skipped_valid` are grouped as completed and are never actionable on resume.
+- `planned`, `preflight_passed`, `downloading`, `downloaded`, `basic_check_passed`, and `checksum_recorded` are grouped as unfinished/continue.
+- `retry_wait` and `failed_retryable` are grouped separately for a future retry executor.
+- `failed_permanent` and `quarantined` require manual review and are not automatically resumed.
+- Duplicate job IDs and unknown statuses fail closed.
+- An existing target file without a validated checksum/status is not automatically skipped; it remains unfinished.
+- Planning is deterministic by job_id and idempotent; no inventory mutation occurs.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+   exit_status=0
+   result=40 tests passed
+2. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+3. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; values were suppressed and 2 documented placeholders were classified
+4. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+5. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 458 nodes and 748 edges before clustering
+6. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=458 nodes, 662 edges, 52 communities
+7. graphify diagnose multigraph --graph graphify-out\graph.json --json
+   exit_status=0
+   result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+8. graphify export html
+   exit_status=0
+   result=graphify-out/graph.html regenerated
+
+limitations=
+- T3-008 is a resume planner only; it does not inspect NetCDF structure, perform basic checks, compute SHA-256, mutate inventory, execute retries, or download data.
+- File-without-checksum behavior is represented by an offline synthetic target and inventory row; actual file validation is downstream T3-009/T4.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- M0 remains IN_PROGRESS; ADR decisions remain PROPOSED; T3-014 through T3-017 remain NOT_STARTED.

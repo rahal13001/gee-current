@@ -37,7 +37,14 @@ var fixed01 = ee.Image(
   .set('source_asset',
     'projects/ee-rahal13001/assets/glorys_current/glorys12v1_daily_surface_20200201')
   .set('nodata_value', -9999)
-  .set('band_mapping', 'b1->uo,b2->vo');
+  .set('band_mapping', 'b1->uo,b2->vo')
+  .set('product_id', 'GLOBAL_MULTIYEAR_PHY_001_030')
+  .set('dataset_id', 'cmems_mod_glo_phy_my_0.083deg_P1D-m')
+  .set('metadata_version', '202311')
+  .set('dataset_part', 'default')
+  .set('depth_m', 0.494025)
+  .set('depth_units', 'm')
+  .set('units', 'm s-1');
 
 Export.image.toAsset({
   image: fixed01,
@@ -63,7 +70,14 @@ var fixed15 = ee.Image(
   .set('source_asset',
     'projects/ee-rahal13001/assets/glorys_current/glorys12v1_daily_surface_20200215')
   .set('nodata_value', -9999)
-  .set('band_mapping', 'b1->uo,b2->vo');
+  .set('band_mapping', 'b1->uo,b2->vo')
+  .set('product_id', 'GLOBAL_MULTIYEAR_PHY_001_030')
+  .set('dataset_id', 'cmems_mod_glo_phy_my_0.083deg_P1D-m')
+  .set('metadata_version', '202311')
+  .set('dataset_part', 'default')
+  .set('depth_m', 0.494025)
+  .set('depth_units', 'm')
+  .set('units', 'm s-1');
 
 Export.image.toAsset({
   image: fixed15,
@@ -89,7 +103,14 @@ var fixed29 = ee.Image(
   .set('source_asset',
     'projects/ee-rahal13001/assets/glorys_current/glorys12v1_daily_surface_20200229')
   .set('nodata_value', -9999)
-  .set('band_mapping', 'b1->uo,b2->vo');
+  .set('band_mapping', 'b1->uo,b2->vo')
+  .set('product_id', 'GLOBAL_MULTIYEAR_PHY_001_030')
+  .set('dataset_id', 'cmems_mod_glo_phy_my_0.083deg_P1D-m')
+  .set('metadata_version', '202311')
+  .set('dataset_part', 'default')
+  .set('depth_m', 0.494025)
+  .set('depth_units', 'm')
+  .set('units', 'm s-1');
 
 Export.image.toAsset({
   image: fixed29,

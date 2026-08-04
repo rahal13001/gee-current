@@ -1,6 +1,6 @@
 # IMPLEMENTATION_STATUS.md
 
-Tanggal baseline: 2026-08-03 (Asia/Jayapura)
+Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 
 ## Active task
 
@@ -29,6 +29,14 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 | Tahap 2 pilot preflight/dry-run | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-002_003_pilot_preflight_and_dry_run.result.txt`; 29-day plan validated offline; user-managed download is recorded in the downstream NetCDF evidence |
 | Tahap 2 pilot NetCDF and core validation | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-004_011_netcdf_validation.result.txt`; user-managed retry contains 29 timestamps and local validation covers variables, units, depth, time, grid, mask, encoding, and range |
 | Tahap 2 GeoTIFF conversion and comparison | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-012_013_geotiff_validation.result.txt`; 29 two-band GeoTIFFs generated and compared to NetCDF within `2.98e-08` maximum absolute difference |
+| Tahap 2 GEE pilot validation | `PASS_WITH_NOTES` | `outputs/evidence/stage_2/T2-014_016_gee_validation.result.txt`; all 29 corrected assets are readable, 116/116 reference-point comparisons pass with zero mask mismatches, B1 covers 29/29 images, and cardinal directions match |
+| Tahap 3 download plan foundation | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-001_003_plan_builder.result.txt`; offline builder produces 132 monthly jobs and 33 JFM jobs/993 timesteps; `daily_full` fails closed |
+| Tahap 3 inventory SQLite/CSV | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-004_inventory_schema.result.txt`, `outputs/evidence/stage_3/T3-005_inventory_csv.result.txt`; SQLite schema/state machine and deterministic CSV export are tested offline |
+| Tahap 3 retry classifier | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-006_retry_classifier.result.txt`; transient/permanent examples and fail-closed unknown errors are tested offline |
+| Tahap 3 retry backoff | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-007_retry_backoff.result.txt`; default delay 10/30/90/270 seconds, cap, dan max attempts diuji offline |
+| Tahap 3 resume inventory | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-008_resume_inventory.result.txt`; completed jobs tidak actionable, pending/retry/manual-review terpilah offline |
+| Tahap 3 SHA-256 checksum | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-009_checksum.result.txt`; hash 64-hex stabil, manifest CSV normatif, atomic write, dan fail-closed guards diuji offline |
+| Tahap 3 quarantine manager | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-010_quarantine.result.txt`; atomic move fixture, reason JSON, collision/no-overwrite, dan path guards diuji offline |
 
 ## Foundation task status
 
@@ -63,8 +71,16 @@ Tanggal baseline: 2026-08-03 (Asia/Jayapura)
 2. Monitoring Cloud/EECU, billing, IAM, dan resource aktif telah dicatat melalui proses user-managed; FND-010 `PASS_WITH_NOTES`, tanpa operasi Cloud.
 3. Tahap 0 active metadata gate `PASS_WITH_NOTES`: user-managed product/daily/monthly describe, real 50-level extraction, dan sanitized material-change comparison sudah dicatat; raw NetCDF validation tetap downstream.
 4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, cross-file loader validation, formula/statistics baseline, schema, dan guardrail tervalidasi offline; ddof/metode persentil, exact polygon/mask, benchmark, dan pilot operasional belum ditetapkan atau dijalankan.
-5. AOI bbox dan asset root sudah dicatat berdasarkan laporan user; keberadaan asset dan write access belum diverifikasi oleh Codex.
-6. Tahap 2 preflight/dry-run `PASS_WITH_NOTES`: 29 tanggal Februari 2020, AOI, dataset, variabel, dan depth tervalidasi offline; NetCDF pilot user-managed sudah divalidasi lokal dengan catatan; GeoTIFF, upload, dan operasi Cloud belum dijalankan.
-7. Tahap 2 NetCDF core validation `PASS_WITH_NOTES`: retry berisi tepat 29 timestep; validasi lintas NetCDF–GeoTIFF dan operasi Earth Engine tetap downstream.
-8. T2-012/T2-013 GeoTIFF conversion and comparison `PASS_WITH_NOTES`: dependency conversion ditambahkan atas persetujuan user; upload dan Earth Engine validation tetap downstream.
-9. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+5. AOI bbox dan asset root sudah dicatat berdasarkan laporan user; keberadaan 29 corrected asset diverifikasi read-only melalui sesi Earth Engine user-managed, sedangkan write access tidak diaudit secara independen.
+6. Tahap 2 preflight/dry-run `PASS_WITH_NOTES`: 29 tanggal Februari 2020, AOI, dataset, variabel, dan depth tervalidasi offline; NetCDF pilot user-managed sudah divalidasi lokal dengan catatan; downstream upload dan GEE validation dicatat terpisah.
+7. Tahap 2 NetCDF core validation `PASS_WITH_NOTES`: retry berisi tepat 29 timestep; seluruh 29 aset corrected telah divalidasi ringan di Earth Engine dan 116/116 titik referensi numerik cocok dengan zero mask mismatch.
+8. T2-012/T2-013 conversion/comparison `PASS_WITH_NOTES`: 29 GeoTIFF cocok dengan NetCDF secara lokal; numeric reference comparison Python–GEE dan B1 sudah dicatat; B2/B3 tetap menunggu aset JFM/full-series.
+9. Tahap 3 plan foundation `PASS_WITH_NOTES`: builder offline untuk 132 monthly job dan 33 daily JFM job/993 timestep tersedia; download, retry, checksum, dan batch tetap belum dijalankan.
+10. T3-004 inventory SQLite `PASS_WITH_NOTES`: `python/inventory.py` menyediakan schema 16 kolom, seed dari plan lokal, dan state machine fail-closed; pengujian offline lulus dengan `unittest`.
+11. T3-005 inventory CSV `PASS_WITH_NOTES`: ekspor deterministik dari SQLite menggunakan penulisan temporary file dan atomic replace; konsistensi header/field/status diuji offline. Batch tetap belum dikerjakan.
+12. T3-006 retry classifier `PASS_WITH_NOTES`: `python/retry_classifier.py` mengklasifikasikan contoh transient/permanent Tahap 3 dan fail-closed untuk kondisi tak dikenal; executor, network, dan download tetap belum dikerjakan.
+13. T3-007 exponential backoff `PASS_WITH_NOTES`: `python/retry_backoff.py` menghasilkan delay 10/30/90/270 detik secara deterministik, mematuhi cap maksimum, dan menolak attempt di luar batas; tidak ada `sleep` atau executor.
+14. T3-008 resume inventory `PASS_WITH_NOTES`: `python/resume.py` tidak mengulang `ready_for_stage4`/`skipped_valid`, memisahkan pending/retry, dan menahan permanent/quarantined untuk manual review; pemeriksaan file aktual tetap downstream.
+15. T3-009 SHA-256 `PASS_WITH_NOTES`: `python/checksum.py` menghasilkan manifest dengan `job_id`, path relatif, ukuran, SHA-256, dan waktu kalkulasi; generator tidak mengubah inventory dan belum menjadi executor download.
+16. T3-010 quarantine `PASS_WITH_NOTES`: `python/quarantine.py` memindahkan file fixture secara atomik ke direktori timestamped, menulis `reason.json`, dan menolak overwrite/collision/path escape; inventory tidak dimutasi otomatis.
+17. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

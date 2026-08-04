@@ -1,0 +1,42 @@
+test_id=T3-005
+requirement=FR-DL-05
+status=PASS_WITH_NOTES
+date=2026-08-04
+scope=Offline deterministic CSV export from local SQLite inventory; no Copernicus Marine or Earth Engine access, authentication, credential read, network, download, daily_full activation, or asset operation
+implementation=python/inventory.py:InventoryStore.export_csv
+tests=tests/unit/test_stage3_inventory.py
+format=CSV header and fields exactly follow INVENTORY_COLUMNS; rows are ordered by job_id via list_jobs
+write_safety=Temporary file in target directory, flush/fsync, then atomic os.replace
+consistency_check=Exported CSV header and all field values match the SQLite row view, including transitioned status
+
+command=.\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+exit_status=0
+result=22 tests passed, including SQLite-CSV header/field/status consistency, T3-004 state machine coverage, plan seeding, and daily_full fail-closed coverage
+
+command=git diff --check
+exit_status=0
+result=No whitespace errors; Git line-ending normalization warnings only
+
+command=powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+exit_status=0
+result=No potential secret indicators found; values were suppressed; two documented placeholders classified
+
+command=powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+exit_status=0
+result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+
+graphify_command=graphify update E:\project\gee-current --no-cluster
+graphify_exit_status=0
+graphify_result=code graph 375 nodes/574 edges; 13 JSON/config files produced zero code nodes and remain outside code-only extraction
+graphify_command_2=graphify cluster-only E:\project\gee-current --no-viz --no-label
+graphify_exit_status_2=0
+graphify_result_2=375 nodes/503 edges/51 communities
+graphify_diagnose=graphify diagnose multigraph --graph graphify-out\graph.json --json
+graphify_diagnose_exit_status=0
+graphify_diagnose_result=missing_endpoints=0,dangling_endpoints=0,self_loops=0,collapsed_endpoint_pairs=0
+graphify_html=graphify export html
+graphify_html_exit_status=0
+
+limitation=CSV was generated only in temporary offline test directories; no persistent operational inventory or download batch was executed
+limitation_2=pytest remains unavailable in the approved .venv and was not installed; unittest is the recorded offline runner
+next_action=Proceed to T3-006 retry classifier only with explicit task scope; keep M0 IN_PROGRESS and ADRs PROPOSED

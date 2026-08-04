@@ -223,7 +223,7 @@ Codex dilarang menyamakan dua status tersebut.
 | Tahap 0 aktif | `PASS_WITH_NOTES` |
 | Tahap 1 implementasi config | `PASS_WITH_NOTES` |
 | Tahap 2 pilot data asli | `IN_PROGRESS` |
-| Tahap 3 otomasi dan batch | `NOT_STARTED` |
+| Tahap 3 otomasi dan batch | `IN_PROGRESS` |
 | Tahap 4 | `NOT_STARTED` |
 | Tahap 5 | `NOT_STARTED` |
 | Tahap 6 | `NOT_STARTED` |
@@ -744,10 +744,10 @@ Benchmark B1–B6
 | T2-011 | P0 | FR-VAL-08 | Pemeriksaan nilai tidak masuk akal | T2-005 | range report | tidak ada sentinel sebagai data valid | `PASS_WITH_NOTES` |
 | T2-012 | P0 | FR-CONV-01..06 | Konversi 29 GeoTIFF dua-band | T2-005..T2-010 | 29 TIFF | float32, mask, CRS, metadata benar | `PASS_WITH_NOTES` |
 | T2-013 | P0 | FR-CONV-07 | Validasi NetCDF–GeoTIFF | T2-012 | comparison CSV | 29/29 dalam abs tolerance 1e-6 | `PASS_WITH_NOTES` |
-| T2-014 | P0 | FR-GEE-01 | Buat/upload tiga aset sampel | T2-013 | asset IDs | band/time/mask terbaca | `NOT_STARTED` |
-| T2-015 | P0 | FR-GEE-02..06 | Uji filter dan statistik AOI ringan | T2-014 | GEE report | nilai cocok Python | `NOT_STARTED` |
-| T2-016 | P0 | FR-VEC-01,02 | Uji arah kardinal Python dan GEE | T2-014 | test result | 0/90/180/270 tepat | `NOT_STARTED` |
-| T2-017 | P0 | B1 | Benchmark 29 hari interaktif | T2-015 | benchmark row | klasifikasi tersedia | `NOT_STARTED` |
+| T2-014 | P0 | FR-GEE-01 | Buat/upload/normalisasi 29 aset pilot | T2-013 | asset IDs | band/time/mask terbaca untuk seluruh pilot | `PASS_WITH_NOTES` |
+| T2-015 | P0 | FR-GEE-02..06 | Uji filter, statistik AOI ringan, dan reference-point comparison | T2-014 | GEE report | nilai referensi cocok Python dalam toleransi; mask konsisten | `PASS_WITH_NOTES` |
+| T2-016 | P0 | FR-VEC-01,02 | Uji arah kardinal Python dan GEE | T2-014 | test result | 0/90/180/270 tepat | `PASS_WITH_NOTES` |
+| T2-017 | P0 | B1 | Benchmark 29 hari interaktif | T2-015 | benchmark row | klasifikasi tersedia | `PASS_WITH_NOTES` |
 | T2-018 | P0 | B2 | Benchmark satu JFM | T2-017 | benchmark row | interactive/batch/Python-only | `NOT_STARTED` |
 | T2-019 | P0 | B3 | Benchmark 993 hari batch/Python | T2-018 | benchmark row | tidak dipaksakan interaktif | `NOT_STARTED` |
 | T2-020 | P1 | B4 | Benchmark produk 11 tahun prahitung | T2-019 | benchmark row | tampil tanpa perhitungan ulang | `NOT_STARTED` |
@@ -784,16 +784,16 @@ FR-META-02 sampai FR-META-05
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T3-001 | P0 | FR-DL-08 | Implementasi dry-run plan | T2-025 | plan output | request tanpa download | `NOT_STARTED` |
-| T3-002 | P0 | FR-DL-01 | Builder 132 job bulanan | T1-002 | plan CSV | count=132 | `NOT_STARTED` |
-| T3-003 | P0 | FR-DL-02 | Builder 33 job JFM | T1-002 | plan CSV | count=33; timesteps=993 | `NOT_STARTED` |
-| T3-004 | P0 | FR-DL-05 | Inventory SQLite schema | FND-005 | SQLite | transaksi dan status valid | `NOT_STARTED` |
-| T3-005 | P0 | FR-DL-05 | Ekspor inventory CSV | T3-004 | CSV | konsisten dengan SQLite | `NOT_STARTED` |
-| T3-006 | P0 | FR-DL-03 | Retry classifier | T3-004 | module/tests | retryable vs permanent benar | `NOT_STARTED` |
-| T3-007 | P0 | FR-DL-03 | Exponential backoff | T3-006 | tests/log | max attempts dibatasi | `NOT_STARTED` |
-| T3-008 | P0 | FR-DL-04 | Resume dari inventory | T3-004 | integration test | job selesai tidak diulang | `NOT_STARTED` |
-| T3-009 | P0 | FR-DL-06 | SHA-256 generator | FND-005 | checksum CSV | semua file memiliki hash | `NOT_STARTED` |
-| T3-010 | P0 | FR-DL-07 | Quarantine manager | T3-004 | quarantine record | file invalid tidak ditimpa | `NOT_STARTED` |
+| T3-001 | P0 | FR-DL-08 | Implementasi dry-run plan | T2-025 | plan output | request tanpa download | `PASS_WITH_NOTES` |
+| T3-002 | P0 | FR-DL-01 | Builder 132 job bulanan | T1-002 | plan CSV | count=132 | `PASS_WITH_NOTES` |
+| T3-003 | P0 | FR-DL-02 | Builder 33 job JFM | T1-002 | plan CSV | count=33; timesteps=993 | `PASS_WITH_NOTES` |
+| T3-004 | P0 | FR-DL-05 | Inventory SQLite schema | FND-005 | `python/inventory.py`, unit tests, evidence | transaksi dan status valid | `PASS_WITH_NOTES` |
+| T3-005 | P0 | FR-DL-05 | Ekspor inventory CSV | T3-004 | `python/inventory.py`, unit tests, evidence | konsisten dengan SQLite | `PASS_WITH_NOTES` |
+| T3-006 | P0 | FR-DL-03 | Retry classifier | T3-004 | `python/retry_classifier.py`, unit tests, evidence | retryable vs permanent benar; unknown fail-closed | `PASS_WITH_NOTES` |
+| T3-007 | P0 | FR-DL-03 | Exponential backoff | T3-006 | `python/retry_backoff.py`, unit tests, evidence | delay 10/30/90/270; max attempts dibatasi | `PASS_WITH_NOTES` |
+| T3-008 | P0 | FR-DL-04 | Resume dari inventory | T3-004 | `python/resume.py`, unit tests, evidence | job selesai tidak diulang; pending/retry terpilah | `PASS_WITH_NOTES` |
+| T3-009 | P0 | FR-DL-06 | SHA-256 generator | FND-005 | `python/checksum.py`, unit tests, evidence | manifest SHA-256 lengkap dan stabil | `PASS_WITH_NOTES` |
+| T3-010 | P0 | FR-DL-07 | Quarantine manager | T3-004 | `python/quarantine.py`, unit tests, evidence | file invalid dipindah atomik; reason JSON; no overwrite | `PASS_WITH_NOTES` |
 | T3-011 | P0 | FR-DL-09 | Guard daily full disabled | T1-007 | test | aktivasi tanpa approval gagal | `NOT_STARTED` |
 | T3-012 | P0 | FR-META-04,05 | Pin version/part pada batch | T0-008 | manifest | perubahan tengah batch menghentikan proses | `NOT_STARTED` |
 | T3-013 | P0 | Security | Sanitasi log unduhan | FND-016 | test log | tidak ada secret | `NOT_STARTED` |

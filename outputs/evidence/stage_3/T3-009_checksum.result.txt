@@ -1,0 +1,49 @@
+test_id=T3-009
+requirement=FR-DL-06
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/checksum.py
+tests=tests/unit/test_stage3_checksum.py
+
+behavior=
+- SHA-256 is calculated from regular local files in bounded chunks and returned as lowercase 64-hex text.
+- Expected SHA-256 values can be verified explicitly; a one-byte fixture mutation returns mismatch and is not valid.
+- The manifest schema follows Tahap 3 section 30.2: job_id, relative_path, size_bytes, sha256, calculated_utc.
+- Job records are processed in deterministic job_id order.
+- Manifest CSV rows are validated, ordered, flushed, fsynced, and atomically replaced.
+- Missing/non-regular files, path escape outside the supplied root, duplicate job IDs, invalid chunk size, and invalid records fail closed.
+- Hashing does not mutate SQLite inventory; a future executor may use records to transition checksum_recorded.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+   exit_status=0
+   result=45 tests passed
+2. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+3. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; values were suppressed and 2 documented placeholders were classified
+4. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+5. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 486 nodes and 846 edges before clustering
+6. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=486 nodes, 742 edges, 52 communities
+7. graphify diagnose multigraph --graph graphify-out\graph.json --json
+   exit_status=0
+   result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+8. graphify export html
+   exit_status=0
+   result=graphify-out/graph.html regenerated
+
+limitations=
+- T3-009 hashes explicitly supplied local files and writes a manifest; it does not download, validate NetCDF structure, mutate inventory, or execute a batch.
+- Mutation detection is represented by stable local fixture behavior and path/file guards; active downloaded datasets are unavailable and were not accessed.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- M0 remains IN_PROGRESS; ADR decisions remain PROPOSED; T3-014 through T3-017 remain NOT_STARTED.

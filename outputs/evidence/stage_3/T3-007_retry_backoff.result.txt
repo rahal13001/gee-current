@@ -1,0 +1,49 @@
+test_id=T3-007
+requirement=FR-DL-03
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/retry_backoff.py
+tests=tests/unit/test_stage3_retry_backoff.py
+
+policy=
+- Default initial delay: 10 seconds.
+- Default multiplier: 3.
+- Default maximum delay: 270 seconds.
+- Default maximum attempts: 4.
+- Deterministic default schedule: attempt 1=10, attempt 2=30, attempt 3=90, attempt 4=270 seconds.
+- Attempt numbers beyond max_attempts raise RetryLimitExceeded; no unbounded retry path is exposed.
+- Policy validation rejects non-positive/non-finite values, multiplier below 1, maximum below initial delay, and invalid max_attempts.
+- The module calculates values only; it does not call sleep, execute a retry, access network, or download data.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+   exit_status=0
+   result=35 tests passed
+2. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+3. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; values were suppressed and 2 documented placeholders were classified
+4. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+5. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 433 nodes and 687 edges before clustering
+6. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=433 nodes, 608 edges, 51 communities
+7. graphify diagnose multigraph --graph graphify-out\graph.json --json
+   exit_status=0
+   result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+8. graphify export html
+   exit_status=0
+   result=graphify-out/graph.html regenerated
+
+limitations=
+- T3-007 provides policy calculation and attempt bounds only; T3-009 checksum, executor integration, network, and download remain pending.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- M0 remains IN_PROGRESS; ADR decisions remain PROPOSED; T3-014 through T3-017 remain NOT_STARTED.

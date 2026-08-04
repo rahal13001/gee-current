@@ -188,6 +188,18 @@ depth-order validator update, Graphify was refreshed sequentially:
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
 - The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
 
+## Current pre-new-chat Graphify refresh
+
+The repository map was refreshed offline on 2026-08-04 after the corrected GEE
+validation, display helper, metadata-complete export scripts, and T3 plan builder
+were added:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 321 nodes and 465 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 321 nodes, 410 edges, and 50 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- The refresh was code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only. It does not independently verify Earth Engine runtime evidence, asset contents, IAM, billing, EECU, or user-managed Copernicus results.
+
 ## Post-T2 GeoTIFF tooling refresh
 
 After adding the reusable NetCDF-to-GeoTIFF converter, cross-validator, and
@@ -229,3 +241,86 @@ sequentially:
 - `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; report contains 260 nodes, 325 edges, and 40 communities.
 - `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
 - The refresh warned that 13 JSON/config files produced zero code nodes; they remain outside semantic extraction because no semantic backend or network access was used.
+
+## Post-T3-004 inventory schema refresh
+
+After adding the offline SQLite inventory schema, state machine, and unit tests,
+Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 372 nodes and 562 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 372 nodes, 496 edges, and 49 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify downloads, NetCDF contents, Earth Engine runtime evidence, or asset writes.
+
+## Post-T3-005 inventory CSV refresh
+
+After adding deterministic SQLite-to-CSV export with atomic replacement, Graphify
+was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 375 nodes and 574 edges.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 375 nodes, 503 edges, and 51 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes; no semantic backend, credential, or network was used.
+
+## Post-T3-006 retry classifier refresh
+
+After adding the offline retry classifier and unit tests, Graphify was refreshed
+code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 408 nodes and 640 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 408 nodes, 564 edges, and 51 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify retry behavior against live services, downloads, NetCDF contents, Earth Engine runtime evidence, or asset writes.
+
+## Post-T3-007 retry backoff refresh
+
+After adding the offline bounded exponential-backoff policy and unit tests,
+Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 433 nodes and 687 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 433 nodes, 608 edges, and 51 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify live retry timing, executor behavior, downloads, NetCDF contents, Earth Engine runtime evidence, or asset writes.
+
+## Post-T3-008 resume planner refresh
+
+After adding the offline inventory resume planner and interruption tests,
+Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 458 nodes and 748 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 458 nodes, 662 edges, and 52 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify filesystem/NetCDF checks, checksum calculation, executor behavior, downloads, Earth Engine runtime evidence, or asset writes.
+
+## Post-T3-009 checksum refresh
+
+After adding the offline SHA-256 generator, manifest writer, and checksum tests,
+Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 486 nodes and 846 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 486 nodes, 742 edges, and 52 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify active file checksums, NetCDF contents, executor behavior, downloads, Earth Engine runtime evidence, or asset writes.
+
+## Post-T3-010 quarantine manager refresh
+
+After adding the offline quarantine manager, reason metadata, and no-overwrite
+tests, Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 512 nodes and 926 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph report contains 512 nodes, 807 edges, and 52 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
+- The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
+- Graphify maps repository structure only; it does not verify active quarantine operations, NetCDF contents, executor behavior, downloads, Earth Engine runtime evidence, or asset writes.

@@ -1,0 +1,48 @@
+test_id=T3-010
+requirement=FR-DL-07
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/quarantine.py
+tests=tests/unit/test_stage3_quarantine.py
+
+behavior=
+- A regular local invalid file is moved with `os.rename` into `data/quarantine/YYYYMMDDTHHMMSSZ/` on the same filesystem.
+- `reason.json` is written with job_id, reason, expected/actual when supplied, source/quarantine paths, and quarantined_utc.
+- Existing timestamp directories and destinations are rejected; source and existing reason metadata remain unchanged.
+- Source path, quarantine root, missing-file, invalid metadata, and non-regular-file conditions fail closed.
+- `quarantine_job` resolves the inventory-declared output path but does not mutate inventory status or checksum.
+- Tests use only temporary directories; no repository data or downloaded asset was moved.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+   exit_status=0
+   result=49 tests passed
+2. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+3. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; values were suppressed and 2 documented placeholders were classified
+4. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+5. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 512 nodes and 926 edges before clustering
+6. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=512 nodes, 807 edges, 52 communities
+7. graphify diagnose multigraph --graph graphify-out\graph.json --json
+   exit_status=0
+   result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+8. graphify export html
+   exit_status=0
+   result=graphify-out/graph.html regenerated
+
+limitations=
+- T3-010 is a local quarantine manager; it does not perform NetCDF validation, update inventory status, retry, download, or run a batch.
+- Atomic move behavior was tested on temporary local files only; active downloaded datasets were not accessed or moved.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- M0 remains IN_PROGRESS; ADR decisions remain PROPOSED; T3-014 through T3-017 remain NOT_STARTED.

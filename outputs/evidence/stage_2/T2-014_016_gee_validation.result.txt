@@ -1,0 +1,111 @@
+test_ids=T2-014,T2-015,T2-016
+status=PASS_WITH_NOTES
+command=Earth Engine Code Editor read-only validation script executed in the user-managed signed-in session
+exit_status=NOT_APPLICABLE_Code_Editor_run
+task_status=SUCCESS
+asset_evidence=29 corrected assets are visible under projects/ee-rahal13001/assets/glorys_current; the three sample assets were the initial corrected validation set
+asset_ids=glorys12v1_daily_surface_20200201_fixed;glorys12v1_daily_surface_20200215_fixed;glorys12v1_daily_surface_20200229_fixed
+filter_evidence=filterDate(2020-02-01,2020-03-01) returned count=29; dates span 2020-02-01 through 2020-02-29
+schema_evidence=All 29 corrected assets read with bands uo,vo; band_mapping=b1->uo,b2->vo
+timestamp_evidence=29 timestamps present; min=1580515200000 (2020-02-01); max=1582934400000 (2020-02-29)
+aoi_stats_evidence=Combined mean/count reducer returned a FeatureCollection with 29 elements for uo,vo,speed over the pilot AOI; each band count min=max=1809
+cardinal_expected=0,90,180,270
+cardinal_observed=0,90,180,270
+correction_note=Initial exploratory GEE cardinal check used reversed atan2 component order and returned 90,0,270,180; the persisted validation script uses the corrected order and matches the expected convention
+limitations=Historical pre-normalization snapshot; current corrected-asset numeric reference comparison and B1 result are recorded below, while B2/B3 remain pending
+benchmark_status=Historical pre-normalization snapshot; current B1/B2/B3 status is recorded below
+network_authentication=User-managed signed-in Earth Engine browser session; no credential or token was read; no new login was performed
+
+full_raw_inventory_date=2026-08-04 Asia/Jayapura
+full_raw_inventory_command=Earth Engine Code Editor read-only inventory script executed in the user-managed signed-in session
+full_raw_inventory_exit_status=NOT_APPLICABLE_Code_Editor_run
+full_raw_asset_count=29
+full_raw_asset_range=2020-02-01 through 2020-02-29; all 29 expected asset IDs were readable
+full_raw_band_signature=b1|b2 occurred 29/29
+full_raw_date_utc_present=0/29
+full_raw_system_time_start_present=0/29
+full_raw_first_asset_metadata=empty for date_utc, system:time_start, and band_mapping
+full_raw_aoi_mean=raw b1=0.04541209731528338; raw b2=-0.04074660826472394; AOI uses config/study_area.json bbox and scale=10000
+full_raw_aoi_pixel_count=b1_min=29; b1_max=29; b2_min=29; b2_max=29
+full_raw_interpretation=All 29 raw assets are readable and contribute to the AOI reducer, but they are not yet normalized to uo/vo or timestamped
+full_raw_limitation=This is not evidence that raw b1/b2 values have been reconciled against Python for all 29 dates; corrected-asset validation is recorded separately below
+next_action=Superseded by corrected full validation, numeric reference comparison, and B1 result recorded below; B2/B3 require larger asset sets
+
+normalization_script=tools/gee_normalize_full_february_2020_assets.js
+normalization_target_scope=26 missing dates; existing corrected dates 2020-02-01, 2020-02-15, and 2020-02-29 were not overwritten
+normalization_task_count=26
+normalization_submission_status=SUBMITTED in user-managed Earth Engine Code Editor session
+normalization_observed_failed_tasks=0 at submission follow-up observation
+normalization_completion=VERIFIED; user reported completion and refresh, followed by read-only corrected-asset validation
+
+corrected_full_validation_date=2026-08-04 Asia/Jayapura
+corrected_full_validation_command=Earth Engine Code Editor read-only validation script tools/gee_validate_corrected_pilot_assets.js executed in the user-managed signed-in session
+corrected_full_validation_exit_status=NOT_APPLICABLE_Code_Editor_run
+corrected_full_inventory_count=29
+corrected_full_filter_count=29
+corrected_full_date_range=2020-02-01 through 2020-02-29
+corrected_full_timestamp_count=29; min=1580515200000; max=1582934400000
+corrected_full_band_signature=uo,vo:29
+corrected_full_band_mapping=b1->uo,b2->vo:29
+corrected_full_aoi_stats_count=29
+corrected_full_aoi_count_range=uo=1809..1809; vo=1809..1809; speed=1809..1809
+corrected_full_cardinal_expected=0,90,180,270
+corrected_full_cardinal_observed=0,90,180,270
+corrected_full_validation_status=PASS_WITH_NOTES
+corrected_full_validation_limitations=Readability, schema, timestamps, metadata mapping, AOI reducer coverage, and cardinal convention are verified; numeric comparison and B1 are recorded below; B2/B3 remain not run because the required larger asset sets are unavailable
+local_node_syntax_check=PASS; node --check tools/gee_normalize_full_february_2020_assets.js and tools/gee_validate_corrected_pilot_assets.js; exit_status=0
+local_compare_script_syntax_check=PASS; node --check tools/gee_compare_pilot_reference_points.js; exit_status=0
+local_git_diff_check=PASS; git diff --check; exit_status=0
+local_secret_scan=PASS; tools/security/check_secrets.ps1 with explicit repository root; exit_status=0; documentation placeholders classified and values suppressed
+local_foundation_check=PASS; powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly; exit_status=0; required files, traceability anchors, and offline secret baseline passed
+local_foundation_check_limitations=Read-only foundation runner checks repository structure and local security baseline; it does not validate Earth Engine task duration/EECU or larger B2/B3 datasets
+
+numeric_reference_date=2026-08-04 Asia/Jayapura
+numeric_reference_command=Earth Engine Code Editor read-only script tools/gee_compare_pilot_reference_points.js; 4 valid native-grid reference points across 29 corrected assets
+numeric_reference_exit_status=NOT_APPLICABLE_Code_Editor_run
+numeric_reference_point_count=4
+numeric_reference_timestamp_count=29
+numeric_reference_comparison_count=116
+numeric_reference_expected_valid_count=116
+numeric_reference_uo_valid_count=116
+numeric_reference_vo_valid_count=116
+numeric_reference_uo_mask_mismatch_count=0
+numeric_reference_vo_mask_mismatch_count=0
+numeric_reference_uo_max_abs_error=1.526010129371258e-8
+numeric_reference_vo_max_abs_error=7.724319461832607e-9
+numeric_reference_uo_mean_abs_error=3.318863309595027e-9
+numeric_reference_vo_mean_abs_error=9.376503022611737e-10
+numeric_reference_status=PASS_WITH_NOTES
+numeric_reference_limitations=Reference-point comparison, not exhaustive all-pixel transfer; the local 29-day GeoTIFF-NetCDF exhaustive comparison remains recorded separately
+
+b1_date=2026-08-04 Asia/Jayapura
+b1_command=Earth Engine Code Editor read-only combined AOI reducer over the 29 corrected February 2020 assets
+b1_status=PASS_WITH_NOTES
+b1_image_count=29
+b1_result_count=29
+b1_count_range=uo=2115..2115;vo=2115..2115;speed=2115..2115
+b1_duration_seconds=NOT_REPORTED_BY_CODE_EDITOR
+b1_eecu=NOT_AVAILABLE_IN_CODE_EDITOR_OUTPUT
+b1_limitations=No task duration or EECU metric was exposed by Code Editor output; no heavy array operation was run
+
+b2_status=NOT_STARTED
+b2_reason=90/91-day JFM GEE asset set is not available; the approved GEE asset set is the 29-day February pilot only
+b3_status=NOT_STARTED
+b3_reason=993-day daily GEE asset set is not available and daily_full remains disabled; the planned route is batch/Python
+
+display_check_date=2026-08-04 Asia/Jayapura
+display_check_command=Earth Engine Code Editor read-only script tools/gee_display_corrected_pilot_asset.js
+display_check_status=PASS_WITH_NOTES
+display_check_asset=projects/ee-rahal13001/assets/glorys_current/glorys12v1_daily_surface_20200201_fixed
+display_check_bands=uo,vo
+display_check_layers=uo;vo;speed;valid_mask;pilot_AOI
+display_check_console_error=none_visible
+display_check_metadata_depth_m=NULL
+display_check_metadata_units=NULL
+display_check_limitation=Display layers and asset readability are confirmed; depth_m and units image properties were not attached during export, while approved depth/unit provenance remains recorded in local configuration and metadata evidence. Existing assets were not overwritten.
+future_export_metadata_fix=tools/gee_export_corrected_pilot_assets.js and tools/gee_normalize_full_february_2020_assets.js now attach product_id, dataset_id, metadata_version, dataset_part, depth_m, depth_units, and units to future exports
+future_export_metadata_fix_syntax=PASS; node --check passed for both export scripts
+existing_asset_metadata_action=MANUAL_REEXPORT_REQUIRED if image-level depth/unit properties are required; no existing asset was overwritten in this task
+decision_reupload=NO_FOR_CURRENT_PILOT; existing corrected assets remain the validated numeric baseline and will not be overwritten
+decision_export_script=GEE export/normalization scripts are corrected for future metadata-complete exports
+decision_speed=DERIVED_IMAGE_BAND; speed is computed as sqrt(uo^2 + vo^2) in m s-1 and is not stored as a redundant permanent asset band

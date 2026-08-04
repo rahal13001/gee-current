@@ -1,0 +1,49 @@
+test_id=T3-004
+requirement=FR-DL-05
+status=PASS_WITH_NOTES
+date=2026-08-04
+scope=Offline SQLite inventory schema and Stage 3 status machine; no Copernicus Marine or Earth Engine access, authentication, credential read, network, download, daily_full activation, or asset operation
+implementation=python/inventory.py
+tests=tests/unit/test_stage3_inventory.py
+schema_table=download_inventory
+schema_columns=job_id,plan_name,dataset_id,year,month,start_datetime,end_datetime,expected_timesteps,output_directory,output_filename,status,attempt_count,checksum,dataset_version,dataset_part,created_utc
+state_count=12
+states=planned,preflight_passed,downloading,downloaded,basic_check_passed,checksum_recorded,skipped_valid,retry_wait,failed_retryable,failed_permanent,quarantined,ready_for_stage4
+state_machine=Python transition validation plus SQLite BEFORE UPDATE trigger; terminal states ready_for_stage4 and failed_permanent have no outgoing transitions
+plan_seed_check=local plan builder rows seeded successfully: monthly_all 132 jobs/132 timesteps; daily_jfm 33 jobs/993 timesteps
+
+command=.\.venv\Scripts\python.exe -m pytest tests/unit/test_stage3_plan_builder.py tests/unit/test_stage3_inventory.py
+exit_status=1
+result=pytest unavailable in approved .venv: No module named pytest
+
+command=.\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py' -v
+exit_status=0
+result=21 tests passed, including schema columns, all valid state paths, illegal transition rejection, direct SQLite trigger rejection, plan seeding, and daily_full fail-closed coverage
+
+command=git diff --check
+exit_status=0
+result=No whitespace errors; Git line-ending normalization warnings only
+
+command=powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+exit_status=0
+result=No potential secret indicators found; values were suppressed; two documented placeholders classified
+
+command=powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+exit_status=0
+result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+
+graphify_command=graphify update E:\project\gee-current --no-cluster
+graphify_exit_status=0
+graphify_result=code graph 372 nodes/562 edges; 13 JSON/config files produced zero code nodes and remain outside code-only extraction
+graphify_command_2=graphify cluster-only E:\project\gee-current --no-viz --no-label
+graphify_exit_status_2=0
+graphify_result_2=372 nodes/496 edges/49 communities
+graphify_diagnose=graphify diagnose multigraph --graph graphify-out\graph.json --json
+graphify_diagnose_exit_status=0
+graphify_diagnose_result=missing_endpoints=0,dangling_endpoints=0,self_loops=0,collapsed_endpoint_pairs=0
+graphify_html=graphify export html
+graphify_html_exit_status=0
+
+limitation=pytest is not installed and was not installed; CSV export T3-005, retry/backoff T3-006/T3-007, resume T3-008, checksum T3-009, quarantine T3-010, and real batch T3-014/T3-015 remain out of scope
+limitation_2=Tests use temporary local SQLite files only; no real download job was executed and no persistent operational inventory was created
+next_action=Implement T3-005 CSV export or the next explicitly approved Stage 3 task; keep M0 IN_PROGRESS and ADRs PROPOSED
