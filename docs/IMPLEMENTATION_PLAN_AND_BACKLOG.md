@@ -794,7 +794,7 @@ FR-META-02 sampai FR-META-05
 | T3-008 | P0 | FR-DL-04 | Resume dari inventory | T3-004 | `python/resume.py`, unit tests, evidence | job selesai tidak diulang; pending/retry terpilah | `PASS_WITH_NOTES` |
 | T3-009 | P0 | FR-DL-06 | SHA-256 generator | FND-005 | `python/checksum.py`, unit tests, evidence | manifest SHA-256 lengkap dan stabil | `PASS_WITH_NOTES` |
 | T3-010 | P0 | FR-DL-07 | Quarantine manager | T3-004 | `python/quarantine.py`, unit tests, evidence | file invalid dipindah atomik; reason JSON; no overwrite | `PASS_WITH_NOTES` |
-| T3-011 | P0 | FR-DL-09 | Guard daily full disabled | T1-007 | test | aktivasi tanpa approval gagal | `NOT_STARTED` |
+| T3-011 | P0 | FR-DL-09 | Guard daily full disabled | T1-007 | `python/02_build_download_plan.py`, unit tests, evidence | aktivasi tanpa approval gagal; tidak ada plan/output | `PASS_WITH_NOTES` |
 | T3-012 | P0 | FR-META-04,05 | Pin version/part pada batch | T0-008 | manifest | perubahan tengah batch menghentikan proses | `NOT_STARTED` |
 | T3-013 | P0 | Security | Sanitasi log unduhan | FND-016 | test log | tidak ada secret | `NOT_STARTED` |
 | T3-014 | P0 | FR-DL-01 | Jalankan batch bulanan | T3-001..T3-013 | 132 NetCDF | seluruh job status valid | `NOT_STARTED` |

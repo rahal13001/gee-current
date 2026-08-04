@@ -1,0 +1,56 @@
+test_id=T3-011
+requirement=FR-DL-09
+status=PASS_WITH_NOTES
+date_utc=2026-08-04
+scope=offline-only
+
+implementation=python/02_build_download_plan.py
+tests=tests/unit/test_stage3_plan_builder.py
+adr=docs/adr/ADR-006-daily-full-nonaktif.md
+
+guard_behavior=
+- `DailyFullDisabledError` is raised before metadata/configuration reads when plan_name is `daily_full`.
+- CLI dry-run returns Python exit status 2 with the disabled/error message.
+- CLI dry-run does not create a plan/output file.
+- `monthly_all` and `daily_jfm` remain enabled and retain their validated counts.
+- ADR-006 remains `PROPOSED`; no approval or activation path was added.
+
+commands=
+1. .\.venv\Scripts\python.exe -m unittest discover -s tests\unit -p 'test_*.py'
+   exit_status=0
+   result=51 tests passed, including builder guard, missing-root guard, and CLI no-output tests
+2. .\.venv\Scripts\python.exe .\python\02_build_download_plan.py --root E:\project\gee-current --plan monthly_all --dry-run
+   exit_status=0
+   result=132 jobs, 132 expected timesteps, status DRY_RUN
+3. .\.venv\Scripts\python.exe .\python\02_build_download_plan.py --root E:\project\gee-current --plan daily_jfm --dry-run
+   exit_status=0
+   result=33 jobs, 993 expected timesteps, status DRY_RUN
+4. .\.venv\Scripts\python.exe .\python\02_build_download_plan.py --root E:\project\gee-current --plan daily_full --dry-run
+   exit_status=2
+   result=error=daily_full is disabled and cannot be planned without approval/change control; no output requested or created
+5. git diff --check
+   exit_status=0
+   result=no whitespace errors; Git reported normal LF-to-CRLF working-copy warnings
+6. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   exit_status=0
+   result=no potential secret indicators; values were suppressed and 2 documented placeholders were classified
+7. powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   exit_status=0
+   result=TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS; TST-FND-005 PASS_WITH_NOTES
+8. graphify update E:\project\gee-current --no-cluster
+   exit_status=0
+   result=code-only graph refresh; 516 nodes and 936 edges before clustering
+9. graphify cluster-only E:\project\gee-current --no-viz --no-label
+   exit_status=0
+   result=516 nodes, 813 edges, 59 communities
+10. graphify diagnose multigraph --graph graphify-out\graph.json --json
+    exit_status=0
+    result=0 missing endpoints, 0 dangling endpoints, 0 self-loops, 0 collapsed endpoint pairs
+11. graphify export html
+    exit_status=0
+    result=graphify-out/graph.html regenerated
+
+limitations=
+- This guard proves fail-closed planning behavior only; it does not authorize or execute daily_full.
+- No Earth Engine/Copernicus authentication, credential inspection, network, download, upload, or asset overwrite was performed.
+- M0 remains IN_PROGRESS; ADR-006 remains PROPOSED; T3-012 through T3-017 remain NOT_STARTED.

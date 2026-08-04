@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Menyelesaikan T3-011 guard `daily_full`: `DailyFullDisabledError` menolak
+  permintaan pada builder sebelum konfigurasi dibaca, CLI mengembalikan exit
+  `2`, dan tidak ada plan/output yang dibuat. ADR-006 tetap `PROPOSED`.
 - Menambahkan T3-010 `python/quarantine.py` untuk memindahkan file invalid
   secara atomik ke direktori timestamped dengan `reason.json`. Collision,
   overwrite, path escape, dan inventory non-mutation diuji offline; manager

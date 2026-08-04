@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 import runpy
+import sys
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
+import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -27,8 +31,43 @@ class Stage3PlanBuilderTests(unittest.TestCase):
         self.assertEqual(february_2020["end_datetime"], "2020-02-29T23:59:59")
 
     def test_daily_full_is_fail_closed(self) -> None:
-        with self.assertRaises(MODULE["PlanError"]):
+        with self.assertRaises(MODULE["DailyFullDisabledError"]):
             MODULE["build_plan"](ROOT, "daily_full")
+
+    def test_daily_full_rejected_before_reading_any_root_configuration(self) -> None:
+        folder = tempfile.TemporaryDirectory()
+        try:
+            with self.assertRaises(MODULE["DailyFullDisabledError"]):
+                MODULE["build_plan"](Path(folder.name), "daily_full")
+        finally:
+            folder.cleanup()
+
+    def test_daily_full_cli_dry_run_returns_error_without_output_file(self) -> None:
+        folder = tempfile.TemporaryDirectory()
+        try:
+            output = Path(folder.name) / "daily_full.csv"
+            original_argv = sys.argv
+            sys.argv = [
+                "02_build_download_plan.py",
+                "--root",
+                str(ROOT),
+                "--plan",
+                "daily_full",
+                "--dry-run",
+                "--output",
+                str(output),
+            ]
+            stdout = StringIO()
+            try:
+                with redirect_stdout(stdout):
+                    exit_status = MODULE["main"]()
+            finally:
+                sys.argv = original_argv
+            self.assertEqual(exit_status, 2)
+            self.assertIn("daily_full is disabled", stdout.getvalue())
+            self.assertFalse(output.exists())
+        finally:
+            folder.cleanup()
 
 
 if __name__ == "__main__":

@@ -56,4 +56,5 @@ sebagai evidence terpisah; Codex tidak menjalankan operasi Cloud atau mengaudit 
 - T3-008 resume planner dan unit tests offline tersedia; completed inventory jobs tidak diulang, retry/pending/manual review dipisahkan, dan file tanpa checksum tidak otomatis di-skip.
 - T3-009 SHA-256 generator dan unit tests offline tersedia; manifest kolom normatif, stable 64-hex hash, path guard, dan atomic CSV write tervalidasi tanpa download atau inventory mutation.
 - T3-010 quarantine manager dan unit tests offline tersedia; atomic move fixture, reason JSON, collision/no-overwrite, path guard, dan inventory non-mutation tervalidasi.
+- T3-011 daily_full guard dan unit tests offline tersedia; builder/CLI fail-closed sebelum konfigurasi dibaca dan tanpa membuat output; ADR-006 tetap `PROPOSED`.
 - M0 tetap `IN_PROGRESS`; status ini tidak mengubah keputusan ADR yang tetap `PROPOSED`.

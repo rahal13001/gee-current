@@ -47,6 +47,13 @@ class PlanError(ValueError):
     """Raised when the approved local configuration cannot build a plan."""
 
 
+class DailyFullDisabledError(PlanError):
+    """Raised whenever the disabled full-daily plan is requested."""
+
+
+DISABLED_PLAN_NAMES = frozenset({"daily_full"})
+
+
 def _read_json(root: Path, relative: str) -> dict[str, Any]:
     path = root / relative
     try:
@@ -140,8 +147,10 @@ def _job(
 def build_plan(root: Path, plan_name: str, *, created_utc: str | None = None) -> list[dict[str, Any]]:
     """Return the requested plan after validating local approved baselines."""
 
-    if plan_name == "daily_full":
-        raise PlanError("daily_full is disabled and cannot be planned without approval/change control")
+    if plan_name in DISABLED_PLAN_NAMES:
+        raise DailyFullDisabledError(
+            "daily_full is disabled and cannot be planned without approval/change control"
+        )
     if plan_name not in {"monthly_all", "daily_jfm"}:
         raise PlanError(f"unsupported plan: {plan_name}")
 
