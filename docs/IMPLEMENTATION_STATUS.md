@@ -40,6 +40,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | Tahap 3 daily_full guard | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-011_daily_full_guard.result.txt`; builder dan CLI menolak daily_full fail-closed tanpa membuat plan/output |
 | Tahap 3 dataset version/part pin | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-012_dataset_pin.result.txt`; pin dari snapshot lokal, batch manifest atomik, dan mismatch version/part fail-closed diuji offline |
 | Tahap 3 log sanitizer | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-013_log_sanitizer.result.txt`; text, event terstruktur, header auth/cookie, token, email, user path, dan exception diuji offline tanpa membaca credential |
+| Tahap 3 T3-014 executor preparation | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-014_executor_preparation.result.txt`; executor lokal membangun plan, menyiapkan/validasi inventory, dan dry-run monthly 132/132 lulus; download aktual tetap disabled dan T3-014 tetap `NOT_STARTED` |
 
 ## Foundation task status
 
@@ -89,5 +90,6 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 17. T3-011 daily_full guard `PASS_WITH_NOTES`: builder menolak `daily_full` sebelum membaca root konfigurasi dan CLI dry-run exit `2` tanpa membuat output; ADR-006 tetap `PROPOSED`.
 18. T3-012 dataset version/part pin `PASS_WITH_NOTES`: `python/dataset_pin.py` mengunci `202311/default` dari snapshot lokal, memvalidasi seluruh job plan/inventory, membuat manifest JSON atomik, dan menghentikan batch saat version/part berubah; tidak ada executor atau download.
 19. T3-013 log sanitizer `PASS_WITH_NOTES`: `python/log_sanitizer.py` meredaksi field sensitif, auth/cookie header, bearer/basic, signed-query values, email, user-profile path, dan exception message; executor unduhan belum ada dan belum dijalankan.
-20. AOI aktif diterapkan menjadi `eastern_indonesia_regional_001` dengan user-provided bbox `N=4.265137, W=122.986190, S=-12.191592, E=143.326183`; `pilot_001` tetap terpisah untuk baseline T2, sedangkan polygon/water mask dan download operasional belum dijalankan.
-21. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+20. T3-014 executor preparation `PASS_WITH_NOTES`: `python/03_download_glorys.py` membangun plan lokal, melakukan dry-run fail-closed, dan dapat seed/validasi inventory lokal tanpa menimpa status. Monthly dry-run menghasilkan 132 job dan 132 expected timesteps; aktualisasi jaringan, autentikasi, dan download belum dilakukan sehingga T3-014 tetap `NOT_STARTED`.
+21. AOI aktif diterapkan menjadi `eastern_indonesia_regional_001` dengan user-provided bbox `N=4.265137, W=122.986190, S=-12.191592, E=143.326183`; `pilot_001` tetap terpisah untuk baseline T2, sedangkan polygon/water mask dan download operasional belum dijalankan.
+22. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

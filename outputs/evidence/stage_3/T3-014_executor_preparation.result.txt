@@ -1,0 +1,38 @@
+T3-014 executor preparation evidence
+Date: 2026-08-05
+Repository: E:\project\gee-current
+Scope: offline preparation only; no Copernicus/Earth Engine authentication, network, credential access, or download
+
+Implementation:
+- Added python/03_download_glorys.py as an offline preparation boundary.
+- Local plan generation delegates to the approved python/02_build_download_plan.py.
+- Optional inventory preparation seeds or validates local SQLite/CSV rows and never overwrites mutable state.
+- Actual execution is fail-closed with exit status 3.
+- daily_full remains rejected by the existing plan-builder guard.
+
+Commands and results:
+1. python -m unittest tests.unit.test_stage3_executor_preparation -v
+   Exit status: 0
+   Result: 4 tests passed; monthly summary, fail-closed actual mode, daily_full rejection,
+   and inventory seed/revalidation passed offline.
+
+2. python .\python\03_download_glorys.py --plan monthly_all --dry-run
+   Exit status: 0
+   Result: job_count=132; expected_timesteps=132; first_job=monthly_2015_01;
+   last_job=monthly_2025_12; authentication=NOT_PERFORMED; network=NOT_PERFORMED;
+   download=NOT_PERFORMED; status=DRY_RUN_READY.
+
+3. python .\python\03_download_glorys.py --plan monthly_all
+   Exit status: 3
+   Result: actual execution rejected fail-closed because network/authentication are disabled
+   in Foundation/M0.
+
+4. python .\python\03_download_glorys.py --plan daily_full --dry-run
+   Exit status: 2
+   Result: daily_full rejected before plan execution.
+
+Limitations:
+- T3-014 actual Copernicus batch has not run and must remain NOT_STARTED.
+- No credentials were read and no network request was attempted.
+- No NetCDF file, checksum, or Stage 4-ready status was produced.
+- Regional AOI remains the approved local bbox; exact water polygon/mask remains pending.

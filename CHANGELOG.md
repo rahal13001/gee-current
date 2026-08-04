@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Menambahkan persiapan executor T3-014 melalui `python/03_download_glorys.py`.
+  Executor hanya membangun plan lokal, melakukan dry-run, serta seed/validasi
+  inventory SQLite/CSV tanpa menimpa status. Mode aktual fail-closed dengan
+  exit `3`; autentikasi, network, dan download belum dilakukan. T3-014 tetap
+  `NOT_STARTED`.
 - Mencatat proposal AOI ekspansi terpisah untuk perairan Papua, Maluku, dan
   Maluku Utara di `docs/AOI_EXPANSION_PROPOSAL.md` dan menerapkan bbox user ke
   `config/study_area.json` sebagai AOI aktif `eastern_indonesia_regional_001`.

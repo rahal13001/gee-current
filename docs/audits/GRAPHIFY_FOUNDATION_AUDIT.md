@@ -373,3 +373,15 @@ study area, Graphify was refreshed code-only on 2026-08-05:
 - `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
 - The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
 - Graphify confirms repository structure only; it does not validate water masks, polygon provenance, file-size estimates, or downstream download execution.
+
+## Post-T3-014 executor preparation refresh
+
+After adding the offline T3-014 executor preparation boundary and its unit
+tests, Graphify was refreshed code-only on 2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 620 nodes and 1,191 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 620 nodes, 1,032 edges, and 55 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
+- The refresh was offline and code-only. No authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
+- Graphify confirms repository structure only; it does not validate a live Copernicus download, NetCDF contents, or Stage 4 readiness.
