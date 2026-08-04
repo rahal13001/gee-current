@@ -1,0 +1,65 @@
+T3-012 Dataset version/part pin
+Date: 2026-08-04 (Asia/Jayapura)
+Status: PASS_WITH_NOTES
+
+Scope:
+- Offline implementation only.
+- The approved local metadata snapshot is the only pin source:
+  outputs/evidence/stage_0/metadata_snapshot_2026-08-03.json.
+- The pinned pair is metadata_version=202311 and dataset_version_part=default.
+- No Earth Engine or Copernicus authentication, network, download, daily_full,
+  upload, overwrite, credential read, or scientific decision change occurred.
+
+Implementation:
+- python/dataset_pin.py provides an immutable DatasetPin, local snapshot loader,
+  per-job and whole-batch validation, structural manifest validation, and atomic
+  JSON manifest writing.
+- python/02_build_download_plan.py derives generated job version/part from the
+  validated local snapshot and validates the complete generated batch.
+- tests/unit/test_stage3_dataset_pin.py covers matching plans, version mismatch,
+  part mismatch, manifest round-trip, manifest mutation, missing snapshot fields,
+  duplicate/empty batch guards, and both supported plans.
+
+Commands and results:
+- python -m unittest discover -s tests\unit -p "test_*.py"
+  exit=0; 60 tests passed.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan monthly_all --dry-run
+  exit=0; 132 jobs and 132 expected timesteps.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan daily_jfm --dry-run
+  exit=0; 33 jobs and 993 expected timesteps.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan daily_full --dry-run
+  exit=2; rejected fail-closed before plan/output creation.
+- git diff --check
+  exit=0; no whitespace errors.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+  exit=0; no potential secret indicators; two documented placeholders only.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+  exit=0; Foundation/security/traceability checks completed; documented placeholders
+  remain classified and no values were printed.
+- graphify update E:\project\gee-current --no-cluster
+  exit=0; 555 nodes and 1,051 edges before clustering.
+- graphify cluster-only E:\project\gee-current --no-viz --no-label
+  exit=0; 555 nodes, 915 edges, and 53 communities.
+- graphify diagnose multigraph --graph graphify-out\graph.json --json
+  exit=0; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed
+  endpoint pairs.
+- graphify export html
+  exit=0; graphify-out\graph.html regenerated.
+
+Acceptance:
+- Matching version/part across the batch is accepted.
+- A changed dataset version or part is rejected before continuation.
+- Persisted manifest version/part mismatch is rejected fail-closed.
+- Existing state-machine definitions, inventory columns, and T3-014..T3-017
+  statuses were not changed.
+
+Limitations:
+- No live metadata was queried; the local snapshot remains user-managed evidence.
+- No download executor exists or was run, so live service-side version rollover
+  remains a downstream operational check.
+- T3-005 CSV export was not changed or required for this task.

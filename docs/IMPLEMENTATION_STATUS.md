@@ -38,6 +38,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | Tahap 3 SHA-256 checksum | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-009_checksum.result.txt`; hash 64-hex stabil, manifest CSV normatif, atomic write, dan fail-closed guards diuji offline |
 | Tahap 3 quarantine manager | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-010_quarantine.result.txt`; atomic move fixture, reason JSON, collision/no-overwrite, dan path guards diuji offline |
 | Tahap 3 daily_full guard | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-011_daily_full_guard.result.txt`; builder dan CLI menolak daily_full fail-closed tanpa membuat plan/output |
+| Tahap 3 dataset version/part pin | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-012_dataset_pin.result.txt`; pin dari snapshot lokal, batch manifest atomik, dan mismatch version/part fail-closed diuji offline |
 
 ## Foundation task status
 
@@ -85,4 +86,5 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 15. T3-009 SHA-256 `PASS_WITH_NOTES`: `python/checksum.py` menghasilkan manifest dengan `job_id`, path relatif, ukuran, SHA-256, dan waktu kalkulasi; generator tidak mengubah inventory dan belum menjadi executor download.
 16. T3-010 quarantine `PASS_WITH_NOTES`: `python/quarantine.py` memindahkan file fixture secara atomik ke direktori timestamped, menulis `reason.json`, dan menolak overwrite/collision/path escape; inventory tidak dimutasi otomatis.
 17. T3-011 daily_full guard `PASS_WITH_NOTES`: builder menolak `daily_full` sebelum membaca root konfigurasi dan CLI dry-run exit `2` tanpa membuat output; ADR-006 tetap `PROPOSED`.
-18. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+18. T3-012 dataset version/part pin `PASS_WITH_NOTES`: `python/dataset_pin.py` mengunci `202311/default` dari snapshot lokal, memvalidasi seluruh job plan/inventory, membuat manifest JSON atomik, dan menghentikan batch saat version/part berubah; tidak ada executor atau download.
+19. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

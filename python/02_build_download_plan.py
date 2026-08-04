@@ -14,6 +14,11 @@ import json
 from pathlib import Path
 from typing import Any, Iterable
 
+try:
+    from dataset_pin import DatasetPin, validate_batch_pin
+except ModuleNotFoundError:
+    from python.dataset_pin import DatasetPin, validate_batch_pin
+
 
 PRODUCT_ID = "GLOBAL_MULTIYEAR_PHY_001_030"
 DAILY_DATASET_ID = "cmems_mod_glo_phy_my_0.083deg_P1D-m"
@@ -85,6 +90,7 @@ def _metadata(root: Path) -> dict[str, Any]:
         raise PlanError("metadata snapshot version does not match approved baseline")
     if snapshot.get("dataset_version_part") != DATASET_PART:
         raise PlanError("metadata snapshot part does not match approved baseline")
+    DatasetPin.from_snapshot(snapshot)
     if snapshot.get("datasets", {}).get("daily", {}).get("id") != DAILY_DATASET_ID:
         raise PlanError("metadata snapshot daily dataset does not match approved baseline")
     if snapshot.get("datasets", {}).get("monthly", {}).get("id") != MONTHLY_DATASET_ID:
@@ -121,6 +127,8 @@ def _job(
     output_directory: str,
     output_filename: str,
     created_utc: str,
+    dataset_version: str,
+    dataset_part: str,
 ) -> dict[str, Any]:
     start_day = date(year, month, 1)
     end_day = _month_end(year, month)
@@ -138,8 +146,8 @@ def _job(
         "status": "planned",
         "attempt_count": 0,
         "checksum": "",
-        "dataset_version": METADATA_VERSION,
-        "dataset_part": DATASET_PART,
+        "dataset_version": dataset_version,
+        "dataset_part": dataset_part,
         "created_utc": created_utc,
     }
 
@@ -154,7 +162,8 @@ def build_plan(root: Path, plan_name: str, *, created_utc: str | None = None) ->
     if plan_name not in {"monthly_all", "daily_jfm"}:
         raise PlanError(f"unsupported plan: {plan_name}")
 
-    _metadata(root)
+    metadata = _metadata(root)
+    pin = DatasetPin.from_snapshot(metadata)
     years, _, _ = _period(root)
     stamp = created_utc or datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     jobs: list[dict[str, Any]] = []
@@ -176,9 +185,11 @@ def build_plan(root: Path, plan_name: str, *, created_utc: str | None = None) ->
                     output_directory=f"data/raw/{output_kind}/{year}",
                     output_filename=f"{filename_prefix}_{year}{month:02d}_d0p494025m.nc",
                     created_utc=stamp,
+                    dataset_version=pin.dataset_version,
+                    dataset_part=pin.dataset_part,
                 )
             )
-    return jobs
+    return list(validate_batch_pin(jobs, pin))
 
 
 def write_csv(jobs: list[dict[str, Any]], path: Path) -> None:

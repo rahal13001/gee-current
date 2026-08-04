@@ -336,3 +336,15 @@ offline tests, Graphify was refreshed code-only on 2026-08-04:
 - `graphify export html`: exit `0`; `graphify-out/graph.html` regenerated.
 - The refresh was offline and code-only. Thirteen JSON/config files produced zero code nodes and remain outside semantic extraction; no semantic backend, credential, or network was used.
 - Graphify maps repository structure only; it does not independently authorize or execute `daily_full`, downloads, Earth Engine runtime actions, or asset writes.
+
+## Post-T3-012 dataset pin refresh
+
+After adding the offline dataset version/part pin validator, batch manifest, and
+unit tests, Graphify was refreshed code-only on 2026-08-04:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 555 nodes and 1,051 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 555 nodes, 915 edges, and 53 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
+- The refresh was offline and code-only; no semantic backend, credential, network, download, Earth Engine runtime action, or asset write was used.
+- Graphify confirms repository structure only; it does not independently verify live metadata stability or execute the downstream batch.

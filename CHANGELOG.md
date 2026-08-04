@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Menyelesaikan T3-012 pin dataset version/part secara offline: `python/dataset_pin.py`
+  mengambil `202311/default` dari snapshot lokal, memvalidasi semua job terhadap pin,
+  dan menulis manifest batch JSON secara atomik. Perubahan version/part di tengah batch
+  ditolak fail-closed; tidak ada executor atau download.
 - Menyelesaikan T3-011 guard `daily_full`: `DailyFullDisabledError` menolak
   permintaan pada builder sebelum konfigurasi dibaca, CLI mengembalikan exit
   `2`, dan tidak ada plan/output yang dibuat. ADR-006 tetap `PROPOSED`.
