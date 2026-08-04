@@ -6,7 +6,8 @@ Status: `READ_ONLY` dengan user-reported runtime smoke; bukan Earth Engine analy
 
 | Decision | Choice | Suggested by local knowledge | Reason | Needs confirmation |
 |---|---|---|---|---|
-| Study area | `pilot_001`, user-defined bbox di `EPSG:4326` | Tidak dipilih otomatis | AOI ditetapkan langsung oleh pengguna; exact polygon/water mask tetap downstream | Tidak untuk pilot bbox |
+| Study area | `eastern_indonesia_regional_001`, user-defined bbox di `EPSG:4326` | Tidak dipilih otomatis | AOI regional diterapkan pada konfigurasi aktif; exact polygon/water mask tetap downstream | Ya |
+| T2 pilot baseline | `pilot_001`, user-defined bbox di `EPSG:4326` | Tidak dipilih otomatis | Konfigurasi pilot dipertahankan terpisah untuk validasi 29 hari | Tidak untuk pilot bbox |
 | Analysis scale | native sekitar 1/12°; nilai final harus mengikuti metadata aktif | Jangan gunakan resolusi lebih halus sebagai akurasi | Menjaga makna grid model | Ya, setelah metadata aktif |
 | Output target | Python validation/products lalu GEE selected assets/light visualization | Hibrida Python–GEE | Sesuai PRD/ADR-004 | Ya |
 
@@ -26,8 +27,10 @@ Status: `READ_ONLY` dengan user-reported runtime smoke; bukan Earth Engine analy
 ## Boundary/performance
 
 Project ID: `ee-rahal13001` (user-reported). Noncommercial registration: user-reported completed.
-AOI pilot bbox sudah ditetapkan user; exact polygon/water mask, export target, exact Earth Engine tier, IAM, billing,
-asset existence/write access, and EECU target remain `UNKNOWN/OPEN`.
+AOI regional bbox sudah diterapkan berdasarkan koordinat user `N=4.265137, W=122.986190,
+S=-12.191592, E=143.326183`; exact polygon/water mask, export target, exact Earth Engine tier,
+IAM, billing, asset existence/write access, and EECU target remain `UNKNOWN/OPEN`.
+Konfigurasi `pilot_001` tetap dipisahkan untuk baseline T2.
 No GEE code, export, asset upload, or batch task was run by Codex. The only runtime evidence is the
 user-reported smoke test `ee.Initialize(project='ee-rahal13001')` plus `ee.Number(1).getInfo()` returning `1`.
 

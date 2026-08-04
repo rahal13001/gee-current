@@ -89,4 +89,5 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 17. T3-011 daily_full guard `PASS_WITH_NOTES`: builder menolak `daily_full` sebelum membaca root konfigurasi dan CLI dry-run exit `2` tanpa membuat output; ADR-006 tetap `PROPOSED`.
 18. T3-012 dataset version/part pin `PASS_WITH_NOTES`: `python/dataset_pin.py` mengunci `202311/default` dari snapshot lokal, memvalidasi seluruh job plan/inventory, membuat manifest JSON atomik, dan menghentikan batch saat version/part berubah; tidak ada executor atau download.
 19. T3-013 log sanitizer `PASS_WITH_NOTES`: `python/log_sanitizer.py` meredaksi field sensitif, auth/cookie header, bearer/basic, signed-query values, email, user-profile path, dan exception message; executor unduhan belum ada dan belum dijalankan.
-20. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+20. AOI aktif diterapkan menjadi `eastern_indonesia_regional_001` dengan user-provided bbox `N=4.265137, W=122.986190, S=-12.191592, E=143.326183`; `pilot_001` tetap terpisah untuk baseline T2, sedangkan polygon/water mask dan download operasional belum dijalankan.
+21. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.

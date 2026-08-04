@@ -13,7 +13,8 @@ assets have been created.
 | Meridional current | `vo` | Unit `m s-1` |
 | Analysis depth | `0.494025 m` | Tolerance `1e-6 m`; full 50 levels not extracted |
 | Project period | `2015-01-01` to `2026-01-01` exclusive | 132 monthly; 993 daily JFM expected |
-| Pilot AOI | `pilot_001` bbox | User-provided; exact polygon not provided |
+| Active study AOI | `eastern_indonesia_regional_001` bbox | User-provided; exact polygon/water mask not provided |
+| T2 pilot AOI | `pilot_001` bbox | User-provided; retained as separate pilot baseline |
 | Direction convention | towards, clockwise from north | Existing Tahap 1 decision |
 | Speed thresholds | empty / `TBD` | No scientific threshold invented |
 | Earth Engine asset root | `projects/ee-rahal13001/assets/glorys_current` | User-reported; not verified by Codex |

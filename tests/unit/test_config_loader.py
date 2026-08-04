@@ -43,13 +43,12 @@ class ConfigLoaderTests(unittest.TestCase):
             destination = Path(folder)
             self.copy_config(destination)
             study = destination / "study_area.json"
-            text = study.read_text(encoding="utf-8").replace(
-                '"west": 129.199367', '"west": 133.329067'
+            study_data = json.loads(study.read_text(encoding="utf-8"))
+            study_data["west"], study_data["east"] = (
+                study_data["east"],
+                study_data["west"],
             )
-            study.write_text(
-                text.replace('"east": 133.329067', '"east": 129.199367'),
-                encoding="utf-8",
-            )
+            study.write_text(json.dumps(study_data), encoding="utf-8")
             with self.assertRaisesRegex(ConfigError, "west < east"):
                 load_m1_config(destination)
 

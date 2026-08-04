@@ -1,0 +1,42 @@
+AOI regional activation — Eastern Indonesia
+Date: 2026-08-05 (Asia/Jayapura)
+Status: APPLIED_WITH_NOTES
+
+Decision:
+- Active study area is now `eastern_indonesia_regional_001` in
+  config/study_area.json.
+- User-provided bbox: west=122.986190, east=143.326183,
+  south=-12.191592, north=4.265137, CRS=EPSG:4326.
+- config/pilot_config.example.json remains `pilot_001` for T2 pilot
+  validation and its 2020-02-01 through 2020-03-01 period.
+- No polygon/water mask was invented; the active regional geometry remains a
+  bbox for preflight/dry-run only.
+
+Commands and results:
+- python -m unittest discover -s tests\unit -p "test_*.py"
+  exit=0; 67 tests passed.
+- python -c "from python.common.config_loader import load_m1_config; from pathlib import Path; c=load_m1_config(Path('config')); print(c.study_area)"
+  exit=0; StudyArea loaded with regional bbox and EPSG:4326.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\validate_m1_config.ps1 -ConfigRoot E:\project\gee-current\config
+  exit=0; M1 configuration PASS_WITH_NOTES.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\prepare_t2_pilot_plan.ps1 -ConfigRoot E:\project\gee-current\config
+  exit=0; pilot_001, 29 dates, and no network/auth/download/upload.
+- graphify update E:\project\gee-current --no-cluster
+  exit=0; 588 nodes and 1,109 edges before clustering.
+- graphify cluster-only E:\project\gee-current --no-viz --no-label
+  exit=0; 588 nodes, 967 edges, and 54 communities.
+- graphify diagnose multigraph --graph graphify-out\graph.json --json
+  exit=0; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0
+  collapsed endpoint pairs.
+- graphify export html
+  exit=0; graphify-out\graph.html regenerated.
+
+Limitations:
+- No authentication, network, download, upload, overwrite, asset access, or
+  live water-mask lookup was performed.
+- T3-014 remains an operational downstream task; this change only activates
+  the local regional bbox for preflight/dry-run configuration.
+- Exact polygon provenance, coastal treatment, storage estimate, and batch
+  approval remain required before actual download.

@@ -248,7 +248,9 @@ Depth:
 0.494025 m
 ```
 
-AOI pilot tetap `BLOCKED` sampai pengguna menetapkannya dan sumber batas dicatat.
+AOI regional aktif sudah ditetapkan sebagai user-provided bbox; polygon batas
+perairan dan water mask tetap `OPEN`. T2 pilot menggunakan konfigurasi
+`pilot_001` terpisah.
 
 ---
 
@@ -1159,7 +1161,7 @@ flowchart TD
 - [x] Memory/performance benchmark tersedia.
 - [x] Security dan governance tersedia.
 - [x] Threshold/speed bins tidak ditebak.
-- [x] AOI pilot tetap blocked sampai diberikan.
+- [x] AOI regional bbox user-provided dicatat; polygon/water mask tetap open.
 - [x] Test network membutuhkan approval.
 - [x] CI tidak membutuhkan secret.
 - [x] Release criteria tersedia.

@@ -1,14 +1,14 @@
 {
-  "aoi_id": "pilot_001",
+  "aoi_id": "eastern_indonesia_regional_001",
   "source_type": "user_provided_bounding_box",
-  "source_reference": "User-provided coordinates, recorded 2026-08-03",
+  "source_reference": "User-provided regional coordinates, recorded 2026-08-05",
   "geometry_type": "bbox",
   "crs": "EPSG:4326",
-  "west": 129.199367,
-  "east": 133.329067,
-  "south": -2.797902,
-  "north": 1.4928,
-  "boundary_mode": "bbox_only_for_subset",
+  "west": 122.986190,
+  "east": 143.326183,
+  "south": -12.191592,
+  "north": 4.265137,
+  "boundary_mode": "bbox_only_for_preflight",
   "exact_polygon_status": "NOT_PROVIDED",
-  "water_area_polygon_mask": "PENDING_TAHAP_2"
+  "water_area_polygon_mask": "PENDING_REGIONAL_AOI"
 }

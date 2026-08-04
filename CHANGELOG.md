@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Mencatat proposal AOI ekspansi terpisah untuk perairan Papua, Maluku, dan
+  Maluku Utara di `docs/AOI_EXPANSION_PROPOSAL.md` dan menerapkan bbox user ke
+  `config/study_area.json` sebagai AOI aktif `eastern_indonesia_regional_001`.
+  `pilot_001` tetap terpisah; polygon perairan, water mask, dan download
+  regional belum ditetapkan atau dijalankan.
 - Menyelesaikan T3-013 sanitizer log offline melalui `python/log_sanitizer.py`.
   Sanitizer meredaksi field sensitif, auth/cookie header, bearer/basic token,
   signed-query values, email, user-profile path, dan exception message tanpa

@@ -360,3 +360,16 @@ refreshed code-only on 2026-08-04:
 - `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
 - The refresh was offline and code-only; no credential, network, download, Earth Engine runtime action, or asset write was used.
 - Graphify confirms code structure only; it does not replace runtime secret-management review or downstream executor testing.
+
+## Post-regional AOI activation refresh
+
+After applying the user-provided Eastern Indonesia regional bbox to the active
+study-area configuration and separating T2 pilot preflight from the active
+study area, Graphify was refreshed code-only on 2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 588 nodes and 1,109 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 588 nodes, 967 edges, and 54 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
+- The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
+- Graphify confirms repository structure only; it does not validate water masks, polygon provenance, file-size estimates, or downstream download execution.

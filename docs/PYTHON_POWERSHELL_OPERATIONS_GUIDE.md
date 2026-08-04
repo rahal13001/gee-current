@@ -49,15 +49,15 @@ trick.
 ### 3.1 Arti koordinat
 
 Di konfigurasi proyek, `west` dan `east` adalah batas barat dan timur, bukan
-indikator hemisfer. AOI pilot saat ini berada pada bujur timur, sehingga nilainya
-positif:
+indikator hemisfer. AOI aktif regional Indonesia Timur berada pada bujur timur,
+sehingga nilainya positif. Konfigurasi `pilot_001` tetap tersedia terpisah untuk T2:
 
 ```json
 {
-  "west": 129.199367,
-  "east": 133.329067,
-  "south": -2.797902,
-  "north": 1.4928,
+  "west": 122.986190,
+  "east": 143.326183,
+  "south": -12.191592,
+  "north": 4.265137,
   "crs": "EPSG:4326"
 }
 ```

@@ -14,7 +14,6 @@ function Read-ConfigJson([string]$Name) {
 }
 
 try {
-    $study = Read-ConfigJson 'study_area.json'
     $pilot = Read-ConfigJson 'pilot_config.example.json'
     $local = Read-ConfigJson 'local.example.json'
     $depth = Read-ConfigJson 'depth_selection.json'
@@ -27,18 +26,18 @@ catch {
 }
 
 $errors = [System.Collections.Generic.List[string]]::new()
-if ($study.aoi_id -ne 'pilot_001' -or $pilot.aoi_id -ne 'pilot_001') {
-    $errors.Add('aoi_id must be pilot_001')
+if ($pilot.aoi_id -ne 'pilot_001') {
+    $errors.Add('pilot aoi_id must be pilot_001')
 }
-if ($study.crs -ne 'EPSG:4326' -or $pilot.crs -ne 'EPSG:4326') {
+if ($pilot.crs -ne 'EPSG:4326') {
     $errors.Add('AOI CRS must be EPSG:4326')
 }
 foreach ($field in @('west', 'east', 'south', 'north')) {
-    if ([double]$study.$field -ne [double]$pilot.$field) {
-        $errors.Add("AOI field mismatch: $field")
+    if ($null -eq $pilot.$field) {
+        $errors.Add("pilot AOI field missing: $field")
     }
 }
-if (-not ([double]$study.west -lt [double]$study.east -and [double]$study.south -lt [double]$study.north)) {
+if (-not ([double]$pilot.west -lt [double]$pilot.east -and [double]$pilot.south -lt [double]$pilot.north)) {
     $errors.Add('AOI bbox ordering is invalid')
 }
 if ($pilot.pilot_period.start -ne '2020-02-01' -or
