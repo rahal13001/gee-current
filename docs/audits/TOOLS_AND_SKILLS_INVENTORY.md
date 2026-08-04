@@ -58,4 +58,5 @@ sebagai evidence terpisah; Codex tidak menjalankan operasi Cloud atau mengaudit 
 - T3-010 quarantine manager dan unit tests offline tersedia; atomic move fixture, reason JSON, collision/no-overwrite, path guard, dan inventory non-mutation tervalidasi.
 - T3-011 daily_full guard dan unit tests offline tersedia; builder/CLI fail-closed sebelum konfigurasi dibaca dan tanpa membuat output; ADR-006 tetap `PROPOSED`.
 - T3-012 dataset version/part pin dan unit tests offline tersedia; `202311/default` diambil dari snapshot lokal, manifest batch JSON ditulis atomik, mismatch di tengah batch ditolak fail-closed, dan Graphify code-only refresh terakhir mencatat 555 node, 915 edge, 53 komunitas, serta diagnostics bersih.
+- T3-013 log sanitizer dan unit tests offline tersedia; sensitive fields, auth/cookie headers, bearer/basic token, signed-query values, email, user-profile path, dan exception message dirahasiakan tanpa credential read; Graphify code-only refresh terakhir mencatat 580 node, 960 edge, 53 komunitas, serta diagnostics bersih; downloader belum dijalankan.
 - M0 tetap `IN_PROGRESS`; status ini tidak mengubah keputusan ADR yang tetap `PROPOSED`.

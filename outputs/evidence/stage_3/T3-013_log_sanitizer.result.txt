@@ -1,0 +1,66 @@
+T3-013 Log sanitizer
+Date: 2026-08-04 (Asia/Jayapura)
+Status: PASS_WITH_NOTES
+
+Scope:
+- Offline sanitizer and synthetic unit tests only.
+- No credential file, environment variable, token, cookie, Earth Engine or
+  Copernicus session, network, download, upload, overwrite, or daily_full was
+  accessed or executed.
+
+Implementation:
+- python/log_sanitizer.py sanitizes caller-supplied text, JSON-like events,
+  rendered JSON events, and exception summaries.
+- Redaction covers sensitive fields, password/token/API-key patterns,
+  Authorization/proxy-authorization/Cookie/Set-Cookie headers, Bearer/Basic
+  values, signed-query values, email addresses, and Windows user-profile paths.
+- Unknown object values are replaced rather than serialized; input events are
+  not mutated; full tracebacks are not emitted by sanitize_exception.
+- Existing T3-014/T3-015 downloader execution remains downstream and was not
+  added or activated.
+
+Commands and results:
+- python -m unittest tests.unit.test_stage3_log_sanitizer
+  exit=0; 7 tests passed.
+- python -m unittest discover -s tests\unit -p "test_*.py"
+  exit=0; 67 tests passed.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan monthly_all --dry-run
+  exit=0; 132 jobs and 132 expected timesteps.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan daily_jfm --dry-run
+  exit=0; 33 jobs and 993 expected timesteps.
+- python .\python\02_build_download_plan.py --root E:\project\gee-current
+  --plan daily_full --dry-run
+  exit=2; rejected fail-closed before plan/output creation.
+- git diff --check
+  exit=0; no whitespace errors.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+  exit=0; no potential secret indicators; two documented placeholders only.
+- powershell -NoProfile -ExecutionPolicy Bypass -File
+  .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+  exit=0; Foundation/security/traceability checks completed; documented
+  placeholders remain classified and no values were printed.
+- graphify update E:\project\gee-current --no-cluster
+  exit=0; 580 nodes and 1,102 edges before clustering.
+- graphify cluster-only E:\project\gee-current --no-viz --no-label
+  exit=0; 580 nodes, 960 edges, and 53 communities.
+- graphify diagnose multigraph --graph graphify-out\graph.json --json
+  exit=0; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed
+  endpoint pairs.
+- graphify export html
+  exit=0; graphify-out\graph.html regenerated.
+
+Acceptance:
+- Synthetic sensitive values are absent from sanitized text and event output.
+- Auth/cookie headers and standalone bearer/basic values are redacted.
+- Signed-query values, email, user-profile path, and exception messages are
+  redacted while safe job/status fields remain available.
+- Structured input is unchanged and unknown objects are not serialized.
+
+Limitations:
+- No live downloader exists yet, so integration with actual service exceptions
+  and provider log handlers remains downstream.
+- Sanitization is a defense-in-depth layer; repository secret scanning and
+  manual review remain required before commit/push.

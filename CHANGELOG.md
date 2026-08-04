@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Menyelesaikan T3-013 sanitizer log offline melalui `python/log_sanitizer.py`.
+  Sanitizer meredaksi field sensitif, auth/cookie header, bearer/basic token,
+  signed-query values, email, user-profile path, dan exception message tanpa
+  membaca credential; executor unduhan belum tersedia atau dijalankan.
 - Menyelesaikan T3-012 pin dataset version/part secara offline: `python/dataset_pin.py`
   mengambil `202311/default` dari snapshot lokal, memvalidasi semua job terhadap pin,
   dan menulis manifest batch JSON secara atomik. Perubahan version/part di tengah batch
