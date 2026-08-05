@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Menyelesaikan WP5-1 conversion pilot lokal melalui `python/conversion.py` dan
+  comparator manifest-scoped. Fixture synthetic 5/5 lulus; satu job T4
+  tervalidasi menghasilkan 29 GeoTIFF float32 dua-band dengan mask, transform,
+  metadata, checksum, dan perbandingan numerik lulus. T5-008 collection
+  conversion tetap menunggu persetujuan.
+
+- Menambahkan audit offline WP5-0 dan kontrak Tahap 5 di
+  `outputs/evidence/stage_5/WP5-0_audit_and_contract.md`. Audit memverifikasi
+  dependency T4-014, schema input/output, dependency lokal, open decisions,
+  serta acceptance criteria; belum ada output produksi dan WP5-1 menunggu
+  persetujuan eksplisit.
+
 - Menyelesaikan Tahap 4 T4-009–T4-014 melalui scope `--scope full`: coverage
   valid, konsistensi `uo`/`vo` mask/time/grid, distribusi per file/periode,
   validated manifest, laporan PASS/FAIL, dan gate Tahap 4. Validasi 165/165

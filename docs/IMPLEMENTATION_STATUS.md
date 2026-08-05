@@ -73,6 +73,22 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | FND-SKILL-001 | `TESTED` | Graphify help, offline extraction, semantic audit, graph diagnostics |
 | FND-SKILL-002 | `TESTED_WITH_NOTES` | skill/reference/template tersedia; runtime smoke dan authentication dilaporkan user, tidak dijalankan ulang oleh Codex |
 
+## Tahap 5 WP5-1
+
+- Active task: `WP5-1` — conversion pilot lokal.
+- Stage: `5` — konversi dan produk Python.
+- Requirement: `FR-CONV-01..07`, `T5-001..T5-007`.
+- Status: `PASS_WITH_NOTES` untuk pilot lokal; T5-008 dan analytics T5 tetap downstream.
+- Evidence: `outputs/evidence/stage_5/WP5-1_conversion_pilot.result.txt`.
+- T4 dependency diverifikasi dari T4-014: 165/165 file PASS, 0 error, 5
+  anomaly non-blocking, manifest downstream ready.
+- Guard coordinate menggunakan toleransi representasi float32 `2e-5` derajat;
+  tidak ada interpolasi/resampling nilai.
+- Open decisions untuk ddof, percentile method, threshold, bins, weighting,
+  reference period, trend, dan geometry tetap TBD/BLOCKED sesuai backlog.
+- M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
+- Approval gate berikutnya: berhenti sebelum WP5-2 sampai persetujuan eksplisit pengguna.
+
 ## Post-M0 follow-up
 
 1. Dependency environment telah disetujui dan lock telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.

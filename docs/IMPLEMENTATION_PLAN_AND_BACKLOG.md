@@ -869,13 +869,13 @@ FR-PY-01 sampai FR-PY-17
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T5-001 | P0 | FR-CONV-01 | Writer float32 | T4-014 | module/test | dtype float32 | `NOT_STARTED` |
-| T5-002 | P0 | FR-CONV-02 | Writer dua band `uo`,`vo` | T5-001 | sample TIFF | order/name benar | `NOT_STARTED` |
-| T5-003 | P0 | FR-CONV-03 | Preserve mask/NoData | T5-001 | mask test | mask cocok NetCDF | `NOT_STARTED` |
-| T5-004 | P0 | FR-CONV-04 | CRS dan affine transform | T4-006 | metadata test | lokasi/orientasi benar | `NOT_STARTED` |
-| T5-005 | P0 | FR-CONV-05 | Guard tanpa resampling | T5-004 | test | tidak ada resampling diam-diam | `NOT_STARTED` |
-| T5-006 | P0 | FR-CONV-06 | Metadata timestep/provenance | T4-012 | metadata | waktu dan source checksum lengkap | `NOT_STARTED` |
-| T5-007 | P0 | FR-CONV-07 | Comparator NetCDF–GeoTIFF | T5-002..T5-006 | CSV report | seluruh timestep dalam toleransi | `NOT_STARTED` |
+| T5-001 | P0 | FR-CONV-01 | Writer float32 | T4-014 | module/test | dtype float32 | `PASS_WITH_NOTES` |
+| T5-002 | P0 | FR-CONV-02 | Writer dua band `uo`,`vo` | T5-001 | sample TIFF | order/name benar | `PASS_WITH_NOTES` |
+| T5-003 | P0 | FR-CONV-03 | Preserve mask/NoData | T5-001 | mask test | mask cocok NetCDF | `PASS_WITH_NOTES` |
+| T5-004 | P0 | FR-CONV-04 | CRS dan affine transform | T4-006 | metadata test | lokasi/orientasi benar | `PASS_WITH_NOTES` |
+| T5-005 | P0 | FR-CONV-05 | Guard tanpa resampling | T5-004 | test | tidak ada resampling diam-diam | `PASS_WITH_NOTES` |
+| T5-006 | P0 | FR-CONV-06 | Metadata timestep/provenance | T4-012 | metadata | waktu dan source checksum lengkap | `PASS_WITH_NOTES` |
+| T5-007 | P0 | FR-CONV-07 | Comparator NetCDF–GeoTIFF | T5-002..T5-006 | JSON comparison report | seluruh timestep dalam toleransi | `PASS_WITH_NOTES` |
 | T5-008 | P0 | Conversion | Konversi source collection inti | T5-007 | 1.125 TIFF timestep atau struktur yang disetujui | seluruh output terinventaris | `NOT_STARTED` |
 
 ## 24.5 Backlog analytics Python

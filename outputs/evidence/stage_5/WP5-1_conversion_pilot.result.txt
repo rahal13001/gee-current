@@ -1,0 +1,155 @@
+WP5-1 Conversion Pilot Lokal - Evidence
+========================================
+
+Task scope
+----------
+- Work package: WP5-1 conversion pilot lokal.
+- Tasks: T5-001..T5-007.
+- Requirements: FR-CONV-01..FR-CONV-07.
+- Decision: PASS_WITH_NOTES.
+- M0 remains IN_PROGRESS; ADR-004, ADR-007, and ADR-009 remain PROPOSED.
+
+Implementation
+--------------
+- python/conversion.py: manifest-scoped NetCDF to GeoTIFF conversion and
+  NetCDF/GeoTIFF comparison.
+- python/04_convert_stage5.py: local conversion CLI.
+- python/05_compare_stage5.py: local comparator CLI.
+- tests/unit/test_stage5_conversion.py: synthetic contract and regression tests.
+
+Acceptance results
+------------------
+- T5-001 writer float32: PASS_WITH_NOTES.
+- T5-002 two bands uo,vo with fixed order: PASS_WITH_NOTES.
+- T5-003 exact common mask and NoData preservation, including valid zero:
+  PASS_WITH_NOTES.
+- T5-004 EPSG:4326 and native north-up affine transform: PASS_WITH_NOTES.
+- T5-005 no silent resampling/reprojection; irregular grids are rejected:
+  PASS_WITH_NOTES.
+- T5-006 timestamp and provenance metadata, source checksum, and config hash:
+  PASS_WITH_NOTES.
+- T5-007 manifest-scoped numeric comparator: PASS_WITH_NOTES.
+
+Commands and recorded results
+-----------------------------
+1. Synthetic and unit regression suite:
+   Command:
+   $env:PYTHONPATH=(Get-Location).Path; & .\.venv\Scripts\python.exe -
+   with the repository custom unittest loader over tests/unit/test_*.py.
+   Exit: 0.
+   Result: 106 tests, 0 failures, 0 errors; OK.
+
+2. Python compilation:
+   Command: .\.venv\Scripts\python.exe -m compileall -q python tests
+   Exit: 0.
+
+3. Dependency consistency:
+   Command: .\.venv\Scripts\python.exe -m pip check
+   Exit: 0; No broken requirements found.
+
+4. Post-work local conversion pilot:
+   Command:
+   .\.venv\Scripts\python.exe python\04_convert_stage5.py
+   --root E:\project\gee-current
+   --manifest outputs\manifests\stage_4_validated_manifest.json
+   --job-id daily_jfm_2020_02
+   --output-dir C:\Users\loka_\AppData\Local\Temp\gee-current-wp5-1-postcheck-20260805154838\geotiff
+   --config-file docs\PRD_GLORYS_Current_Research_Teaching_System.md
+   --config-file docs\SECURITY_AND_SECRETS.md
+   --config-file pyproject.toml
+   --prefix glorys12v1_daily_202002_d0p494025m
+   --report C:\Users\loka_\AppData\Local\Temp\gee-current-wp5-1-postcheck-20260805154838\conversion_report.json
+   --overwrite
+   Exit: 0.
+   Result: 29 GeoTIFF outputs; every output has 39633 valid pixels out of
+   48510; dtype float32; bands uo,vo; CRS EPSG:4326; NoData -9999; resampling
+   none; pipeline version stage5-conversion-pilot-1.0.
+
+5. Post-work local comparator:
+   Command:
+   .\.venv\Scripts\python.exe python\05_compare_stage5.py
+   --root E:\project\gee-current
+   --manifest outputs\manifests\stage_4_validated_manifest.json
+   --job-id daily_jfm_2020_02
+   --geotiff-dir C:\Users\loka_\AppData\Local\Temp\gee-current-wp5-1-postcheck-20260805154838\geotiff
+   --prefix glorys12v1_daily_202002_d0p494025m
+   --report C:\Users\loka_\AppData\Local\Temp\gee-current-wp5-1-postcheck-20260805154838\comparison_report.json
+   --tolerance 1e-6
+   Exit: 0.
+   Result: 29/29 files compared; status PASS_WITH_NOTES; max absolute
+   difference 5.960464477539063e-08; mean 3.6634012982609487e-09;
+   p95 1.4901161193847656e-08; p99 2.60770320892334e-08.
+
+6. Security and foundation checks:
+   Commands:
+   powershell -NoProfile -ExecutionPolicy Bypass -File
+   .\tools\security\check_secrets.ps1 -Root E:\project\gee-current
+   powershell -NoProfile -ExecutionPolicy Bypass -File
+   .\tools\run_foundation_checks.ps1 -Root E:\project\gee-current -ReadOnly
+   Exit: 0 for both.
+   Result: no potential secrets; 2 documentation placeholders classified;
+   TST-FND-001 PASS_WITH_NOTES; TST-FND-002 PASS; TST-SEC-BASELINE PASS;
+   TST-FND-005 PASS_WITH_NOTES.
+
+7. Patch hygiene:
+   Command: git diff --check
+   Exit: 0.
+   Ruff and Black were not available in PATH or the local environment; no
+   installation was attempted under the offline foundation constraint.
+
+9. Independent post-work artifact verification:
+   Command: local Python assertion check over conversion_report.json,
+   comparison_report.json, and the first GeoTIFF with rasterio.
+   Exit: 0.
+   Result: 29 outputs, 29 comparisons, max absolute difference remained
+   5.960464477539063e-08; two float32 bands, EPSG:4326, NoData -9999, and
+   descriptions uo,vo verified.
+
+10. Graphify refresh:
+   Commands:
+   graphify update E:\project\gee-current --no-cluster
+   graphify cluster-only E:\project\gee-current --no-viz --no-label
+   graphify diagnose multigraph --graph
+   E:\project\gee-current\graphify-out\graph.json --undirected
+   graphify export html --graph
+   E:\project\gee-current\graphify-out\graph.json
+   Exit: 0 for all four commands.
+   Result: graph refreshed to 868 nodes and 1650 post-cluster edges, 69
+   communities; multigraph diagnostic reported 0 missing endpoints, 0 dangling
+   endpoints, 0 self-loops, and 0 collapsed endpoint pairs. Graphify warned
+   that 179 source files produced zero nodes; this is recorded as a graph
+   extraction limitation, not a conversion failure.
+
+Provenance and source controls
+------------------------------
+- Validated manifest entry: daily_jfm_2020_02.
+- Source: data/raw/daily_jfm/2020/glorys12v1_daily_202002_d0p494025m.nc.
+- Source SHA-256:
+  02992dad92502db3b1934a0058e2146e01e05451a2c545b8a22dff5a305c5f7a.
+- Pilot config hash:
+  d13fc7dd55ead5b992f88b7ff89e75a84e75d428f9505380f681c555c3505f39.
+- Absolute comparison tolerance: 1e-6.
+- Output GeoTIFFs were written outside the repository under the temporary
+  directory shown above; no production GeoTIFF collection was committed.
+
+Limitations and controls
+------------------------
+- This is one validated T4 job with 29 February 2020 daily timesteps, not the
+  1,125-timestep collection conversion.
+- GRID_TOLERANCE=2e-5 degrees is a coordinate representation guard for native
+  float32 GLORYS coordinates; it does not resample or interpolate.
+- No GEE, Earth Engine, Copernicus Marine, network, authentication, download,
+  upload, dependency installation, or cloud computation was performed.
+- T5-008 remains NOT_STARTED and requires a separate approval/change-control
+  decision. T5-017 threshold and T5-019 current rose remain unchanged.
+- The first postcheck CLI invocation omitted the required --prefix argument
+  and returned exit 2 before pipeline execution; the corrected invocation above
+  returned exit 0 and produced the recorded pilot/comparator results.
+
+Next gate
+---------
+- WP5-1 is complete with PASS_WITH_NOTES for the pilot scope.
+- Recommended commit: one focused commit containing the WP5-1 implementation,
+  tests, documentation updates, and evidence. No commit was created
+  automatically.
+- Do not begin WP5-2/T5-008 collection conversion until explicit user approval.
