@@ -44,6 +44,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | Tahap 3 T3-015 daily JFM | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt`; user-managed daily batch terverifikasi 33/33 job dan 993/993 timestep setelah perbaikan batas waktu daily |
 | Tahap 3 T3-016 reconciliation | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-016_inventory_reconciliation.result.txt`; 165/165 file aktif, 1.125 timestep, 165 checksum cocok, 0 partial, dan tiga quarantine artifact sebagai note |
 | Tahap 3 T3-017 stage gate | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt`; laporan final dan cross-check gate lulus dengan quarantine limitation; T4 belum dimulai |
+| Tahap 4 NetCDF validation | `NOT_STARTED` | Kontrak artifact dan batas operasi local/offline sudah didokumentasikan; belum ada validator atau artifact T4 yang dijalankan |
 
 ## Foundation task status
 

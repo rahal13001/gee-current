@@ -2404,7 +2404,11 @@ Tahap 4 baru boleh dimulai jika:
 14. file bermasalah dikarantina;
 15. inventory konsisten dengan filesystem;
 16. laporan final tersedia;
-17. keputusan `PASS` dicatat.
+17. keputusan `PASS` atau `PASS_WITH_NOTES` dicatat, tanpa blocker kritis.
+
+Jika keputusan `PASS_WITH_NOTES`, seluruh note wajib bersifat non-blocking,
+tercatat di evidence, dan tidak boleh menyamarkan file aktif yang hilang,
+checksum mismatch, partial file, atau kegagalan metadata dasar.
 
 Tahap 4 kemudian memeriksa secara mendalam:
 
@@ -2421,6 +2425,15 @@ Tahap 4 kemudian memeriksa secara mendalam:
 - konsistensi `uo` dan `vo`;
 - nilai tidak masuk akal;
 - metadata produk.
+
+Kontrak artifact Tahap 4 yang disepakati sebelum implementasi:
+
+- validated manifest: `outputs/manifests/stage_4_validated_manifest.json`;
+- laporan per file: `outputs/evidence/stage_4/T4-013_validation_report.result.txt`;
+- laporan gate: `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt`.
+
+Seluruh artifact tersebut dibuat secara lokal. Tidak ada upload atau akses GEE
+selama T4.
 
 ---
 

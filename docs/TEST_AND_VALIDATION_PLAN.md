@@ -566,6 +566,16 @@ Evidence tidak boleh memuat:
 | TST-VAL-019 | L2 | FR-VAL-09 | Laporan PASS lengkap | SYN-NC-NOMINAL | Jalankan validator. | Report memuat test, count, checksum, config hash, status PASS. | report schema test | Otomatis |
 | TST-VAL-020 | L2 | FR-VAL-09 | Laporan FAIL lengkap | SYN-NC-BAD-DEPTH | Jalankan validator. | Report FAIL memuat reason dan downstream_ready=false. | report schema test | Otomatis |
 
+Kontrak output T4 sebelum implementasi:
+
+- `outputs/manifests/stage_4_validated_manifest.json` hanya boleh berisi file
+  yang lulus seluruh validasi T4;
+- `outputs/evidence/stage_4/T4-013_validation_report.result.txt` mencakup
+  hasil PASS/FAIL per file dan alasan kegagalan;
+- `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` mencatat keputusan
+  gate serta limitation;
+- seluruh validasi T4 berjalan lokal/offline dan tidak mengakses GEE.
+
 ## Konversi NetCDF–GeoTIFF
 
 | Test ID | Level | Requirement | Test | Data/fixture | Prosedur ringkas | Expected result | Bukti | Eksekusi |

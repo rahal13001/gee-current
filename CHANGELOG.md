@@ -28,6 +28,9 @@
   gate Tahap 3. Cross-check final menghasilkan 165 job, 1.125 timestep, 165
   checksum cocok, dan keputusan `PASS_WITH_NOTES`; status T3-014 sampai T3-017
   diperbarui setelah instruksi eksplisit user.
+- Menyelaraskan dokumentasi pra-T4: `PASS_WITH_NOTES` diterima hanya untuk note
+  non-blocking, kontrak validated manifest/report ditetapkan, batas T4 local/offline
+  dicatat, dan status Tahap 4 tetap `NOT_STARTED` sampai persetujuan user.
 - Mencatat proposal AOI ekspansi terpisah untuk perairan Papua, Maluku, dan
   Maluku Utara di `docs/AOI_EXPANSION_PROPOSAL.md` dan menerapkan bbox user ke
   `config/study_area.json` sebagai AOI aktif `eastern_indonesia_regional_001`.

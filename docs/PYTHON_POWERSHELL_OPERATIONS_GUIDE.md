@@ -258,7 +258,28 @@ dijalankan; `daily_jfm` adalah batch terpisah T3-015. Kedua batch boleh berbagi
 SQLite inventory yang sama: executor hanya memvalidasi dan memproses job dari
 plan aktif, sementara status plan lain dipertahankan.
 
-## 8. Pola kerja Earth Engine setelah file siap
+## 8. Batas operasi Tahap 4 — belum dimulai
+
+Tahap 4 adalah validasi lokal terhadap 165 file NetCDF yang sudah direkonsiliasi
+oleh T3. Inputnya adalah `data/raw/monthly`, `data/raw/daily_jfm`, SQLite
+inventory, checksum, konfigurasi AOI/depth, dataset pin, dan evidence T3-017.
+
+Validator T4 akan memeriksa variabel/dimensi, unit, depth, waktu, mask/fill,
+orientasi koordinat, encoding, plausibility, coverage, serta konsistensi
+`uo`/`vo`. Nilai tidak boleh dikoreksi diam-diam. File yang gagal hanya boleh
+ditandai dan ditahan dari manifest tervalidasi.
+
+Artifact yang direncanakan:
+
+- `outputs/manifests/stage_4_validated_manifest.json`;
+- `outputs/evidence/stage_4/T4-013_validation_report.result.txt`;
+- `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt`.
+
+Belum ada command T4 yang dijalankan dan belum ada artifact T4 yang dibuat.
+T4 tidak login, tidak mengakses network, tidak mengubah raw NetCDF, dan tidak
+menyentuh GEE Code Editor. Mulai T4 memerlukan persetujuan eksplisit user.
+
+## 9. Pola kerja Earth Engine setelah file siap
 
 Operasi asset adalah operasi cloud dan dilakukan hanya setelah user menyetujui
 target, periode, AOI, dan nama asset. Untuk setiap tanggal, catat:
@@ -279,7 +300,7 @@ Untuk pilot saat ini, jangan mengubah struktur temporal 29 tanggal menjadi satu
 asset bertile. Setiap tanggal harus tetap dapat dibedakan sebagai image asset
 atau item koleksi yang sesuai.
 
-## 9. Urutan kerja yang disarankan
+## 10. Urutan kerja yang disarankan
 
 ```text
 ubah config

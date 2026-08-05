@@ -838,9 +838,9 @@ FR-VAL-01 sampai FR-VAL-09
 | T4-009 | P0 | Data quality | Valid pixel count dan coverage | T4-005 | coverage table | count/percentage tercatat | `NOT_STARTED` |
 | T4-010 | P0 | Data quality | Konsistensi `uo`–`vo` mask/time/grid | T4-001..T4-006 | comparison | dimensi/coords identik | `NOT_STARTED` |
 | T4-011 | P1 | Data quality | Distribusi per file dan periode | T4-008 | QC tables | perubahan ekstrem terflag | `NOT_STARTED` |
-| T4-012 | P0 | Pipeline | Buat validated manifest | T4-001..T4-011 | manifest | hanya PASS masuk downstream | `NOT_STARTED` |
-| T4-013 | P0 | FR-VAL-09 | Laporan PASS/FAIL per file | T4-012 | reports | semua 165 tercakup | `NOT_STARTED` |
-| T4-014 | P0 | Stage gate | Laporan Tahap 4 | T4-013 | final report | tidak ada blocker kritis | `NOT_STARTED` |
+| T4-012 | P0 | Pipeline | Buat validated manifest | T4-001..T4-011 | `outputs/manifests/stage_4_validated_manifest.json` | hanya PASS masuk downstream | `NOT_STARTED` |
+| T4-013 | P0 | FR-VAL-09 | Laporan PASS/FAIL per file | T4-012 | `outputs/evidence/stage_4/T4-013_validation_report.result.txt` | semua 165 tercakup | `NOT_STARTED` |
+| T4-014 | P0 | Stage gate | Laporan Tahap 4 | T4-013 | `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` | tidak ada blocker kritis | `NOT_STARTED` |
 
 ---
 
