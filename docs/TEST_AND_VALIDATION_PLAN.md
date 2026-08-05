@@ -498,7 +498,7 @@ Evidence tidak boleh memuat:
 | TST-CONF-005 | L1 | FR-CONF-02 | JFM dan tahun kabisat | CFG-PERIOD-JFM | Bangun JFM 2015–2025. | 33 paket dan 993 hari; 2016/2020/2024 memiliki 91 hari. | pytest | Otomatis |
 | TST-CONF-006 | L1 | FR-CONF-03 | Depth target valid | CFG-DEPTH-VALID | Load depth 0.494025 dan tolerance 1e-6. | Diterima dan label top_model_layer tersedia. | pytest | Otomatis |
 | TST-CONF-007 | L1 | FR-CONF-03 | Depth berbeda ditolak | CFG-DEPTH-MISMATCH | Gunakan depth di luar tolerance. | Fail closed atau status mismatch eksplisit. | pytest | Otomatis |
-| TST-CONF-008 | L1 | FR-CONF-04 | Threshold dapat kosong | CFG-THRESHOLD-TBD | Load threshold list kosong. | Pipeline fungsi non-threshold tetap berjalan; fungsi exceedance berstatus BLOCKED/TBD. | pytest | Otomatis |
+| TST-CONF-008 | L1 | FR-CONF-04 | Threshold diturunkan secara eksplisit | CFG-THRESHOLD-P90 | Load metode global AOI P90, threshold list literal tetap kosong, dan minimum valid area 0,95. | Config diterima; exceedance menggunakan P90 per analysis plan dan operator `>`. | pytest | Otomatis |
 | TST-CONF-009 | L1 | FR-CONF-04 | Threshold monoton | CFG-THRESHOLD-BAD | Load bins tidak naik atau negatif tanpa izin. | Config ditolak dengan pesan jelas. | pytest | Otomatis |
 | TST-CONF-010 | L1 | FR-CONF-05 | Project dan asset root konsisten | CFG-GEE-VALID | Load Project ID dan asset root yang berasal dari project sama. | Diterima; root mengikuti projects/<id>/assets/... | pytest | Otomatis |
 | TST-CONF-011 | L1 | FR-CONF-05 | Project mismatch ditolak | CFG-GEE-MISMATCH | Project ID berbeda dari prefix asset root. | Fail closed sebelum operasi GEE. | pytest | Otomatis |

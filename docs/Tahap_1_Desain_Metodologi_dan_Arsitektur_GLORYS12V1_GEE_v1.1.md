@@ -736,11 +736,16 @@ Penggunaan CV hanya tepat jika:
 
 Ambang tidak boleh ditetapkan sebagai kriteria keselamatan atau teknik tanpa dasar.
 
-Sistem menyediakan konfigurasi:
+Sistem menyediakan konfigurasi. Untuk T5-017, keputusan yang telah disahkan
+menggunakan threshold relatif P90 dari kecepatan resultan vektor rata-rata
+spasial AOI, terpisah per `analysis_plan_id`:
 
 ```json
 {
-  "speed_thresholds_mps": []
+  "speed_thresholds_mps": [],
+  "threshold_method": "relative_high_current_threshold_global_p90",
+  "threshold_scope": "global_aoi_per_analysis_plan_id",
+  "threshold_status": "RESOLVED_GLOBAL_AOI_P90"
 }
 ```
 
@@ -752,7 +757,8 @@ Ambang dapat berasal dari:
 - standar teknis yang relevan;
 - distribusi data, misalnya persentil.
 
-Sumber ambang harus dicatat.
+Sumber/metode ambang harus dicatat. Ambang ini adalah metodologi penelitian,
+bukan ambang keselamatan, bahaya, atau operasional.
 
 ### 14.5 Persentase kejadian
 
@@ -1172,13 +1178,15 @@ valid_percentage
 
 ### 20.3 Aturan minimum
 
-Nilai minimum kelengkapan belum ditetapkan secara final sebelum pilot.
+Nilai minimum kelengkapan yang disahkan untuk T5-017/T5-019 adalah 0,95
+terhadap static expected-ocean mask.
 
 Konfigurasi:
 
 ```json
 {
-  "minimum_valid_percentage": null
+  "minimum_valid_percentage": 0.95,
+  "minimum_valid_area_fraction": 0.95
 }
 ```
 
@@ -2128,7 +2136,9 @@ config/
   ],
   "direction_convention": "towards_clockwise_from_north",
   "speed_thresholds_mps": [],
-  "minimum_valid_percentage": null
+  "threshold_method": "relative_high_current_threshold_global_p90",
+  "minimum_valid_area_fraction": 0.95,
+  "threshold_status": "RESOLVED_GLOBAL_AOI_P90"
 }
 ```
 

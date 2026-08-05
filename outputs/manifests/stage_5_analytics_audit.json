@@ -1,0 +1,16 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "analytics_version": "stage5-analytics-1.0",
+  "product_count": 2264,
+  "checked_raster_count": 2264,
+  "checked_table_count": 4,
+  "checked_figure_count": 2,
+  "frame_count": 1125,
+  "limitations": [
+    "T5-023 trend is exploratory and does not establish causality or statistical significance.",
+    "Zonal area is an approximate EPSG:4326 bbox area; exact water polygon is pending.",
+    "T5-017 and T5-019 are calculated for the AOI. Zone outputs require user-supplied zone IDs and valid geometries.",
+    "The static expected-ocean mask is the baseline valid-pair mask from the validated collection because an exact water polygon was not supplied; valid-area QC detects additional timestep loss against that mask.",
+    "Current rose is a research summary and not a safety, operational, or hazard indicator."
+  ]
+}

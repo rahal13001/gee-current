@@ -154,11 +154,18 @@ def load_m1_config(config_root: str | Path) -> M1Config:
     if statistics.get("direction_convention") != DIRECTION_CONVENTION:
         raise ConfigError("direction convention does not match approved baseline")
     if statistics.get("speed_thresholds_mps") != []:
-        raise ConfigError("speed thresholds must remain empty until scientifically approved")
-    if statistics.get("minimum_valid_percentage") is not None:
-        raise ConfigError("minimum valid percentage must remain open")
-    if statistics.get("threshold_status") != "TBD_NOT_INVENTED":
-        raise ConfigError("threshold status must remain explicitly TBD")
+        raise ConfigError("speed thresholds must remain empty; T5-017 uses derived P90")
+    if statistics.get("threshold_method") != "relative_high_current_threshold_global_p90":
+        raise ConfigError("threshold method must be the approved global AOI P90")
+    if statistics.get("minimum_valid_area_fraction") != 0.95:
+        raise ConfigError("minimum valid area fraction must be 0.95")
+    if statistics.get("threshold_status") != "RESOLVED_GLOBAL_AOI_P90":
+        raise ConfigError("threshold status must record the resolved P90 decision")
+    rose = statistics.get("current_rose")
+    if not isinstance(rose, dict) or rose.get("sector_count") != 16:
+        raise ConfigError("current rose must use 16 sectors")
+    if rose.get("zero_epsilon_mps") != 1e-6:
+        raise ConfigError("current rose zero epsilon must be 1e-6 m s-1")
     if local.get("copernicus_product_id") != PRODUCT_ID:
         raise ConfigError("Copernicus product ID does not match approved baseline")
     if local.get("copernicus_daily_dataset_id") != DAILY_DATASET_ID:

@@ -84,10 +84,11 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   anomaly non-blocking, manifest downstream ready.
 - Guard coordinate menggunakan toleransi representasi float32 `2e-5` derajat;
   tidak ada interpolasi/resampling nilai.
-- Open decisions untuk ddof, percentile method, threshold, bins, weighting,
-  reference period, trend, dan geometry tetap TBD/BLOCKED sesuai backlog.
+- Pada saat WP5-1, keputusan ddof, percentile method, threshold, bins, weighting,
+  reference period, trend, dan geometry masih TBD/BLOCKED; threshold/bins/QC
+  kemudian diselesaikan melalui keputusan ahli untuk WP5-3.
 - M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
-- Approval gate berikutnya: berhenti sebelum WP5-3/analytics sampai persetujuan eksplisit pengguna.
+- WP5-3 analytics kemudian dilaksanakan setelah persetujuan eksplisit pengguna.
 
 ## Tahap 5 WP5-2
 
@@ -106,8 +107,32 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   toleransi `1e-6`, maksimum selisih `1.1920928955078125e-07`.
 - Tidak ada GEE, network, authentication, upload, dependency installation,
   atau perubahan raw/T4. M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
-- Approval gate berikutnya: berhenti sebelum WP5-3/analytics T5-009..T5-027
-  sampai persetujuan eksplisit pengguna.
+- Approval gate berikutnya: berhenti sebelum WP5-4 sampai persetujuan eksplisit pengguna.
+
+## Tahap 5 WP5-3
+
+- Active task: `WP5-3` / `T5-009..T5-027` — analytics dan precomputed products lokal.
+- Status: `PASS_WITH_NOTES`; T5-017 dan T5-019 untuk AOI telah dihitung setelah
+  keputusan ahli disahkan ke konfigurasi. Output zona tetap menunggu ID dan
+  geometri valid.
+- Evidence: `outputs/evidence/stage_5/WP5-3_analytics.result.txt`.
+- Manifest: `outputs/manifests/stage_5_analytics_manifest.json`;
+  audit: `outputs/manifests/stage_5_analytics_audit.json`.
+- Hasil: 1.125 frame, 2.264 derived raster products, threshold table untuk
+  `daily_jfm` dan `monthly_all`, current-rose long/summary table, dan 2 SVG;
+  metadata/checksum audit lulus.
+- Keputusan eksplisit: threshold `global AOI P90` per analysis plan dengan
+  operator `>`; valid-area minimum `0,95` terhadap static expected-ocean mask;
+  current rose 16 sektor `towards`, speed bins global P25/P50/P75/P90,
+  `ZERO <= 1e-6 m s-1`, dan denominator frekuensi memasukkan zero.
+- `OD-004`, `OD-005`, dan `OD-006` dicatat `RESOLVED`; keputusan ini adalah
+  metodologi penelitian, bukan ambang keselamatan/operasional.
+- T5-023 hanya exploratory trend; tidak ada klaim kausalitas/signifikansi.
+- AOI memakai bbox dan static expected-ocean mask dari baseline valid-pair;
+  exact water polygon serta zona belum tersedia sehingga produk zona belum
+  dibuat.
+- M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
+- Approval gate berikutnya: berhenti sebelum WP5-4 sampai persetujuan eksplisit pengguna.
 
 ## Post-M0 follow-up
 

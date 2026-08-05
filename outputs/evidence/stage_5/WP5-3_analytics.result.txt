@@ -1,0 +1,140 @@
+WP5-3 / T5-009..T5-027 Analytics - Evidence
+============================================
+
+Scope and decision
+------------------
+- Work package: WP5-3.
+- Tasks: T5-009..T5-027.
+- Decision: PASS_WITH_NOTES for local AOI analytics.
+- T5-017: implemented with `relative_high_current_threshold_global_p90`,
+  one global threshold per analysis plan, operator `>`, and valid-area QC.
+- T5-019: implemented for the AOI with 16 `towards` sectors and global AOI
+  quantile speed bins. Zone output waits for valid zone geometries.
+- T5-023 trend is exploratory only and makes no causal or inferential claim.
+- OD-004, OD-005, and OD-006 are RESOLVED in the project backlog; ADR-011 is
+  PROPOSED pending formal M0 governance acceptance.
+
+Implementation
+--------------
+- python/analytics.py: speed/vector formulas, area-weighted AOI time series,
+  global P90 threshold/exceedance, 16-sector current rose, quantile bins,
+  climatology/anomaly/trend calculations, tables, SVG figures, manifest,
+  and audit.
+- python/09_run_stage5_analytics.py: full collection analytics CLI.
+- python/10_audit_stage5_analytics.py: independent checksum/schema/tag/table/
+  figure audit CLI.
+- tests/unit/test_stage5_analytics.py: seven synthetic/regression tests,
+  including P90 equality, zero handling, and valid-area handling.
+
+Analytics command
+-----------------
+Command:
+.\.venv\Scripts\python.exe python\09_run_stage5_analytics.py
+--conversion-manifest outputs\manifests\stage_5_conversion_manifest.json
+--output-root data\validated\stage5_analytics
+--report outputs\manifests\stage_5_analytics_manifest.json
+--config-file docs\PRD_GLORYS_Current_Research_Teaching_System.md
+--config-file docs\SECURITY_AND_SECRETS.md
+--config-file pyproject.toml
+--config-file config\statistics.json
+--analysis-period config\analysis_period.json
+--study-area config\study_area.json
+--statistics config\statistics.json
+--ddof 0
+--percentile-method linear
+Exit: 0.
+Result: 1,125 source frames processed; ddof=0, percentile_method=linear,
+direction=towards_clockwise_from_north. The resolved statistics configuration
+is included in the config hash.
+
+Products
+--------
+- 1,125 speed rasters from hypot(uo,vo), preserving joint missing masks.
+- 12 monthly climatology speed rasters, reference period 2015-2025.
+- 1 JFM climatology speed raster from 993 daily frames with equal-daily
+  weighting recorded.
+- 1,125 speed anomaly rasters with explicit monthly/JFM baselines.
+- 1 exploratory monthly annual-mean speed trend slope raster.
+- 1,125-row timestep speed/zonal table with valid count and labelled area
+  approximation.
+- Threshold table contains one AOI row per plan: daily JFM P90
+  0.13707363069297987 m s-1 and monthly P90 0.2078578596813843 m s-1;
+  equality is non-exceedance.
+- Current-rose long table contains 97 rows per plan including a separate ZERO
+  row; summary table and two dependency-free SVG figures are written.
+- Product manifest contains 2,264 derived rasters, 4 tables, and 2 figures.
+
+Independent audit command
+-------------------------
+Command:
+.\.venv\Scripts\python.exe python\10_audit_stage5_analytics.py
+--manifest outputs\manifests\stage_5_analytics_manifest.json
+--report outputs\manifests\stage_5_analytics_audit.json
+Exit: 0.
+Result: 2,264/2,264 rasters checksum/schema/tag verified; 4/4 tables and 2/2
+figures verified; 1,125 source frames; status PASS_WITH_NOTES.
+
+Post-work checks
+----------------
+- Synthetic analytics tests: exit 0; 7/7 passed.
+- Full custom unittest suite after final fixes: exit 0; 114 tests, 0 failures,
+  0 errors.
+- compileall: exit 0.
+- pip check: exit 0; no broken requirements.
+- Offline secret scan: exit 0; no potential secrets; 2 documentation
+  placeholders classified.
+- Foundation read-only checks: exit 0; TST-FND-001 PASS_WITH_NOTES,
+  TST-FND-002 PASS, TST-SEC-BASELINE PASS, TST-FND-005 PASS_WITH_NOTES.
+- git diff --check: exit 0.
+- Independent manifest assertions: 1,125 frames, 2,264 products, threshold
+  counts reconcile, and current-rose frequency sums equal 100% for both plans.
+- Graphify was refreshed after code/docs/evidence changes: 987 nodes, 1,945
+  post-cluster edges, 80 communities; 0 missing endpoints, 0 dangling
+  endpoints, 0 self-loops, and 0 collapsed endpoint pairs. It reported 183
+  source files with zero nodes, an extraction limitation rather than an
+  analytics failure.
+
+Provenance
+----------
+- Analytics version: stage5-analytics-1.0.
+- Analytics config hash:
+  e5e5890212c28573df1dcb595c5f8e96cd41d26ab8486b429a082ea14486384f.
+- Source conversion manifest SHA-256:
+  0d137d0414e54c0d7c166cd5af8688cffb04564c6e49ef983ae916df57686c0d.
+- Analytics manifest:
+  outputs/manifests/stage_5_analytics_manifest.json.
+- Analytics audit:
+  outputs/manifests/stage_5_analytics_audit.json.
+- Derived rasters remain local under data/validated/stage5_analytics and are
+  ignored by Git; manifests/evidence are provenance artifacts.
+
+Limitations
+-----------
+- T5-017/T5-019 are complete for the AOI; valid zone geometries and exact
+  water-area polygon remain pending.
+- Static expected-ocean mask is derived from the baseline valid-pair mask of
+  the validated collection; it is not an exact user-supplied water polygon.
+- ddof=0 and linear quantiles remain explicit implementation baselines.
+- Trend is exploratory and does not imply causality or statistical significance.
+- Current rose and threshold are research methodology, not safety, hazard, or
+  operational indicators.
+- No GEE, Earth Engine, network, authentication, upload, dependency
+  installation, or cloud computation was performed.
+
+Development retry note
+----------------------
+- Local regression exposed and fixed zero-vector sector sentinel handling,
+  north-up cell-area rotation guard, manifest plan label monthly_all, and the
+  static expected-ocean denominator needed to apply the 0.95 rule correctly.
+  The final full run, audit, tests, and invariant checks passed afterward.
+
+Next gate
+---------
+- WP5-3 is complete with PASS_WITH_NOTES for AOI analytics; zone products and
+  later cloud/GEE work remain downstream.
+- Recommended commit:
+  feat(stage5): add offline analytics and precomputed products
+  Include analytics code/tests, manifests, evidence, ADR-011, and
+  documentation. Do not commit ignored derived raster binaries.
+- No commit was created automatically.
+- Do not begin WP5-4 until explicit user approval.

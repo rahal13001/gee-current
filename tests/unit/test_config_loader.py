@@ -75,7 +75,7 @@ class ConfigLoaderTests(unittest.TestCase):
             self.copy_config(destination)
             statistics = destination / "statistics.json"
             text = statistics.read_text(encoding="utf-8").replace(
-                '"threshold_status": "TBD_NOT_INVENTED"',
+                '"threshold_status": "RESOLVED_GLOBAL_AOI_P90"',
                 '"threshold_status": "invented"',
             )
             statistics.write_text(text, encoding="utf-8")

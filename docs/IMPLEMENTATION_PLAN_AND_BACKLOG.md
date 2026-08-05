@@ -882,25 +882,25 @@ FR-PY-01 sampai FR-PY-17
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T5-009 | P0 | FR-PY-01 | Implementasi speed | T4-014 | tests | formula benar | `NOT_STARTED` |
-| T5-010 | P0 | FR-PY-02 | Implementasi mean speed | T5-009 | tests | berbeda dari resultan | `NOT_STARTED` |
-| T5-011 | P0 | FR-PY-03 | Mean `u` dan `v` | T4-014 | tests | valid-count aware | `NOT_STARTED` |
-| T5-012 | P0 | FR-PY-04 | Resultant speed | T5-011 | tests | formula benar | `NOT_STARTED` |
-| T5-013 | P0 | FR-PY-05 | Resultant direction | T5-011 | tests | arah menuju; cardinal pass | `NOT_STARTED` |
-| T5-014 | P0 | FR-PY-06 | Persistence | T5-010,T5-012 | tests | range 0–1 dengan tolerance | `NOT_STARTED` |
-| T5-015 | P0 | FR-PY-07 | Min/max/median/SD/variance | T5-009 | tables/tests | label temporal benar | `NOT_STARTED` |
-| T5-016 | P0 | FR-PY-08 | P10–P99 | T5-009 | tables/tests | quantile method terdokumentasi | `NOT_STARTED` |
-| T5-017 | P1 | FR-PY-09 | Threshold exceedance | T1-004,T5-009 | tables | threshold source tercatat | `BLOCKED` |
-| T5-018 | P0 | FR-PY-10 | Direction sectors 16 arah | T5-013 | tests | wrap north benar | `NOT_STARTED` |
-| T5-019 | P1 | FR-PY-11 | Current rose | T5-017,T5-018 | figures/tables | konvensi menuju jelas | `BLOCKED` |
-| T5-020 | P0 | FR-PY-12 | Monthly climatology | T5-009..T5-014 | raster/tables | reference 2015–2025 jelas | `NOT_STARTED` |
-| T5-021 | P0 | FR-PY-13 | JFM climatology | T5-009..T5-014 | raster/tables | weighting terdokumentasi | `NOT_STARTED` |
-| T5-022 | P0 | FR-PY-14 | Anomalies | T5-020,T5-021 | raster/tables | reference period explicit | `NOT_STARTED` |
-| T5-023 | P2 | FR-PY-15 | Trend exploration | T5-020,T5-021 | report | disebut kecenderungan 2015–2025 | `NOT_STARTED` |
-| T5-024 | P0 | FR-PY-16 | Zonal tables | T2-001,T5-009..T5-016 | CSV/Parquet | area/valid-count tercatat | `NOT_STARTED` |
-| T5-025 | P0 | FR-PY-17 | Precomputed raster products | T5-010..T5-024 | derived rasters | metadata lengkap | `NOT_STARTED` |
-| T5-026 | P0 | Provenance | Product manifest dan checksums | T5-008,T5-025 | manifest | semua output traceable | `NOT_STARTED` |
-| T5-027 | P0 | Stage gate | Laporan Tahap 5 | T5-001..T5-026 | final report | semua P0 `PASS` | `NOT_STARTED` |
+| T5-009 | P0 | FR-PY-01 | Implementasi speed | T4-014 | `python/analytics.py`, tests | formula hypot(uo,vo), joint mask | `PASS_WITH_NOTES` |
+| T5-010 | P0 | FR-PY-02 | Implementasi mean speed | T5-009 | `python/analytics.py`, timestep table | mean scalar speed dipisahkan dari resultant speed | `PASS_WITH_NOTES` |
+| T5-011 | P0 | FR-PY-03 | Mean `u` dan `v` | T4-014 | `python/analytics.py`, timestep table | paired valid-count aware | `PASS_WITH_NOTES` |
+| T5-012 | P0 | FR-PY-04 | Resultant speed | T5-011 | `python/analytics.py`, tests | hypot(mean_u,mean_v) | `PASS_WITH_NOTES` |
+| T5-013 | P0 | FR-PY-05 | Resultant direction | T5-011 | `python/analytics.py`, tests | toward-bearing clockwise from north; cardinal cases | `PASS_WITH_NOTES` |
+| T5-014 | P0 | FR-PY-06 | Persistence | T5-010,T5-012 | `python/analytics.py`, timestep table | resultant/mean speed; zero denominator explicit | `PASS_WITH_NOTES` |
+| T5-015 | P0 | FR-PY-07 | Min/max/median/SD/variance | T5-009 | `python/common/descriptive_statistics.py`, timestep table | ddof=0 baseline recorded; temporal labels retained | `PASS_WITH_NOTES` |
+| T5-016 | P0 | FR-PY-08 | P10–P99 | T5-009 | `python/common/descriptive_statistics.py`, timestep table | linear method recorded explicitly | `PASS_WITH_NOTES` |
+| T5-017 | P1 | FR-PY-09 | Threshold exceedance | T1-004,T5-009,T5-011,T5-012,T5-016 | `data/validated/stage5_analytics/tables/threshold_exceedance.csv`, `config/statistics.json` | Global AOI P90 per analysis plan; `>`; valid-area QC 0,95; missing timesteps recorded | `PASS_WITH_NOTES` |
+| T5-018 | P0 | FR-PY-10 | Direction sectors 16 arah | T5-013 | `python/analytics.py`, tests | 16 toward sectors with north wrap and zero-vector exclusion | `PASS_WITH_NOTES` |
+| T5-019 | P1 | FR-PY-11 | Current rose | T5-017,T5-018 | `data/validated/stage5_analytics/tables/current_rose_long.csv`, `data/validated/stage5_analytics/tables/current_rose_summary.csv`, `data/validated/stage5_analytics/figures/current_rose_*.svg` | AOI output; 16 towards sectors; global P25/P50/P75/P90 bins; zero/missing and sparse classes recorded; zones pending valid geometry | `PASS_WITH_NOTES` |
+| T5-020 | P0 | FR-PY-12 | Monthly climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology`, analytics manifest | 12 monthly speed climatologies, reference 2015–2025 | `PASS_WITH_NOTES` |
+| T5-021 | P0 | FR-PY-13 | JFM climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology/jfm_speed.tif`, analytics manifest | 993 daily frames, equal-daily weighting recorded | `PASS_WITH_NOTES` |
+| T5-022 | P0 | FR-PY-14 | Anomalies | T5-020,T5-021 | `data/validated/stage5_analytics/anomaly`, analytics manifest | 1,125 speed anomalies, reference period explicit | `PASS_WITH_NOTES` |
+| T5-023 | P2 | FR-PY-15 | Trend exploration | T5-020,T5-021 | `data/validated/stage5_analytics/trend`, analytics manifest | exploratory OLS slope only; no inferential/causal claim | `PASS_WITH_NOTES` |
+| T5-024 | P0 | FR-PY-16 | Zonal tables | T2-001,T5-009..T5-016 | `data/validated/stage5_analytics/tables/timestep_speed_statistics.csv` | 1,125 rows with valid count and approximate bbox area | `PASS_WITH_NOTES` |
+| T5-025 | P0 | FR-PY-17 | Precomputed raster products | T5-010..T5-024 | analytics manifest/audit | 2,264 derived rasters with metadata/checksums | `PASS_WITH_NOTES` |
+| T5-026 | P0 | Provenance | Product manifest dan checksums | T5-008,T5-025 | `outputs/manifests/stage_5_analytics_manifest.json`, `outputs/manifests/stage_5_analytics_audit.json` | all derived products and table traceable | `PASS_WITH_NOTES` |
+| T5-027 | P0 | Stage gate | Laporan Tahap 5 | T5-001..T5-026 | `outputs/evidence/stage_5/WP5-3_analytics.result.txt` | executable analytics PASS_WITH_NOTES; T5-017/T5-019 AOI products complete; zone products await geometry | `PASS_WITH_NOTES` |
 
 ---
 
@@ -1137,9 +1137,9 @@ Open decision tidak boleh diisi oleh Codex tanpa data atau persetujuan.
 | OD-001 | AOI pilot dan sumber batas | T2-001 | `RESOLVED_WITH_NOTES` |
 | OD-002 | Project ID aktual | FND-009 | `OPEN` |
 | OD-003 | Community atau Contributor Tier | FND-009/T2 benchmark | `OPEN` |
-| OD-004 | Threshold kecepatan dan sumbernya | T5-017 | `OPEN` |
-| OD-005 | Speed bins final | T5-019 | `OPEN` |
-| OD-006 | Minimum valid percentage | T4/T5 | `OPEN` |
+| OD-004 | Threshold kecepatan dan sumbernya | T5-017 | `RESOLVED` — global AOI P90 per analysis plan; metodologi relatif, bukan ambang keselamatan |
+| OD-005 | Speed bins final | T5-019 | `RESOLVED` — global AOI P25/P50/P75/P90, 16 towards sectors, zero epsilon 1e-6 m s-1 |
+| OD-006 | Minimum valid percentage | T4/T5 | `RESOLVED` — minimum valid area fraction 0,95 terhadap static expected-ocean mask |
 | OD-007 | Numerical tolerance final setelah float32 | T2/T5/T10 | Baseline 1e-6, perlu konfirmasi pilot |
 | OD-008 | Daftar derived assets yang dipublikasikan | T6-008 | `OPEN` |
 | OD-009 | Batas AOI interaktif | T1-011/T2 benchmark | `OPEN` |

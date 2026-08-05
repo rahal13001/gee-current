@@ -24,6 +24,25 @@
   ],
   "direction_convention": "towards_clockwise_from_north",
   "speed_thresholds_mps": [],
-  "minimum_valid_percentage": null,
-  "threshold_status": "TBD_NOT_INVENTED"
+  "threshold_method": "relative_high_current_threshold_global_p90",
+  "threshold_label": "Ambang kondisi arus relatif tinggi, P90",
+  "threshold_units": "m s-1",
+  "threshold_scope": "global_aoi_per_analysis_plan_id",
+  "minimum_valid_percentage": 0.95,
+  "minimum_valid_area_fraction": 0.95,
+  "current_rose": {
+    "unit_scope": ["aoi", "zone_with_valid_geometry"],
+    "sector_count": 16,
+    "sector_width_deg": 22.5,
+    "direction_convention": "towards",
+    "direction_reference": "true_north",
+    "direction_rotation": "clockwise",
+    "zero_epsilon_mps": 1e-6,
+    "speed_bin_method": "global_aoi_quantiles",
+    "speed_bin_quantiles": [0.25, 0.5, 0.75, 0.9],
+    "missing_policy": "pairwise_valid_uv_and_minimum_valid_area",
+    "sparse_class_count": 5
+  },
+  "threshold_status": "RESOLVED_GLOBAL_AOI_P90",
+  "decision_ids": ["OD-004", "OD-005", "OD-006"]
 }

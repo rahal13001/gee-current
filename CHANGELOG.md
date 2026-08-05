@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Memperbarui WP5-3 analytics lokal berdasarkan keputusan ahli: threshold global
+  AOI P90 per analysis plan, valid-area QC 0,95, current rose 16 sektor
+  `towards` dengan global quantile bins, tabel threshold/rose, dan 2 SVG AOI.
+  Produk zona menunggu geometri valid; metodologi tidak diperlakukan sebagai
+  ambang keselamatan atau operasional.
+
 - Menyelesaikan WP5-2/T5-008 conversion collection lokal: 165/165 entry
   tervalidasi dan 1.125/1.125 timestep menghasilkan GeoTIFF terinventaris
   dengan checksum/provenance; audit metadata dan comparator numerik seluruh
