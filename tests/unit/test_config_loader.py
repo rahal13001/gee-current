@@ -82,6 +82,19 @@ class ConfigLoaderTests(unittest.TestCase):
             with self.assertRaisesRegex(ConfigError, "threshold status"):
                 load_m1_config(destination)
 
+    def test_resolved_current_rose_contract_fails_closed_on_drift(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as folder:
+            destination = Path(folder)
+            self.copy_config(destination)
+            statistics = destination / "statistics.json"
+            data = json.loads(statistics.read_text(encoding="utf-8"))
+            data["current_rose"]["sector_count"] = 8
+            statistics.write_text(json.dumps(data), encoding="utf-8")
+            with self.assertRaisesRegex(ConfigError, "16 sectors"):
+                load_m1_config(destination)
+
     def test_metadata_guard_accepts_approved_snapshot(self):
         snapshot_path = (
             Path(__file__).parents[2]

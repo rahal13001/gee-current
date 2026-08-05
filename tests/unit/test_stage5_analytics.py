@@ -62,6 +62,12 @@ class Stage5AnalyticsTests(unittest.TestCase):
         self.assertNotEqual(_speed_bin_for_value(threshold, definitions), "BIN_5")
         self.assertEqual(_speed_bin_for_value(0.0, definitions), "ZERO")
 
+    def test_duplicate_quantiles_do_not_create_zero_width_bins(self) -> None:
+        definitions = _speed_bin_definitions([1.0, 1.0, 1.0, 1.0], 1.0, "linear")
+        for item in definitions:
+            if item["lower"] is not None and item["upper"] is not None:
+                self.assertLess(float(item["lower"]), float(item["upper"]))
+
     def test_area_fraction_rejects_unsupported_timestep(self) -> None:
         u = np.ones((2, 2))
         v = np.ones((2, 2))

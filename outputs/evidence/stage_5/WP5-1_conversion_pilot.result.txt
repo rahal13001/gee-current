@@ -140,8 +140,9 @@ Limitations and controls
   float32 GLORYS coordinates; it does not resample or interpolate.
 - No GEE, Earth Engine, Copernicus Marine, network, authentication, download,
   upload, dependency installation, or cloud computation was performed.
-- T5-008 remains NOT_STARTED and requires a separate approval/change-control
-  decision. T5-017 threshold and T5-019 current rose remain unchanged.
+- At the time of this WP5-1 evidence, T5-008 remained NOT_STARTED and T5-017/
+  T5-019 were unchanged. A later decision is recorded in the WP5-3 evidence
+  and ADR-011; this historical statement is not the current Stage 5 status.
 - The first postcheck CLI invocation omitted the required --prefix argument
   and returned exit 2 before pipeline execution; the corrected invocation above
   returned exit 0 and produced the recorded pilot/comparator results.

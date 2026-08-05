@@ -16,7 +16,7 @@ assets have been created.
 | Active study AOI | `eastern_indonesia_regional_001` bbox | User-provided; exact polygon/water mask not provided |
 | T2 pilot AOI | `pilot_001` bbox | User-provided; retained as separate pilot baseline |
 | Direction convention | towards, clockwise from north | Existing Tahap 1 decision |
-| Speed thresholds | empty / `TBD` | No scientific threshold invented |
+| Speed thresholds | Derived global AOI P90 per `analysis_plan_id` | Literal `speed_thresholds_mps` remains empty by design; method is relative research P90, not safety/operational |
 | Earth Engine asset root | `projects/ee-rahal13001/assets/glorys_current` | User-reported; not verified by Codex |
 
 Mask, nodata, raw encoding, and numerical data ranges remain validation inputs

@@ -28,10 +28,21 @@
 
 ## Gate status
 
-The offline configuration and formula baseline is structurally ready for
-review. Thresholds remain empty/TBD and no scientific value was invented. The
-typed loader, constants/formula/statistics modules, data dictionary, architecture
-manifest, and interactive limits baseline are present and locally validated.
+The offline configuration and formula baseline was structurally ready for
+review at the time of this historical report. The threshold list was empty/TBD
+then, and no scientific value was invented. The typed loader,
+constants/formula/statistics modules, data dictionary, architecture manifest,
+and interactive limits baseline were present and locally validated.
 Exact polygon/mask, benchmarking, the operational pilot, and Tahap 2 remain
 downstream work. No network, authentication, asset existence check, upload, or
 operational computation was performed.
+
+## Amendment 2026-08-05
+
+The original report is a historical Tahap 1 baseline. After the domain-expert
+decision recorded in `docs/adr/ADR-011-threshold-current-rose.md`, the active
+configuration was revalidated with exit status `0`. The literal threshold list
+remains empty intentionally; T5-017 now derives global AOI P90 per
+`analysis_plan_id`, and T5-019 uses the resolved 16-sector/current-rose
+contract. Minimum valid area fraction is `0.95`. Formal ADR governance remains
+`PROPOSED` until accepted through the M0 process.

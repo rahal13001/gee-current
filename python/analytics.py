@@ -11,6 +11,7 @@ import csv
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from html import escape
+import hashlib
 import json
 import math
 import os
@@ -28,7 +29,7 @@ from python.common.descriptive_statistics import summary_statistics
 from python.conversion import PIPELINE_VERSION, _atomic_write_json
 
 
-ANALYTICS_VERSION = "stage5-analytics-1.0"
+ANALYTICS_VERSION = "stage5-analytics-1.1"
 EARTH_RADIUS_M = 6_371_008.8
 ZERO_EPSILON_MPS = 1e-6
 MINIMUM_VALID_AREA_FRACTION = 0.95
@@ -111,6 +112,47 @@ def _spatial_mean_vector(
     }
 
 
+def _mask_sha256(mask: np.ndarray) -> str:
+    """Return a deterministic checksum for a boolean expected-ocean mask."""
+
+    normalized = np.asarray(mask, dtype=np.uint8)
+    return hashlib.sha256(normalized.tobytes()).hexdigest()
+
+
+def _write_mask_raster(path: Path, mask: np.ndarray, profile: Mapping[str, Any], tags: Mapping[str, str]) -> None:
+    """Write a static expected-ocean mask as a byte GeoTIFF atomically."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary: Path | None = None
+    raster_profile = dict(profile)
+    raster_profile.update(count=1, dtype="uint8", nodata=0, compress="deflate", tiled=False)
+    try:
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp", delete=False) as handle:
+            temporary = Path(handle.name)
+        with rasterio.open(temporary, "w", **raster_profile) as destination:
+            destination.write(np.asarray(mask, dtype=np.uint8), 1)
+            destination.set_band_description(1, "static_expected_ocean_mask")
+            destination.update_tags(**{key: str(value) for key, value in tags.items()})
+        os.replace(temporary, path)
+    except (OSError, rasterio.errors.RasterioError) as exc:
+        raise AnalyticsError(f"cannot write expected-ocean mask: {path}") from exc
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
+def _bin_label(item: Mapping[str, Any]) -> str:
+    """Render an auditable speed-bin label in metres per second."""
+
+    if item["speed_bin"] == "ZERO":
+        return f"ZERO <= {ZERO_EPSILON_MPS:.6f} m s-1"
+    lower = item.get("lower")
+    upper = item.get("upper")
+    if upper is None:
+        return f"{float(lower):.6f} < S m s-1"
+    return f"{float(lower):.6f} < S <= {float(upper):.6f} m s-1"
+
+
 def _speed_bin_definitions(
     values: Sequence[float],
     threshold: float,
@@ -190,19 +232,23 @@ def _write_current_rose_svg(
 ) -> None:
     """Write a dependency-free stacked polar current-rose SVG."""
 
-    colors = ("#64748b", "#38bdf8", "#22c55e", "#facc15", "#fb923c", "#ef4444")
+    colors = ("#38bdf8", "#22c55e", "#facc15", "#fb923c", "#ef4444")
     width, height = 720, 620
     cx, cy, radius = 300, 315, 210
     totals: dict[tuple[str, str], float] = {}
     for row in rows:
         totals[(str(row["direction_sector"]), str(row["speed_bin"]))] = float(row["frequency_percentage"])
-    max_freq = max((sum(totals.get((label, item["speed_bin"]), 0.0) for item in bin_definitions) for label in SECTOR_LABELS), default=1.0)
+    non_zero_bins = [item for item in bin_definitions if item["speed_bin"] != "ZERO"]
+    max_freq = max((sum(totals.get((label, item["speed_bin"]), 0.0) for item in non_zero_bins) for label in SECTOR_LABELS), default=1.0)
     scale = radius / max(max_freq, 1.0)
+    unit_id = escape(str(summary["unit_id"]))
+    period = f"{summary['period_start']} to {summary['period_end']}"
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
-        f'<text x="24" y="30" font-family="sans-serif" font-size="18" font-weight="bold">Current rose — {escape(str(summary["analysis_plan_id"]))} — menuju</text>',
-        '<text x="24" y="52" font-family="sans-serif" font-size="12">Frekuensi terhadap timestep valid; zero/calm numerik dilaporkan terpisah</text>',
+        f'<text x="24" y="30" font-family="sans-serif" font-size="18" font-weight="bold">Current rose — {escape(str(summary["analysis_plan_id"]))} — towards</text>',
+        f'<text x="24" y="50" font-family="sans-serif" font-size="12">AOI/unit: {unit_id}; period: {escape(period)}; depth: {escape(str(summary["depth_m"]))} m</text>',
+        '<text x="24" y="68" font-family="sans-serif" font-size="12">16 sectors; true north; clockwise; frequency denominator includes valid ZERO timesteps</text>',
     ]
     for grid in (0.25, 0.50, 0.75, 1.0):
         r = radius * grid
@@ -213,26 +259,37 @@ def _write_current_rose_svg(
         y = cy - (radius + 24) * math.cos(angle)
         elements.append(f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="middle" font-family="sans-serif" font-size="11">{label}</text>')
         radial = 0.0
-        for bin_index, item in enumerate(bin_definitions):
+        for bin_index, item in enumerate(non_zero_bins):
             value = totals.get((label, str(item["speed_bin"])), 0.0) * scale
             if value <= 0:
                 continue
-            x1 = cx + radial * math.sin(angle)
-            y1 = cy - radial * math.cos(angle)
-            radial += value
-            x2 = cx + radial * math.sin(angle)
-            y2 = cy - radial * math.cos(angle)
-            elements.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" stroke="{colors[bin_index % len(colors)]}" stroke-width="10"/>')
-    legend_y = 100
-    for index, item in enumerate(bin_definitions):
-        label = str(item["speed_bin"])
-        elements.append(f'<rect x="520" y="{legend_y + index * 24}" width="14" height="14" fill="{colors[index % len(colors)]}"/>')
+            outer = radial + value
+            start_angle = math.radians(index * 22.5 - 11.25)
+            end_angle = math.radians(index * 22.5 + 11.25)
+            def point(r: float, a: float) -> tuple[float, float]:
+                return cx + r * math.sin(a), cy - r * math.cos(a)
+            x1, y1 = point(radial, start_angle)
+            x2, y2 = point(outer, start_angle)
+            x3, y3 = point(outer, end_angle)
+            x4, y4 = point(radial, end_angle)
+            if radial <= 0:
+                path_data = f"M {cx:.2f} {cy:.2f} L {x2:.2f} {y2:.2f} A {outer:.2f} {outer:.2f} 0 0 1 {x3:.2f} {y3:.2f} Z"
+            else:
+                path_data = f"M {x1:.2f} {y1:.2f} L {x2:.2f} {y2:.2f} A {outer:.2f} {outer:.2f} 0 0 1 {x3:.2f} {y3:.2f} L {x4:.2f} {y4:.2f} A {radial:.2f} {radial:.2f} 0 0 0 {x1:.2f} {y1:.2f} Z"
+            elements.append(f'<path d="{path_data}" fill="{colors[bin_index % len(colors)]}" stroke="white" stroke-width="0.5"/>')
+            radial = outer
+    legend_y = 105
+    legend_items = list(non_zero_bins) + [item for item in bin_definitions if item["speed_bin"] == "ZERO"]
+    for index, item in enumerate(legend_items):
+        label = _bin_label(item)
+        legend_color = colors[index] if index < len(colors) else "#64748b"
+        elements.append(f'<rect x="520" y="{legend_y + index * 24}" width="14" height="14" fill="{legend_color}"/>')
         elements.append(f'<text x="540" y="{legend_y + 12 + index * 24}" font-family="sans-serif" font-size="11">{escape(label)}</text>')
     elements.extend([
-        f'<text x="520" y="280" font-family="sans-serif" font-size="11">valid={summary["valid_count"]}; zero={summary["zero_count"]}; missing={summary["missing_count"]}</text>',
-        f'<text x="520" y="300" font-family="sans-serif" font-size="11">P90={float(summary["threshold_global_p90_mps"]):.6f} m s-1</text>',
-        f'<text x="520" y="320" font-family="sans-serif" font-size="11">depth={escape(str(summary["depth_m"]))} m</text>',
-        '<text x="24" y="590" font-family="sans-serif" font-size="11">Model limitation: static expected-ocean mask is baseline valid-pair mask; exact water polygon/zones are not supplied.</text>',
+        f'<text x="520" y="285" font-family="sans-serif" font-size="11">valid={summary["valid_count"]}; zero={summary["zero_count"]}; missing={summary["missing_count"]}</text>',
+        f'<text x="520" y="305" font-family="sans-serif" font-size="11">P90={float(summary["threshold_global_p90_mps"]):.6f} m s-1</text>',
+        f'<text x="520" y="325" font-family="sans-serif" font-size="11">dominant={escape(str(summary["dominant_sector"]))}</text>',
+        '<text x="24" y="590" font-family="sans-serif" font-size="11">Limitation: static expected-ocean mask is baseline valid-pair mask; exact water polygon/zones are not supplied.</text>',
         '</svg>',
     ])
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -493,6 +550,7 @@ def run_collection_analytics(
     study_area_path: str | Path = "config/study_area.json",
     statistics_path: str | Path = "config/statistics.json",
     depth_selection_path: str | Path = "config/depth_selection.json",
+    local_config_path: str | Path = "config/local.example.json",
 ) -> dict[str, Any]:
     """Build speed products, climatologies, anomalies, trend, zonal table, and manifest."""
 
@@ -506,6 +564,7 @@ def run_collection_analytics(
     study_area = _safe_json(Path(study_area_path))
     statistics_config = _safe_json(Path(statistics_path))
     depth_config = _safe_json(Path(depth_selection_path))
+    local_config = _safe_json(Path(local_config_path))
     if statistics_config.get("threshold_method") != "relative_high_current_threshold_global_p90":
         raise AnalyticsError("T5-017 requires the approved global AOI P90 method")
     if statistics_config.get("minimum_valid_area_fraction") != MINIMUM_VALID_AREA_FRACTION:
@@ -516,13 +575,38 @@ def run_collection_analytics(
 
     source_metadata: dict[str, dict[str, Any]] = {}
     source_manifest_reference = conversion_manifest.get("manifest")
-    if source_manifest_reference:
-        source_manifest_path = Path(str(source_manifest_reference))
-        if source_manifest_path.is_file():
-            source_manifest = _safe_json(source_manifest_path)
-            for entry in source_manifest.get("entries", []):
-                if isinstance(entry, dict) and entry.get("plan_name") not in source_metadata:
-                    source_metadata[str(entry["plan_name"])] = entry
+    if not source_manifest_reference:
+        raise AnalyticsError("conversion manifest must reference the validated Stage 4 manifest")
+    source_manifest_path = Path(str(source_manifest_reference))
+    if not source_manifest_path.is_file():
+        raise AnalyticsError(f"validated Stage 4 manifest is missing: {source_manifest_path}")
+    source_manifest = _safe_json(source_manifest_path)
+    metadata_by_plan: dict[str, set[tuple[str, str, str]]] = {}
+    for entry in source_manifest.get("entries", []):
+        if not isinstance(entry, dict):
+            raise AnalyticsError("validated Stage 4 metadata entry is invalid")
+        plan_name = str(entry.get("plan_name", ""))
+        metadata = (
+            str(entry.get("dataset_id", "")),
+            str(entry.get("dataset_version", "")),
+            str(entry.get("dataset_part", "")),
+        )
+        if not all(metadata):
+            raise AnalyticsError(f"validated Stage 4 metadata is incomplete for {plan_name}")
+        metadata_by_plan.setdefault(plan_name, set()).add(metadata)
+        source_metadata.setdefault(plan_name, entry)
+    for plan_name in ("daily_jfm", "monthly_all"):
+        if metadata_by_plan.get(plan_name) != {
+            (
+                source_metadata[plan_name]["dataset_id"],
+                source_metadata[plan_name]["dataset_version"],
+                source_metadata[plan_name]["dataset_part"],
+            )
+        }:
+            raise AnalyticsError(f"dataset metadata is mixed or missing for {plan_name}")
+    product_id = local_config.get("copernicus_product_id")
+    if not isinstance(product_id, str) or not product_id:
+        raise AnalyticsError("local config must provide copernicus_product_id")
 
     products: list[dict[str, Any]] = []
     rows: list[dict[str, Any]] = []
@@ -531,6 +615,8 @@ def run_collection_analytics(
     profiles: dict[str, dict[str, Any]] = {}
     spatial_by_plan: dict[str, list[dict[str, Any]]] = {"daily_jfm": [], "monthly_all": []}
     static_expected_masks: dict[str, np.ndarray] = {}
+    static_expected_mask_profiles: dict[str, dict[str, Any]] = {}
+    static_expected_mask_sources: dict[str, str] = {}
     area_cache: dict[tuple[int, int, str], np.ndarray] = {}
     for record in records:
         source_path = record["source_path"]
@@ -562,7 +648,15 @@ def run_collection_analytics(
         stats = frame_statistics(speed * 0 + u, speed * 0 + v, ddof=ddof, percentile_method=percentile_method)
         area_key = (speed.shape[0], speed.shape[1], str(profile["transform"]))
         area = area_cache.setdefault(area_key, _cell_area_m2(profile["transform"], speed.shape[0], speed.shape[1]))
-        static_expected_masks.setdefault(record["plan_name"], np.isfinite(u) & np.isfinite(v))
+        current_mask = np.isfinite(u) & np.isfinite(v)
+        if record["plan_name"] not in static_expected_masks:
+            static_expected_masks[record["plan_name"]] = current_mask.copy()
+            static_expected_mask_profiles[record["plan_name"]] = profile
+            static_expected_mask_sources[record["plan_name"]] = record["time"]
+        elif not np.array_equal(static_expected_masks[record["plan_name"]], current_mask):
+            raise AnalyticsError(
+                f"static expected-ocean mask mismatch at {record['plan_name']} {record['time']}"
+            )
         spatial = _spatial_mean_vector(
             u,
             v,
@@ -605,6 +699,36 @@ def run_collection_analytics(
                 "units": "m s-1",
                 "config_hash": config_hash_value,
                 "analytics_version": ANALYTICS_VERSION,
+            }
+        )
+
+    mask_records: list[dict[str, Any]] = []
+    for plan_name, mask in sorted(static_expected_masks.items()):
+        mask_file = output_path / "masks" / f"static_expected_ocean_mask_{plan_name}.tif"
+        mask_hash = _mask_sha256(mask)
+        _write_mask_raster(
+            mask_file,
+            mask,
+            static_expected_mask_profiles[plan_name],
+            {
+                "band_name": "static_expected_ocean_mask",
+                "product_type": "static_expected_ocean_mask",
+                "analysis_plan_id": plan_name,
+                "mask_method": "baseline_valid_pair_from_first_validated_frame",
+                "mask_source_time": static_expected_mask_sources[plan_name],
+                "mask_sha256": mask_hash,
+                "analytics_version": ANALYTICS_VERSION,
+                "config_hash": config_hash_value,
+            },
+        )
+        mask_records.append(
+            {
+                "path": str(mask_file),
+                "sha256": sha256_file(mask_file),
+                "mask_sha256": mask_hash,
+                "analysis_plan_id": plan_name,
+                "valid_pixel_count": int(mask.sum()),
+                "source_time": static_expected_mask_sources[plan_name],
             }
         )
 
@@ -700,10 +824,10 @@ def run_collection_analytics(
         period_start = min(str(item["time"]) for item in series)[:10]
         period_end = max(str(item["time"]) for item in series)[:10]
         source = source_metadata.get(plan_name, {})
-        dataset_id = source.get("dataset_id") or (
-            "cmems_mod_glo_phy_my_0.083deg_P1D-m" if plan_name == "daily_jfm" else "cmems_mod_glo_phy_my_0.083deg_P1M-m"
-        )
-        dataset_version = source.get("dataset_version", "202311")
+        if not source:
+            raise AnalyticsError(f"validated Stage 4 metadata is missing for {plan_name}")
+        dataset_id = str(source["dataset_id"])
+        dataset_version = str(source["dataset_version"])
         common = {
             "analysis_plan_id": plan_name,
             "unit_id": study_area.get("aoi_id"),
@@ -714,6 +838,9 @@ def run_collection_analytics(
             "depth_m": depth_config.get("analysis_depth_m"),
             "dataset_id": dataset_id,
             "dataset_version": dataset_version,
+            "dataset_part": source.get("dataset_part"),
+            "product_id": product_id,
+            "source_variables": "uo,vo",
             "config_hash": config_hash_value,
         }
         threshold_row = {
@@ -754,7 +881,7 @@ def run_collection_analytics(
         for sector_index, sector in enumerate(SECTOR_LABELS):
             lower = (sector_index * 22.5 - 11.25) % 360.0
             upper = (sector_index * 22.5 + 11.25) % 360.0
-            for item in bin_definitions:
+            for item in (candidate for candidate in bin_definitions if candidate["speed_bin"] != "ZERO"):
                 speed_bin = str(item["speed_bin"])
                 count = counts.get((sector, speed_bin), 0)
                 current_rose_rows.append({
@@ -833,14 +960,14 @@ def run_collection_analytics(
     threshold_fields = [
         "analysis_plan_id", "unit_id", "unit_type", "threshold_method", "threshold_label", "threshold_global_p90_mps", "local_p90_mps",
         "valid_count", "missing_count", "expected_count", "valid_percentage", "exceedance_count", "non_exceedance_count", "exceedance_percentage",
-        "comparison_operator", "period_start", "period_end", "time_resolution", "depth_m", "dataset_id", "dataset_version", "config_hash", "minimum_valid_area_fraction", "aoi_geometry_status",
+        "comparison_operator", "period_start", "period_end", "time_resolution", "depth_m", "dataset_id", "dataset_version", "dataset_part", "product_id", "source_variables", "config_hash", "minimum_valid_area_fraction", "aoi_geometry_status",
     ]
     _write_csv(threshold_file, threshold_rows, threshold_fields)
     rose_long_file = output_path / "tables" / "current_rose_long.csv"
     rose_long_fields = [
         "analysis_plan_id", "unit_id", "unit_type", "direction_sector", "direction_center_deg", "direction_lower_deg", "direction_upper_deg",
         "speed_bin", "speed_lower_mps", "speed_upper_mps", "count", "frequency_percentage", "valid_count", "zero_count", "missing_count",
-        "sparse_class", "threshold_global_p90_mps", "period_start", "period_end", "time_resolution", "depth_m", "direction_convention", "dataset_id", "config_hash",
+        "sparse_class", "threshold_global_p90_mps", "period_start", "period_end", "time_resolution", "depth_m", "direction_convention", "dataset_id", "dataset_version", "dataset_part", "product_id", "source_variables", "config_hash",
     ]
     _write_csv(rose_long_file, current_rose_rows, rose_long_fields)
     rose_summary_file = output_path / "tables" / "current_rose_summary.csv"
@@ -848,7 +975,7 @@ def run_collection_analytics(
         "analysis_plan_id", "unit_id", "unit_type", "resultant_direction_deg", "resultant_speed_mps", "mean_speed_mps", "persistence",
         "dominant_sector", "dominant_speed_bin", "valid_count", "zero_count", "missing_count", "valid_percentage", "zero_percentage", "missing_percentage",
         "threshold_global_p90_mps", "period_start", "period_end", "time_resolution", "depth_m", "direction_convention", "direction_reference", "direction_rotation",
-        "sector_count", "sector_width_deg", "zero_epsilon_mps", "speed_bin_method", "speed_bin_quantiles", "direction_caveat", "aoi_geometry_status", "dataset_id", "config_hash",
+        "sector_count", "sector_width_deg", "zero_epsilon_mps", "speed_bin_method", "speed_bin_quantiles", "direction_caveat", "aoi_geometry_status", "dataset_id", "dataset_version", "dataset_part", "product_id", "source_variables", "config_hash",
     ]
     summary_csv_rows = [dict(row, speed_bin_quantiles=json.dumps(row["speed_bin_quantiles"]), speed_bin_definitions=json.dumps(row["speed_bin_definitions"])) for row in current_rose_summaries]
     _write_csv(rose_summary_file, summary_csv_rows, rose_summary_fields)
@@ -899,6 +1026,11 @@ def run_collection_analytics(
                 "missing_policy": "pairwise_valid_uv_and_minimum_valid_area",
                 "minimum_valid_area_fraction": MINIMUM_VALID_AREA_FRACTION,
             },
+            "static_expected_ocean_mask": {
+                "method": "baseline_valid_pair_from_first_validated_frame",
+                "cross_frame_consistency": "fail_closed_exact_array_equal",
+                "plans": sorted(static_expected_masks),
+            },
         },
         "analysis_period": analysis_period,
         "aoi": study_area,
@@ -907,6 +1039,17 @@ def run_collection_analytics(
         "products": products,
         "tables": table_records,
         "figures": current_rose_figures,
+        "masks": mask_records,
+        "source_metadata": {
+            plan: {
+                "dataset_id": source_metadata[plan]["dataset_id"],
+                "dataset_version": source_metadata[plan]["dataset_version"],
+                "dataset_part": source_metadata[plan]["dataset_part"],
+                "product_id": product_id,
+                "variables": ["uo", "vo"],
+            }
+            for plan in ("daily_jfm", "monthly_all")
+        },
         "decisions": {"OD-004": "RESOLVED", "OD-005": "RESOLVED", "OD-006": "RESOLVED"},
         "zone_status": "NOT_AVAILABLE_NO_ZONE_GEOMETRIES",
         "limitations": [
@@ -932,6 +1075,7 @@ def audit_analytics_manifest(manifest_path: str | Path) -> dict[str, Any]:
     checked_rasters = 0
     checked_tables = 0
     checked_figures = 0
+    checked_masks = 0
     for product in products:
         if not isinstance(product, dict):
             raise AnalyticsError("analytics product record is invalid")
@@ -974,6 +1118,28 @@ def audit_analytics_manifest(manifest_path: str | Path) -> dict[str, Any]:
         if path.suffix.lower() != ".svg" or "<svg" not in path.read_text(encoding="utf-8"):
             raise AnalyticsError(f"analytics figure is not a valid SVG: {path}")
         checked_figures += 1
+    for mask in manifest.get("masks", []):
+        if not isinstance(mask, dict):
+            raise AnalyticsError("analytics mask record is invalid")
+        path = Path(str(mask.get("path", ""))).resolve()
+        if not path.is_file() or sha256_file(path) != str(mask.get("sha256", "")):
+            raise AnalyticsError(f"analytics mask checksum or path mismatch: {path}")
+        with rasterio.open(path) as source:
+            if source.count != 1 or source.dtypes != ("uint8",):
+                raise AnalyticsError(f"analytics mask schema mismatch: {path}")
+            if source.nodata != 0 or source.crs is None or source.crs.to_string() != "EPSG:4326":
+                raise AnalyticsError(f"analytics mask spatial metadata mismatch: {path}")
+            values = source.read(1)
+            if not np.isin(values, [0, 1]).all():
+                raise AnalyticsError(f"analytics mask contains values outside 0/1: {path}")
+            if _mask_sha256(values.astype(bool)) != str(mask.get("mask_sha256", "")):
+                raise AnalyticsError(f"analytics mask content checksum mismatch: {path}")
+            tags = source.tags()
+            if tags.get("analytics_version") != manifest.get("analytics_version"):
+                raise AnalyticsError(f"analytics mask version tag mismatch: {path}")
+            if tags.get("config_hash") != manifest.get("config_hash"):
+                raise AnalyticsError(f"analytics mask config tag mismatch: {path}")
+        checked_masks += 1
     return {
         "status": "PASS_WITH_NOTES",
         "analytics_version": manifest.get("analytics_version"),
@@ -981,6 +1147,7 @@ def audit_analytics_manifest(manifest_path: str | Path) -> dict[str, Any]:
         "checked_raster_count": checked_rasters,
         "checked_table_count": checked_tables,
         "checked_figure_count": checked_figures,
+        "checked_mask_count": checked_masks,
         "frame_count": manifest.get("frame_count"),
         "limitations": manifest.get("limitations", []),
     }

@@ -47,8 +47,9 @@ belum tersedia tetap menjadi keterbatasan yang harus ditampilkan.
 
 ## Technical impact
 
-Analytics menghasilkan tabel threshold, tabel current-rose long/summary, dan
-figure SVG AOI. Semua metode, metadata, checksum, dan aturan missing dicatat
+Analytics menghasilkan tabel threshold, tabel current-rose long/summary,
+figure SVG AOI, dan static expected-ocean mask per analysis plan. Semua metode,
+metadata dataset T4, config hash lengkap, checksum, dan aturan missing dicatat
 di manifest Stage 5.
 
 ## Security/cost impact

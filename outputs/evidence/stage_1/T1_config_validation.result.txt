@@ -4,3 +4,5 @@ command=powershell -NoProfile -ExecutionPolicy Bypass -File tools/validate_m1_co
 exit_status=0
 evidence=AOI ordering, EPSG:4326, period/JFM fields, verified 50-level depth status, statistic fields, dataset IDs, timezone, asset-root prefix, and open thresholds validated
 limitations=No network, authentication, asset existence check, or operational computation was performed
+
+amendment_2026-08-05=Current validator re-run after ADR-011/OD-004..OD-006 decision; exit_status=0; resolved global AOI P90/current-rose contract and minimum_valid_area_fraction=0.95 validated. Historical baseline lines above are retained for audit chronology.

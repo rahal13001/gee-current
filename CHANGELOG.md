@@ -8,11 +8,16 @@
   Produk zona menunggu geometri valid; metodologi tidak diperlakukan sebagai
   ambang keselamatan atau operasional.
 
+- Memperkuat audit WP5-3: current-rose ZERO tidak diberi sektor, static
+  expected-ocean mask disimpan dan diaudit, config hash mencakup seluruh config
+  analytics, metadata dataset wajib berasal dari manifest T4, dan figure SVG
+  menampilkan periode/unit/bin dalam `m s-1`.
+
 - Menyelesaikan WP5-2/T5-008 conversion collection lokal: 165/165 entry
   tervalidasi dan 1.125/1.125 timestep menghasilkan GeoTIFF terinventaris
   dengan checksum/provenance; audit metadata dan comparator numerik seluruh
   collection lulus pada toleransi 1e-6. Output raster tetap lokal/diabaikan
-  Git; WP5-3 analytics menunggu persetujuan.
+  Git; WP5-3 analytics kemudian dijalankan setelah keputusan metodologi disahkan.
 
 - Menyelesaikan WP5-1 conversion pilot lokal melalui `python/conversion.py` dan
   comparator manifest-scoped. Fixture synthetic 5/5 lulus; satu job T4

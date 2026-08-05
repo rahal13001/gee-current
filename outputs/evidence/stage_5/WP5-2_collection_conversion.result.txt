@@ -110,8 +110,9 @@ Limitations and controls
 - This is the approved local/offline collection conversion only.
 - No GEE, Earth Engine, Copernicus Marine, network, authentication, download,
   upload, dependency installation, or cloud computation was performed.
-- No analytics decision T5-009..T5-027 was made; threshold/current rose and
-  other open scientific decisions remain unchanged.
+- At the time of this WP5-2 evidence, no analytics decision T5-009..T5-027
+  had been made. The later threshold/current-rose decision is recorded in
+  ADR-011 and WP5-3 evidence; conversion inputs and outputs remain unchanged.
 - The conversion manifest is the inventory/provenance record; the raster
   collection itself is intentionally not committed.
 

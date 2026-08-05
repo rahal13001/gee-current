@@ -110,6 +110,14 @@ storage/runtime bermakna. Bulk GeoTIFF/raw tidak menjadi artefak commit default.
 | T5-024—T5-025 | `BLOCKED_WITH_NOTES` | AOI tersedia sebagai bbox user-provided; polygon perairan/water mask belum memiliki provenance yang cukup untuk klaim zonal. |
 | T5-008 | `PENDING_APPROVAL` | Conversion collection 1.125 timestep menunggu pilot lulus dan persetujuan skala/storage/runtime. |
 
+### Addendum 2026-08-05
+
+The blocked T5-017/T5-019 rows above are the WP5-0 pre-decision snapshot.
+OD-004, OD-005, and OD-006 were subsequently resolved by the domain-expert
+decision documented in `docs/adr/ADR-011-threshold-current-rose.md` and
+implemented/audited in WP5-3 for the AOI. Zone geometry and formal ADR
+acceptance remain downstream governance/hand-off items.
+
 Tidak ada nilai threshold, bin, weighting, ddof, reference period, atau metode
 trend yang diciptakan dalam audit ini.
 

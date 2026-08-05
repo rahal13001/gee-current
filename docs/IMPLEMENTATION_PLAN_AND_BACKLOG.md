@@ -684,7 +684,7 @@ FR-CONF-01 sampai FR-CONF-06
 | T1-001 | P0 | FR-CONF-01 | Buat schema AOI | FND-005 | JSON schema | validasi west/east/south/north | `PASS_WITH_NOTES` |
 | T1-002 | P0 | FR-CONF-02 | Buat schema periode | FND-005 | period config | 2015–2025 dan JFM benar | `PASS_WITH_NOTES` |
 | T1-003 | P0 | FR-CONF-03 | Buat config depth | T0-007 | depth config | exact target + tolerance | `PASS_WITH_NOTES` |
-| T1-004 | P0 | FR-CONF-04 | Buat config threshold dan speed bins | FND-005 | statistics config | kosong/TBD diizinkan; tidak ditebak | `PASS_WITH_NOTES` |
+| T1-004 | P0 | FR-CONF-04 | Buat config threshold dan speed bins | FND-005 | statistics config, ADR-011 | literal threshold list tetap kosong karena global AOI P90 diturunkan; metode/scope/bin/QC tervalidasi | `PASS_WITH_NOTES` |
 | T1-005 | P0 | FR-CONF-05 | Buat config Project ID dan asset root | FND-009 | local example config | tidak memuat credential | `PASS_WITH_NOTES` |
 | T1-006 | P0 | FR-CONF-06 | Validasi tidak ada secret pada config | T1-001..T1-005 | security test | pattern secret gagal validation | `TESTED` |
 | T1-007 | P0 | Methodology | Implementasi config loader typed | T1-001..T1-005 | Python module | error jelas dan fail closed | `PASS_WITH_NOTES` |
@@ -898,7 +898,7 @@ FR-PY-01 sampai FR-PY-17
 | T5-022 | P0 | FR-PY-14 | Anomalies | T5-020,T5-021 | `data/validated/stage5_analytics/anomaly`, analytics manifest | 1,125 speed anomalies, reference period explicit | `PASS_WITH_NOTES` |
 | T5-023 | P2 | FR-PY-15 | Trend exploration | T5-020,T5-021 | `data/validated/stage5_analytics/trend`, analytics manifest | exploratory OLS slope only; no inferential/causal claim | `PASS_WITH_NOTES` |
 | T5-024 | P0 | FR-PY-16 | Zonal tables | T2-001,T5-009..T5-016 | `data/validated/stage5_analytics/tables/timestep_speed_statistics.csv` | 1,125 rows with valid count and approximate bbox area | `PASS_WITH_NOTES` |
-| T5-025 | P0 | FR-PY-17 | Precomputed raster products | T5-010..T5-024 | analytics manifest/audit | 2,264 derived rasters with metadata/checksums | `PASS_WITH_NOTES` |
+| T5-025 | P0 | FR-PY-17 | Precomputed raster products | T5-010..T5-024 | analytics manifest/audit | 2,264 derived rasters plus 2 auditable static masks, with metadata/checksums | `PASS_WITH_NOTES` |
 | T5-026 | P0 | Provenance | Product manifest dan checksums | T5-008,T5-025 | `outputs/manifests/stage_5_analytics_manifest.json`, `outputs/manifests/stage_5_analytics_audit.json` | all derived products and table traceable | `PASS_WITH_NOTES` |
 | T5-027 | P0 | Stage gate | Laporan Tahap 5 | T5-001..T5-026 | `outputs/evidence/stage_5/WP5-3_analytics.result.txt` | executable analytics PASS_WITH_NOTES; T5-017/T5-019 AOI products complete; zone products await geometry | `PASS_WITH_NOTES` |
 
@@ -1470,7 +1470,7 @@ Tidak boleh diimplementasikan sebelum diterima.
 |---|---|---|
 | Dokumentasi dianggap eksekusi | tahap dilompati | status baseline ganda |
 | AOI belum tersedia | pilot terblokir | OD-001/T2-001 |
-| Threshold ditebak | hasil menyesatkan | OD-004/T5-017 blocked |
+| Threshold ditebak | hasil menyesatkan | OD-004 resolved global AOI P90; config/ADR guard dan fail-closed validation |
 | Metadata berubah | seri tidak konsisten | T0-008/T3-012 |
 | Secret bocor | akun kompromi | FND-004/FND-016 |
 | Batch terlalu awal | error skala penuh | T2 gate |

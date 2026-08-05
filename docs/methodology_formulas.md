@@ -1,8 +1,9 @@
 # Approved methodology formulas
 
-This file is an implementation register for the formulas already approved in
-the PRD and Tahap 1. It does not introduce thresholds, alter the direction
-convention, or claim that active GLORYS data have been processed.
+This file is an implementation register for the formulas approved in the PRD,
+Tahap 1, and ADR-011. It does not introduce safety thresholds or alter the
+direction convention. Local Stage 5 processing is evidenced separately; no
+GEE/cloud processing is claimed here.
 
 Implementation: `python/common/scientific_formulas.py`
 

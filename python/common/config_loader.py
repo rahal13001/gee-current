@@ -157,15 +157,35 @@ def load_m1_config(config_root: str | Path) -> M1Config:
         raise ConfigError("speed thresholds must remain empty; T5-017 uses derived P90")
     if statistics.get("threshold_method") != "relative_high_current_threshold_global_p90":
         raise ConfigError("threshold method must be the approved global AOI P90")
+    if statistics.get("threshold_label") != "Ambang kondisi arus relatif tinggi, P90":
+        raise ConfigError("threshold label must describe a relative research P90")
+    if statistics.get("threshold_units") != "m s-1":
+        raise ConfigError("threshold units must be m s-1")
+    if statistics.get("threshold_scope") != "global_aoi_per_analysis_plan_id":
+        raise ConfigError("threshold scope must be global per analysis plan")
     if statistics.get("minimum_valid_area_fraction") != 0.95:
         raise ConfigError("minimum valid area fraction must be 0.95")
+    if statistics.get("minimum_valid_percentage") != 0.95:
+        raise ConfigError("legacy minimum valid percentage alias must equal 0.95")
     if statistics.get("threshold_status") != "RESOLVED_GLOBAL_AOI_P90":
         raise ConfigError("threshold status must record the resolved P90 decision")
     rose = statistics.get("current_rose")
     if not isinstance(rose, dict) or rose.get("sector_count") != 16:
         raise ConfigError("current rose must use 16 sectors")
+    if rose.get("sector_width_deg") != 22.5:
+        raise ConfigError("current rose sector width must be 22.5 degrees")
+    if rose.get("direction_convention") != "towards" or rose.get("direction_reference") != "true_north" or rose.get("direction_rotation") != "clockwise":
+        raise ConfigError("current rose direction convention must be towards/true_north/clockwise")
     if rose.get("zero_epsilon_mps") != 1e-6:
         raise ConfigError("current rose zero epsilon must be 1e-6 m s-1")
+    if rose.get("speed_bin_method") != "global_aoi_quantiles" or rose.get("speed_bin_quantiles") != [0.25, 0.5, 0.75, 0.9]:
+        raise ConfigError("current rose must use global AOI P25/P50/P75/P90 bins")
+    if rose.get("missing_policy") != "pairwise_valid_uv_and_minimum_valid_area":
+        raise ConfigError("current rose missing policy is not approved")
+    if rose.get("sparse_class_count") != 5:
+        raise ConfigError("current rose sparse class threshold must be 5")
+    if statistics.get("decision_ids") != ["OD-004", "OD-005", "OD-006"]:
+        raise ConfigError("resolved statistics decision IDs are incomplete")
     if local.get("copernicus_product_id") != PRODUCT_ID:
         raise ConfigError("Copernicus product ID does not match approved baseline")
     if local.get("copernicus_daily_dataset_id") != DAILY_DATASET_ID:

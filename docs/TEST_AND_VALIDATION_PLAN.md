@@ -67,7 +67,8 @@ Dokumen ini tidak menyatakan pengujian telah dijalankan. Status awal seluruh tes
 10. Test tidak boleh membaca atau mencetak secret.
 11. Setiap bug menambah regression test.
 12. Hasil negatif juga menjadi evidence.
-13. Open scientific decisions tetap `BLOCKED`.
+13. Unresolved scientific decisions tetap `BLOCKED`; resolved decisions must
+    be represented in config/ADR and validated fail-closed.
 14. Reproducibility mencakup config hash, dependency version, dan source checksum.
 
 ---
@@ -617,7 +618,7 @@ Kontrak output T4 sebelum implementasi:
 | TST-PY-013 | L1 | FR-PY-07 | Valid-only statistics | SERIES-WITH-NAN | Hitung statistik. | NaN dikecualikan; valid_count benar. | pytest | Otomatis |
 | TST-PY-014 | L1 | FR-PY-08 | Persentil P10–P99 | SERIES-ORDERED | Bandingkan dengan metode quantile yang dikunci. | Semua quantile cocok referensi; method metadata tersedia. | pytest | Otomatis |
 | TST-PY-015 | L1 | FR-PY-09 | Threshold exceedance | SERIES-THRESHOLD | Gunakan threshold yang telah disetujui fixture. | Count/persen menggunakan denominator valid. | pytest | Otomatis |
-| TST-PY-016 | L1 | FR-PY-09 | Threshold belum ditetapkan | CFG-THRESHOLD-TBD | Panggil fungsi production. | Status blocked/config error; tidak memilih nilai sendiri. | pytest | Otomatis |
+| TST-PY-016 | L1 | FR-PY-09 | Konfigurasi threshold tidak lengkap | CFG-THRESHOLD-UNRESOLVED | Hapus metode/status keputusan dari config lalu panggil loader/production path. | Fail closed; tidak memilih nilai threshold sendiri. | pytest | Otomatis |
 | TST-PY-017 | L1 | FR-PY-10 | 16 sektor arah | VEC-SECTOR-BOUNDARIES | Uji center dan batas sektor. | Seluruh arah masuk sektor yang ditentukan; wrap N benar. | pytest | Otomatis |
 | TST-PY-018 | L1 | FR-PY-11 | Current rose frequency | ROSE-KNOWN | Gunakan kombinasi arah/kelas terkontrol. | Total frekuensi=100% valid; matriks sesuai referensi. | pytest | Otomatis |
 | TST-PY-019 | L1 | FR-PY-11 | Current rose low-resultant caveat | ROSE-BIMODAL | Gunakan timur/barat sama banyak. | Output distribusi benar dan warning arah resultan tidak stabil. | pytest/report | Otomatis |
@@ -1175,7 +1176,7 @@ flowchart TD
 - [x] Python–GEE comparison diwajibkan.
 - [x] Memory/performance benchmark tersedia.
 - [x] Security dan governance tersedia.
-- [x] Threshold/speed bins tidak ditebak.
+- [x] Threshold/speed bins tidak ditebak; keputusan yang disahkan dicatat di ADR-011 dan config.
 - [x] AOI regional bbox user-provided dicatat; polygon/water mask tetap open.
 - [x] Test network membutuhkan approval.
 - [x] CI tidak membutuhkan secret.

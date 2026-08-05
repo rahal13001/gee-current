@@ -119,14 +119,16 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 - Manifest: `outputs/manifests/stage_5_analytics_manifest.json`;
   audit: `outputs/manifests/stage_5_analytics_audit.json`.
 - Hasil: 1.125 frame, 2.264 derived raster products, threshold table untuk
-  `daily_jfm` dan `monthly_all`, current-rose long/summary table, dan 2 SVG;
-  metadata/checksum audit lulus.
+  `daily_jfm` dan `monthly_all`, current-rose long/summary table, 2 SVG, dan
+  2 static expected-ocean mask GeoTIFF; metadata/checksum audit lulus.
 - Keputusan eksplisit: threshold `global AOI P90` per analysis plan dengan
   operator `>`; valid-area minimum `0,95` terhadap static expected-ocean mask;
   current rose 16 sektor `towards`, speed bins global P25/P50/P75/P90,
   `ZERO <= 1e-6 m s-1`, dan denominator frekuensi memasukkan zero.
 - `OD-004`, `OD-005`, dan `OD-006` dicatat `RESOLVED`; keputusan ini adalah
   metodologi penelitian, bukan ambang keselamatan/operasional.
+- Analytics version `stage5-analytics-1.1` menyimpan config hash lengkap,
+  dataset metadata T4, mask checksum, serta guard exact mask lintas frame.
 - T5-023 hanya exploratory trend; tidak ada klaim kausalitas/signifikansi.
 - AOI memakai bbox dan static expected-ocean mask dari baseline valid-pair;
   exact water polygon serta zona belum tersedia sehingga produk zona belum

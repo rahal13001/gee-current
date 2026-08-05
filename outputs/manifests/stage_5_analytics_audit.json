@@ -1,10 +1,11 @@
 {
   "status": "PASS_WITH_NOTES",
-  "analytics_version": "stage5-analytics-1.0",
+  "analytics_version": "stage5-analytics-1.1",
   "product_count": 2264,
   "checked_raster_count": 2264,
   "checked_table_count": 4,
   "checked_figure_count": 2,
+  "checked_mask_count": 2,
   "frame_count": 1125,
   "limitations": [
     "T5-023 trend is exploratory and does not establish causality or statistical significance.",
