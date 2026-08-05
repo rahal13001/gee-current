@@ -1949,17 +1949,30 @@ quarantine lama dipertahankan sebagai evidence.
 
 ### 36.10 `06_generate_stage3_report.py`
 
-Menghasilkan:
+Menghasilkan laporan dan gate offline dari plan lokal serta hasil T3-016:
 
 - jumlah job;
 - berhasil;
+- jumlah timestep;
 - gagal;
 - skip valid;
 - karantina;
+- jumlah file aktif dan checksum cocok;
 - total ukuran;
 - versi;
+- AOI dan depth aktif;
 - daftar masalah;
 - keputusan gerbang.
+
+Perintah:
+
+```powershell
+python python/06_generate_stage3_report.py --root E:\project\gee-current
+```
+
+Laporan tidak mengubah inventory, file, status job, atau konfigurasi. Gate
+`PASS_WITH_NOTES` tetap dapat diterima untuk Tahap 3 bila satu-satunya catatan
+adalah artefak quarantine historis yang tidak berada pada output aktif.
 
 ---
 

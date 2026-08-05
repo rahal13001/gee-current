@@ -24,6 +24,10 @@
   read-only plan, SQLite inventory, file aktif, SHA-256, partial, dan quarantine.
   Rekonsiliasi aktual menemukan 165/165 file aktif dan checksum cocok; tiga file
   quarantine lama dipertahankan sebagai audit evidence.
+- Menambahkan T3-017 `python/06_generate_stage3_report.py` untuk laporan dan
+  gate Tahap 3. Cross-check final menghasilkan 165 job, 1.125 timestep, 165
+  checksum cocok, dan keputusan `PASS_WITH_NOTES`; status T3-014 sampai T3-017
+  diperbarui setelah instruksi eksplisit user.
 - Mencatat proposal AOI ekspansi terpisah untuk perairan Papua, Maluku, dan
   Maluku Utara di `docs/AOI_EXPANSION_PROPOSAL.md` dan menerapkan bbox user ke
   `config/study_area.json` sebagai AOI aktif `eastern_indonesia_regional_001`.

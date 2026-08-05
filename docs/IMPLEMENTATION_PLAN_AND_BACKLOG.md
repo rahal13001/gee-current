@@ -797,10 +797,10 @@ FR-META-02 sampai FR-META-05
 | T3-011 | P0 | FR-DL-09 | Guard daily full disabled | T1-007 | `python/02_build_download_plan.py`, unit tests, evidence | aktivasi tanpa approval gagal; tidak ada plan/output | `PASS_WITH_NOTES` |
 | T3-012 | P0 | FR-META-04,05 | Pin version/part pada batch | T0-008 | `python/dataset_pin.py`, manifest, unit tests, evidence | perubahan tengah batch menghentikan proses | `PASS_WITH_NOTES` |
 | T3-013 | P0 | Security | Sanitasi log unduhan | FND-016 | `python/log_sanitizer.py`, unit tests, evidence | tidak ada secret | `PASS_WITH_NOTES` |
-| T3-014 | P0 | FR-DL-01 | Jalankan batch bulanan | T3-001..T3-013 | 132 NetCDF | seluruh job status valid | `NOT_STARTED` |
-| T3-015 | P0 | FR-DL-02 | Jalankan batch JFM | T3-001..T3-013 | 33 NetCDF | 993 timestep | `NOT_STARTED` |
-| T3-016 | P0 | Pipeline | Rekonsiliasi filesystem–inventory | T3-014,T3-015 | `outputs/evidence/stage_3/T3-016_inventory_reconciliation.result.txt` | 165 file terhitung | `NOT_STARTED` |
-| T3-017 | P0 | Stage gate | Laporan Tahap 3 | T3-014..T3-016 | final report | `PASS` berbukti | `NOT_STARTED` |
+| T3-014 | P0 | FR-DL-01 | Jalankan batch bulanan | T3-001..T3-013 | 132 NetCDF | seluruh job status valid | `PASS_WITH_NOTES` |
+| T3-015 | P0 | FR-DL-02 | Jalankan batch JFM | T3-001..T3-013 | 33 NetCDF | 993 timestep | `PASS_WITH_NOTES` |
+| T3-016 | P0 | Pipeline | Rekonsiliasi filesystem–inventory | T3-014,T3-015 | `outputs/evidence/stage_3/T3-016_inventory_reconciliation.result.txt` | 165 file terhitung | `PASS_WITH_NOTES` |
+| T3-017 | P0 | Stage gate | Laporan Tahap 3 | T3-014..T3-016 | `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt` | `PASS_WITH_NOTES` berbukti | `PASS_WITH_NOTES` |
 
 ---
 

@@ -539,6 +539,7 @@ Evidence tidak boleh memuat:
 | TST-DL-014 | L1 | FR-DL-08 | Dry run tidak mengunduh | Valid plan | Jalankan --dry-run. | Request ditampilkan/disimpan; tidak ada NetCDF baru. | pytest/filesystem diff | Otomatis |
 | TST-DL-015 | L1 | FR-DL-09 | Daily full disabled | Config default | Coba menjalankan daily_full tanpa gate. | Command ditolak dan tidak membuat plan/job. | pytest | Otomatis |
 | TST-DL-016 | L1 | Pipeline | Rekonsiliasi filesystem-inventory | 165 active NetCDF + SQLite | Jalankan `python/05_reconcile_inventory.py` read-only. | 165 job/file, 1125 timestep, checksum cocok, partial kosong, quarantine dicatat sebagai note. | evidence/report | Semiotomatis |
+| TST-DL-017 | L1 | Stage gate | Laporan Tahap 3 | T3-014..T3-016 evidence | Jalankan `python/06_generate_stage3_report.py`. | Laporan memuat counts, checksum, version/part, AOI/depth, limitations, dan gate decision. | evidence/report | Semiotomatis |
 
 ## Validasi NetCDF
 

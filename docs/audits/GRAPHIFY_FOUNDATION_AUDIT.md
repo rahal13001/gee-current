@@ -408,3 +408,15 @@ its unit tests, Graphify was refreshed code-only on 2026-08-05:
 - `graphify export html --graph graphify-out\graph.json`: exit `0`; `graphify-out\graph.html` regenerated.
 - The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
 - Graphify confirms repository structure only; it does not independently validate the 165 downloaded files or scientific NetCDF quality.
+
+## Post-T3-017 stage gate refresh
+
+After adding the Stage 3 gate report generator and updating the authorized task
+statuses, Graphify was refreshed code-only on 2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 714 nodes and 1,520 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 714 nodes, 1,321 edges, and 62 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --undirected`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html --graph graphify-out\graph.json`: exit `0`; `graphify-out\graph.html` regenerated.
+- The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
+- Graphify confirms repository structure only; it does not independently validate scientific NetCDF quality or user-managed service execution.

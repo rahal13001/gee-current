@@ -1,0 +1,88 @@
+T3-017 Stage 3 gate evidence
+Date: 2026-08-05
+Repository: E:\project\gee-current
+Scope: offline report/gate over user-managed local download artifacts; no authentication, credential access, network, download, upload, or asset mutation
+
+Implementation:
+- Added python/06_generate_stage3_report.py.
+- The report rebuilds monthly_all and daily_jfm plans, calls the read-only
+  T3-016 reconciliation, records AOI/depth and dataset version/part, and emits
+  a deterministic Stage 3 gate decision.
+- Added tests/unit/test_stage3_report.py for nominal note and blocking-failure
+  gate decisions.
+
+Commands and results:
+1. .\\.venv\\Scripts\\python.exe -m unittest tests.unit.test_stage3_report tests.unit.test_stage3_reconcile_inventory -v
+   Exit status: 0
+   Result: 4 tests passed, including report rendering, gate failure behavior,
+   shared-plan reconciliation, and checksum/missing/extra-file failure detection.
+
+2. .\\.venv\\Scripts\\python.exe .\\python\\06_generate_stage3_report.py --root E:\\project\\gee-current
+   Exit status: 0
+   Result:
+   stage=T3-017
+   report_type=stage3_gate
+   monthly_jobs=132
+   daily_jfm_jobs=33
+   total_jobs=165
+   monthly_timesteps=132
+   daily_jfm_timesteps=993
+   total_timesteps=1125
+   inventory_jobs=165
+   ready_jobs=165
+   active_files=165
+   checksum_matches=165
+   partial_files=0
+   quarantine_files=3
+   dataset_versions=202311
+   dataset_parts=default
+   aoi_name=eastern_indonesia_regional_001
+   aoi_west=122.98619
+   aoi_east=143.326183
+   aoi_south=-12.191592
+   aoi_north=4.265137
+   depth_m=0.494025
+   daily_full=DISABLED
+   reconciliation_status=PASS_WITH_NOTES
+   issue_count=1
+   issue=NOTE|QUARANTINE_ARTIFACTS|3 quarantined NetCDF artifact(s) retained as audit evidence
+   gate_decision=PASS_WITH_NOTES
+
+3. .\\.venv\\Scripts\\python.exe .\\python\\05_reconcile_inventory.py --root E:\\project\\gee-current --plan all
+   Exit status: 0
+   Result: 165/165 active files, 165/165 checksum matches, 0 partial files,
+   and three retained quarantine artifacts as a non-blocking note.
+
+Decision:
+- T3-014 monthly, T3-015 daily JFM, T3-016 reconciliation, and T3-017 gate
+  are updated to PASS_WITH_NOTES after explicit user instruction.
+- M0 remains IN_PROGRESS.
+- ADRs remain PROPOSED.
+- T4 remains pending; scientific NetCDF validation is not inferred from this
+  filesystem/inventory gate.
+
+Limitations:
+- The actual Copernicus operations were user-managed; Codex did not authenticate,
+  read credentials, access network, or rerun downloads.
+- Three historical invalid outputs remain in quarantine as auditable evidence and
+  are excluded from active-file counts.
+
+Final validation:
+4. .\\.venv\\Scripts\\python.exe -m unittest discover -s tests\\unit -p "test_*.py"
+   Exit status: 0; 79 tests passed.
+
+5. powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\security\\check_secrets.ps1 -Root E:\\project\\gee-current
+   Exit status: 0; no potential secret indicators; two documentation placeholders
+   were classified and values were suppressed.
+
+6. powershell -NoProfile -ExecutionPolicy Bypass -File .\\tools\\run_foundation_checks.ps1 -Root E:\\project\\gee-current -ReadOnly
+   Exit status: 0; Foundation checks returned PASS/PASS_WITH_NOTES only.
+
+7. git diff --check
+   Exit status: 0; only normal LF/CRLF conversion warnings were reported.
+
+8. Graphify code-only refresh and diagnostics:
+   `graphify update` exit 0 with 714 nodes/1520 edges before clustering;
+   `cluster-only` exit 0 with 714 nodes/1321 edges/62 communities;
+   `diagnose multigraph` exit 0 with 0 missing endpoints, 0 dangling endpoints,
+   0 self-loops, and 0 collapsed endpoint pairs; HTML export exit 0.
