@@ -1,0 +1,1506 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "stage": "T5-008",
+  "job_count": 165,
+  "file_count": 1125,
+  "absolute_tolerance": 1e-06,
+  "max_absolute_difference": 1.1920928955078125e-07,
+  "max_error_location": {
+    "time": "2022-03-17T00:00:00",
+    "band_index": 1,
+    "row": 19,
+    "column": 67
+  },
+  "output_root": "E:\\project\\gee-current\\data\\geotiff\\stage5_collection",
+  "jobs": [
+    {
+      "job_id": "daily_jfm_2015_01",
+      "file_count": 31,
+      "max_absolute_difference": 1.0058283805847168e-07,
+      "mean_absolute_difference": 3.4200350649218835e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2015_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.2010904806505732e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2015_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3593433203760276e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2016_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.250094238482004e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2016_02",
+      "file_count": 29,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.2549167186004456e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2016_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.605151480573264e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2017_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1186184519496366e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2017_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3495214741559783e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2017_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6228285405339133e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2018_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1648122784505792e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2018_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1408147274416373e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2018_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3433702926105556e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2019_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6948633178949987e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2019_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.92612163557874e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2019_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.594906062801903e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2020_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.146039119488939e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2020_02",
+      "file_count": 29,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6634012982609487e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2020_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.815206801572216e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2021_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4524738343882656e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2021_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1065049986303026e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2021_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.9435715930957378e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2022_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1061869003478078e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2022_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6339342043499164e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2022_03",
+      "file_count": 31,
+      "max_absolute_difference": 1.1920928955078125e-07,
+      "mean_absolute_difference": 3.3998231812687636e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2023_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.314178886989432e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2023_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.478002101404765e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2023_03",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.280542443649215e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2024_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.984042432753835e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2024_02",
+      "file_count": 29,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.823145220301572e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2024_03",
+      "file_count": 31,
+      "max_absolute_difference": 1.043081283569336e-07,
+      "mean_absolute_difference": 4.233513352544976e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2025_01",
+      "file_count": 31,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.069626010295405e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2025_02",
+      "file_count": 28,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3728422203085484e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "daily_jfm_2025_03",
+      "file_count": 31,
+      "max_absolute_difference": 1.0803341865539551e-07,
+      "mean_absolute_difference": 4.177525889050397e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.802074763137994e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.488696571856183e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.4747383650759345e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.20887447364204e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.7947431797786716e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.2058849871313505e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.68065200697671e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 3.725290298461914e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.73996263646046e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 3.3527612686157227e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.977242980444786e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.2480885887766814e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3361524124671035e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2015_12",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.4431561598357756e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.173156503429956e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.637913092150087e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_03",
+      "file_count": 1,
+      "max_absolute_difference": 3.725290298461914e-08,
+      "mean_absolute_difference": 2.906455831349887e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3646797913075444e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.3257751739879644e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.7986909554336914e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.534424973193496e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.5565137179299163e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.860821424671027e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.2347791733257017e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.4026444620425963e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2016_12",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 1.941976640965165e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_01",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.4573023559329303e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_02",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.407109208319107e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_03",
+      "file_count": 1,
+      "max_absolute_difference": 4.0978193283081055e-08,
+      "mean_absolute_difference": 3.006654137260628e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 3.0000745111689286e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.60422517837464e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4738075897713063e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.9759648812757718e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6298857201322684e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.189529916560554e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.517515105951883e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_11",
+      "file_count": 1,
+      "max_absolute_difference": 4.842877388000488e-08,
+      "mean_absolute_difference": 2.405558296454635e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2017_12",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.3583729779113024e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_01",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.218226942158099e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.3636836761138886e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.5082474608143764e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_04",
+      "file_count": 1,
+      "max_absolute_difference": 4.842877388000488e-08,
+      "mean_absolute_difference": 2.222174717813119e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.874835800060403e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_06",
+      "file_count": 1,
+      "max_absolute_difference": 8.195638656616211e-08,
+      "mean_absolute_difference": 4.310501041989376e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 3.3527612686157227e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.05149876062254e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.04886691018586e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.793154441864874e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.730178020701463e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.689751146286835e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2018_12",
+      "file_count": 1,
+      "max_absolute_difference": 3.3527612686157227e-08,
+      "mean_absolute_difference": 2.131234885759984e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.073202355445248e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3856406001425308e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.84065957043289e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.8371347707409082e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 2.453542569594816e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.8331491690365624e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.5607526488401953e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.808240584546556e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.8381308859345635e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.0913054984773224e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 2.5844771288196397e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2019_12",
+      "file_count": 1,
+      "max_absolute_difference": 4.842877388000488e-08,
+      "mean_absolute_difference": 1.8608592507203528e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_01",
+      "file_count": 1,
+      "max_absolute_difference": 4.470348358154297e-08,
+      "mean_absolute_difference": 2.4266130999480736e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1959123820554473e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.9947638129663424e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.9996045378766644e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.906605994617467e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.979780836223013e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.1884959753175725e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6246220192589088e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.393545322732471e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.844569520038584e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.8862469797825237e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2020_12",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.348738525419885e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 3.0049152360792502e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 2.3937619668188016e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 1.879517190423244e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_04",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 1.7057680642731458e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.8649101923137263e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4330139080027684e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.332439623458216e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.925122942332679e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.42367061076661e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4241314127789738e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.432872916015089e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2021_12",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.4205504444778647e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.5827852249674886e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.9827324966843773e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 2.6128635156724015e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_04",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.006362982005369e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.1859019509302185e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.778303285829323e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.81608913852737e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.156396799455924e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 4.325399195354152e-09,
+      "p95_absolute_difference": 1.862645149230957e-08,
+      "p99_absolute_difference": 3.725290298461914e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.5750868342542553e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.6568530158283365e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2022_12",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.1539815931055742e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_01",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.5219706809484927e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.945557609266274e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.136968559925608e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.21540641784668e-08,
+      "mean_absolute_difference": 1.513454993078609e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 2.9191451102410224e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3403351747682556e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.573159943755972e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.968501477208671e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.9653526561505e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.2083196769712238e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.4150047596291465e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2023_12",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.318284256081161e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_01",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.430006078932277e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.350674587198069e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4615412868432093e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6253269791973053e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.122925529766807e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.502287971282521e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.272706018011428e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.797431198824479e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.429583102969239e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.5843453081118613e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_11",
+      "file_count": 1,
+      "max_absolute_difference": 5.587935447692871e-08,
+      "mean_absolute_difference": 3.3514735417949185e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2024_12",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.6087747480297023e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_01",
+      "file_count": 1,
+      "max_absolute_difference": 4.0978193283081055e-08,
+      "mean_absolute_difference": 2.2682321004550167e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_02",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.6140006228537363e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_03",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.4812801651183083e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.9802322387695312e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_04",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.8101583037649395e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_05",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.7680486967780614e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_06",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.7291349081785804e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_07",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 2.896539394883111e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_08",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.060231092578754e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 2.2351741790771484e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_09",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.5717030265499525e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_10",
+      "file_count": 1,
+      "max_absolute_difference": 5.960464477539063e-08,
+      "mean_absolute_difference": 3.3608260103109774e-09,
+      "p95_absolute_difference": 1.4901161193847656e-08,
+      "p99_absolute_difference": 2.60770320892334e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_11",
+      "file_count": 1,
+      "max_absolute_difference": 4.0978193283081055e-08,
+      "mean_absolute_difference": 2.317391306825859e-09,
+      "p95_absolute_difference": 1.1175870895385742e-08,
+      "p99_absolute_difference": 1.862645149230957e-08,
+      "status": "PASS_WITH_NOTES"
+    },
+    {
+      "job_id": "monthly_2025_12",
+      "file_count": 1,
+      "max_absolute_difference": 2.9802322387695312e-08,
+      "mean_absolute_difference": 2.052655351293399e-09,
+      "p95_absolute_difference": 7.450580596923828e-09,
+      "p99_absolute_difference": 1.4901161193847656e-08,
+      "status": "PASS_WITH_NOTES"
+    }
+  ],
+  "limitations": [
+    "Comparison was performed locally against decoded NetCDF values.",
+    "No Earth Engine ingestion or cloud execution was validated."
+  ]
+}

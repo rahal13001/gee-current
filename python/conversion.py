@@ -106,6 +106,42 @@ def load_manifest_entry(manifest_path: str | Path, job_id: str) -> dict[str, Any
     return entry
 
 
+def load_validated_manifest_entries(manifest_path: str | Path) -> list[dict[str, Any]]:
+    """Load all PASS entries from a validated Stage 4 manifest deterministically."""
+
+    path = Path(manifest_path)
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ConversionError(f"cannot read manifest: {path}") from exc
+    if not isinstance(document, dict) or not isinstance(document.get("entries"), list):
+        raise ConversionError("manifest must contain an entries list")
+    entries: list[dict[str, Any]] = []
+    seen_job_ids: set[str] = set()
+    for raw_entry in document["entries"]:
+        if not isinstance(raw_entry, dict):
+            raise ConversionError("manifest entries must be objects")
+        entry = dict(raw_entry)
+        if entry.get("status") != "PASS":
+            raise ConversionError("collection manifest contains a non-PASS entry")
+        job_id = _require_text(entry, "job_id")
+        if job_id in seen_job_ids:
+            raise ConversionError(f"manifest contains duplicate job_id={job_id!r}")
+        seen_job_ids.add(job_id)
+        _require_text(entry, "plan_name")
+        _require_text(entry, "relative_path")
+        checksum = _require_text(entry, "source_checksum")
+        if len(checksum) != 64 or any(char not in "0123456789abcdefABCDEF" for char in checksum):
+            raise ConversionError(f"manifest source_checksum is not SHA-256 for {job_id!r}")
+        expected_timesteps = entry.get("expected_timesteps")
+        if not isinstance(expected_timesteps, int) or expected_timesteps <= 0:
+            raise ConversionError(f"manifest expected_timesteps is invalid for {job_id!r}")
+        entries.append(entry)
+    if not entries:
+        raise ConversionError("validated manifest contains no entries")
+    return sorted(entries, key=lambda item: str(item["job_id"]))
+
+
 def config_hash(paths: Iterable[str | Path], *, root: str | Path | None = None) -> str:
     """Hash the ordered contents and relative names of explicit config files."""
 
@@ -489,6 +525,304 @@ def compare_job_outputs(
     }
 
 
+def _collection_job_directory(output_root: Path, entry: Mapping[str, Any]) -> Path:
+    """Return and validate the isolated output directory for one collection job."""
+
+    plan_name = _require_text(entry, "plan_name")
+    job_id = _require_text(entry, "job_id")
+    for value, label in ((plan_name, "plan_name"), (job_id, "job_id")):
+        if value in {".", ".."} or Path(value).name != value or any(char in value for char in ("/", "\\")):
+            raise ConversionError(f"manifest {label} is not a safe output path component")
+    directory = (output_root / plan_name / job_id).resolve()
+    try:
+        directory.relative_to(output_root.resolve())
+    except ValueError as exc:
+        raise ConversionError("collection output path escapes output root") from exc
+    return directory
+
+
+def _entry_prefix(entry: Mapping[str, Any]) -> str:
+    """Derive a deterministic TIFF prefix from a manifest source filename."""
+
+    relative_path = _require_text(entry, "relative_path")
+    prefix = Path(relative_path).stem
+    if not prefix or prefix in {".", ".."} or any(char in prefix for char in ("/", "\\")):
+        raise ConversionError("manifest relative_path has an unsafe output prefix")
+    return prefix
+
+
+def _atomic_write_json(path: Path, document: Mapping[str, Any]) -> None:
+    """Write JSON through a sibling temporary file and atomic replacement."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            temporary = Path(handle.name)
+            json.dump(document, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except OSError as exc:
+        raise ConversionError(f"cannot atomically write JSON report: {path}") from exc
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
+def convert_collection(
+    *,
+    root: str | Path,
+    manifest_path: str | Path,
+    output_root: str | Path,
+    config_hash_value: str,
+    expected_job_count: int = 165,
+    expected_timestep_count: int = 1125,
+    overwrite: bool = False,
+    resume: bool = False,
+) -> dict[str, Any]:
+    """Convert every validated manifest entry into an isolated local collection."""
+
+    if len(config_hash_value) != 64:
+        raise ConversionError("config_hash_value must be a SHA-256 hex digest")
+    if expected_job_count <= 0 or expected_timestep_count <= 0:
+        raise ConversionError("collection expectations must be positive")
+    root_path = Path(root).resolve()
+    manifest = Path(manifest_path).resolve()
+    output_path = Path(output_root).resolve()
+    entries = load_validated_manifest_entries(manifest)
+    total_expected = sum(int(entry["expected_timesteps"]) for entry in entries)
+    if len(entries) != expected_job_count:
+        raise ConversionError(
+            f"validated manifest job count {len(entries)} != expected {expected_job_count}"
+        )
+    if total_expected != expected_timestep_count:
+        raise ConversionError(
+            f"validated manifest timestep count {total_expected} != expected {expected_timestep_count}"
+        )
+    jobs: list[dict[str, Any]] = []
+    for entry in entries:
+        job_id = _require_text(entry, "job_id")
+        job_directory = _collection_job_directory(output_path, entry)
+        prefix = _entry_prefix(entry)
+        resumed = False
+        if resume and job_directory.is_dir():
+            try:
+                existing = compare_job_outputs(
+                    root=root_path,
+                    entry=entry,
+                    geotiff_dir=job_directory,
+                    prefix=prefix,
+                )
+                resumed = True
+                job_report: dict[str, Any] = {
+                    "status": "RESUMED",
+                    "job_id": job_id,
+                    "plan_name": _require_text(entry, "plan_name"),
+                    "prefix": prefix,
+                    "output_dir": str(job_directory),
+                    "output_count": int(existing["file_count"]),
+                    "outputs": [
+                        {
+                            "path": item["path"],
+                            "time": item["time"],
+                            "sha256": sha256_file(Path(item["path"])),
+                            "valid_pixel_count": item["valid_pixel_count"],
+                        }
+                        for item in existing["files"]
+                    ],
+                    "source_checksum": _require_text(entry, "source_checksum"),
+                    "comparison_max_absolute_difference": existing["max_absolute_difference"],
+                }
+            except (ConversionError, OSError):
+                resumed = False
+        if not resumed:
+            converted = convert_job(
+                root=root_path,
+                entry=entry,
+                output_dir=job_directory,
+                config_hash_value=config_hash_value,
+                prefix=prefix,
+                overwrite=overwrite or resume,
+            )
+            job_report = dict(converted)
+            job_report["plan_name"] = _require_text(entry, "plan_name")
+            job_report["prefix"] = prefix
+            job_report["output_dir"] = str(job_directory)
+        job_report["resumed"] = resumed
+        jobs.append(job_report)
+    return {
+        "status": "PASS_WITH_NOTES",
+        "stage": "T5-008",
+        "job_count": len(jobs),
+        "expected_job_count": expected_job_count,
+        "timestep_count": sum(int(job["output_count"]) for job in jobs),
+        "expected_timestep_count": expected_timestep_count,
+        "manifest": str(manifest),
+        "manifest_sha256": sha256_file(manifest),
+        "output_root": str(output_path),
+        "config_hash": config_hash_value,
+        "pipeline_version": PIPELINE_VERSION,
+        "jobs": jobs,
+        "limitations": [
+            "Collection conversion was performed locally and offline only.",
+            "No Earth Engine upload, cloud computation, or network access was performed.",
+            "Monthly and daily_jfm outputs are isolated by plan_name/job_id to avoid timestamp collisions.",
+        ],
+    }
+
+
+def audit_collection_outputs(
+    *,
+    conversion_report: Mapping[str, Any],
+    output_root: str | Path,
+) -> dict[str, Any]:
+    """Audit all collection files, checksums, raster metadata, and inventory counts."""
+
+    if conversion_report.get("status") != "PASS_WITH_NOTES":
+        raise ConversionError("conversion report is not PASS_WITH_NOTES")
+    output_path = Path(output_root).resolve()
+    jobs = conversion_report.get("jobs")
+    if not isinstance(jobs, list) or not jobs:
+        raise ConversionError("conversion report has no jobs")
+    total_outputs = 0
+    checked_outputs = 0
+    job_summaries: list[dict[str, Any]] = []
+    for job in jobs:
+        if not isinstance(job, dict):
+            raise ConversionError("conversion report job is not an object")
+        job_id = _require_text(job, "job_id")
+        outputs = job.get("outputs")
+        if not isinstance(outputs, list):
+            raise ConversionError(f"conversion report outputs are invalid for {job_id!r}")
+        expected_count = int(job.get("output_count", -1))
+        if len(outputs) != expected_count:
+            raise ConversionError(f"inventory count mismatch for {job_id!r}")
+        expected_source_checksum = _require_text(job, "source_checksum")
+        expected_config_hash = _require_text(conversion_report, "config_hash")
+        total_outputs += expected_count
+        for output in outputs:
+            if not isinstance(output, dict):
+                raise ConversionError(f"output inventory record is invalid for {job_id!r}")
+            raw_path = Path(_require_text(output, "path")).resolve()
+            try:
+                raw_path.relative_to(output_path)
+            except ValueError as exc:
+                raise ConversionError(f"output path escapes output root for {job_id!r}") from exc
+            if not raw_path.is_file():
+                raise ConversionError(f"output file is missing: {raw_path}")
+            if sha256_file(raw_path) != _require_text(output, "sha256"):
+                raise ConversionError(f"output checksum mismatch: {raw_path}")
+            with rasterio.open(raw_path) as raster:
+                if raster.count != 2 or raster.dtypes != ("float32", "float32"):
+                    raise ConversionError(f"raster schema mismatch: {raw_path}")
+                if raster.crs is None or raster.crs.to_string() != CRS:
+                    raise ConversionError(f"raster CRS mismatch: {raw_path}")
+                if raster.nodata != NODATA_VALUE or raster.descriptions != CURRENT_VARIABLES:
+                    raise ConversionError(f"raster metadata mismatch: {raw_path}")
+                tags = raster.tags()
+                for key, expected in (
+                    ("job_id", job_id),
+                    ("plan_name", _require_text(job, "plan_name")),
+                    ("source_checksum", expected_source_checksum),
+                    ("config_hash", expected_config_hash),
+                    ("variables", "uo,vo"),
+                    ("crs", CRS),
+                    ("resampling", "none"),
+                    ("pipeline_version", PIPELINE_VERSION),
+                ):
+                    if tags.get(key) != expected:
+                        raise ConversionError(f"raster tag {key!r} mismatch: {raw_path}")
+            checked_outputs += 1
+        job_summaries.append(
+            {
+                "job_id": job_id,
+                "output_count": expected_count,
+                "checked_count": expected_count,
+                "status": "PASS_WITH_NOTES",
+            }
+        )
+    if total_outputs != int(conversion_report.get("expected_timestep_count", -1)):
+        raise ConversionError("collection inventory total does not match expected timestep count")
+    return {
+        "status": "PASS_WITH_NOTES",
+        "stage": "T5-008",
+        "job_count": len(jobs),
+        "output_count": total_outputs,
+        "checked_output_count": checked_outputs,
+        "output_root": str(output_path),
+        "jobs": job_summaries,
+        "limitations": [
+            "This audit verifies local output structure, metadata, paths, and SHA-256 inventory.",
+            "Numeric source comparison is reported separately by the collection comparator.",
+        ],
+    }
+
+
+def compare_collection_outputs(
+    *,
+    root: str | Path,
+    manifest_path: str | Path,
+    output_root: str | Path,
+    tolerance: float = 1e-6,
+) -> dict[str, Any]:
+    """Compare every converted collection timestep against its decoded NetCDF source."""
+
+    entries = load_validated_manifest_entries(manifest_path)
+    output_path = Path(output_root).resolve()
+    job_summaries: list[dict[str, Any]] = []
+    max_difference = 0.0
+    max_location: dict[str, Any] | None = None
+    total_outputs = 0
+    for entry in entries:
+        job_id = _require_text(entry, "job_id")
+        report = compare_job_outputs(
+            root=root,
+            entry=entry,
+            geotiff_dir=_collection_job_directory(output_path, entry),
+            prefix=_entry_prefix(entry),
+            tolerance=tolerance,
+        )
+        total_outputs += int(report["file_count"])
+        if float(report["max_absolute_difference"]) >= max_difference:
+            max_difference = float(report["max_absolute_difference"])
+            max_location = report.get("max_error_location")
+        job_summaries.append(
+            {
+                "job_id": job_id,
+                "file_count": report["file_count"],
+                "max_absolute_difference": report["max_absolute_difference"],
+                "mean_absolute_difference": report["mean_absolute_difference"],
+                "p95_absolute_difference": report["p95_absolute_difference"],
+                "p99_absolute_difference": report["p99_absolute_difference"],
+                "status": report["status"],
+            }
+        )
+    return {
+        "status": "PASS_WITH_NOTES",
+        "stage": "T5-008",
+        "job_count": len(job_summaries),
+        "file_count": total_outputs,
+        "absolute_tolerance": tolerance,
+        "max_absolute_difference": max_difference,
+        "max_error_location": max_location,
+        "output_root": str(output_path),
+        "jobs": job_summaries,
+        "limitations": [
+            "Comparison was performed locally against decoded NetCDF values.",
+            "No Earth Engine ingestion or cloud execution was validated.",
+        ],
+    }
+
+
 __all__ = [
     "CRS",
     "ConversionError",
@@ -497,7 +831,11 @@ __all__ = [
     "PIPELINE_VERSION",
     "PreparedSource",
     "config_hash",
+    "audit_collection_outputs",
     "compare_job_outputs",
+    "compare_collection_outputs",
+    "convert_collection",
     "convert_job",
     "load_manifest_entry",
+    "load_validated_manifest_entries",
 ]

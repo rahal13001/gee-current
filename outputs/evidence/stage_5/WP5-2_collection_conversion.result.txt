@@ -1,0 +1,126 @@
+WP5-2 / T5-008 Collection Conversion - Evidence
+================================================
+
+Task scope
+----------
+- Work package: WP5-2.
+- Task: T5-008 conversion source collection inti.
+- Decision: PASS_WITH_NOTES.
+- Input contract: only PASS entries from
+  outputs/manifests/stage_4_validated_manifest.json.
+- Expected scope: 165 source jobs and 1,125 timesteps.
+- M0 remains IN_PROGRESS; ADR-004, ADR-007, and ADR-009 remain PROPOSED.
+
+Implementation
+--------------
+- python/conversion.py: deterministic collection orchestration, fail-closed
+  manifest validation, per-plan/job isolation, atomic JSON reports, complete
+  output audit, and complete collection comparator.
+- python/06_convert_stage5_collection.py: collection conversion CLI.
+- python/07_audit_stage5_collection.py: inventory/checksum/raster metadata audit.
+- python/08_compare_stage5_collection.py: all-job numeric comparator.
+- tests/unit/test_stage5_conversion.py: collection conversion, audit, and
+  comparator regression coverage.
+
+Conversion command and result
+-----------------------------
+Command:
+.\.venv\Scripts\python.exe python\06_convert_stage5_collection.py
+--root E:\project\gee-current
+--manifest outputs\manifests\stage_4_validated_manifest.json
+--output-root data\geotiff\stage5_collection
+--config-file docs\PRD_GLORYS_Current_Research_Teaching_System.md
+--config-file docs\SECURITY_AND_SECRETS.md
+--config-file pyproject.toml
+--report outputs\manifests\stage_5_conversion_manifest.json
+--expected-jobs 165
+--expected-timesteps 1125
+Exit: 0.
+Result: 165/165 jobs; 1,125/1,125 timesteps; status PASS_WITH_NOTES.
+The output directory contains 1,125 GeoTIFF files and uses 266,221,706 bytes
+on this run. Monthly and daily_jfm outputs are isolated under
+data/geotiff/stage5_collection/<plan_name>/<job_id> to avoid timestamp
+collisions.
+
+Audit command and result
+------------------------
+Command:
+.\.venv\Scripts\python.exe python\07_audit_stage5_collection.py
+--conversion-report outputs\manifests\stage_5_conversion_manifest.json
+--output-root data\geotiff\stage5_collection
+--report outputs\manifests\stage_5_audit_manifest.json
+Exit: 0.
+Result: 165/165 jobs audited; 1,125/1,125 outputs checked; all recorded
+SHA-256 values, paths, two-band float32 schema, EPSG:4326, NoData -9999,
+band descriptions uo/vo, provenance tags, and resampling=none passed.
+
+Numeric comparison command and result
+--------------------------------------
+Command:
+.\.venv\Scripts\python.exe python\08_compare_stage5_collection.py
+--root E:\project\gee-current
+--manifest outputs\manifests\stage_4_validated_manifest.json
+--output-root data\geotiff\stage5_collection
+--report outputs\manifests\stage_5_collection_comparison.json
+--tolerance 1e-6
+Exit: 0.
+Result: 165/165 jobs and 1,125/1,125 TIFFs compared; status PASS_WITH_NOTES.
+Maximum absolute difference was 1.1920928955078125e-07 at
+2022-03-17T00:00:00, band 1, row 19, column 67; this is below 1e-6.
+
+Post-work quality gates
+-----------------------
+- Full custom unittest loader: exit 0; 107 tests, 0 failures, 0 errors.
+- compileall: exit 0.
+- pip check: exit 0; no broken requirements.
+- Offline secret scan: exit 0; no potential secrets; 2 documentation
+  placeholders classified and values suppressed.
+- Foundation checks read-only: exit 0; TST-FND-001 PASS_WITH_NOTES,
+  TST-FND-002 PASS, TST-SEC-BASELINE PASS, TST-FND-005 PASS_WITH_NOTES.
+- git diff --check: exit 0.
+- Independent report checks confirmed 165 jobs, 1,125 files, matching audit
+  counts, and comparator maximum below tolerance.
+- Graphify commands:
+  graphify update E:\project\gee-current --no-cluster
+  graphify cluster-only E:\project\gee-current --no-viz --no-label
+  graphify diagnose multigraph --graph E:\project\gee-current\graphify-out\graph.json --undirected
+  graphify export html --graph E:\project\gee-current\graphify-out\graph.json
+  Exit: 0 for all four commands. Result: 904 nodes, 1,749 post-cluster edges,
+  67 communities; 0 missing endpoints, 0 dangling endpoints, 0 self-loops,
+  and 0 collapsed endpoint pairs. Graphify reported 182 source files with
+  zero nodes; this is an extraction limitation and not a conversion failure.
+
+Provenance
+----------
+- Stage 4 manifest SHA-256:
+  5e0d335b0060dfa7e5bad2de7649099fce350b7c37b8699de6d1e781dc203089.
+- Conversion config hash:
+  d13fc7dd55ead5b992f88b7ff89e75a84e75d428f9505380f681c555c3505f39.
+- Conversion manifest:
+  outputs/manifests/stage_5_conversion_manifest.json.
+- Audit manifest:
+  outputs/manifests/stage_5_audit_manifest.json.
+- Numeric comparison:
+  outputs/manifests/stage_5_collection_comparison.json.
+- Generated GeoTIFFs remain local under data/geotiff/stage5_collection and are
+  ignored by Git; they are not uploaded or included in a commit.
+
+Limitations and controls
+------------------------
+- This is the approved local/offline collection conversion only.
+- No GEE, Earth Engine, Copernicus Marine, network, authentication, download,
+  upload, dependency installation, or cloud computation was performed.
+- No analytics decision T5-009..T5-027 was made; threshold/current rose and
+  other open scientific decisions remain unchanged.
+- The conversion manifest is the inventory/provenance record; the raster
+  collection itself is intentionally not committed.
+
+Next gate
+---------
+- WP5-2/T5-008 is complete with PASS_WITH_NOTES.
+- Recommended commit:
+  feat(stage5): convert validated collection locally
+  Include the batch converter, tests, three manifests, evidence, and
+  documentation updates. Do not commit ignored GeoTIFF binaries.
+- No commit was created automatically.
+- Do not begin WP5-3/analytics T5-009..T5-027 until explicit user approval.

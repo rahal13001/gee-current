@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Menyelesaikan WP5-2/T5-008 conversion collection lokal: 165/165 entry
+  tervalidasi dan 1.125/1.125 timestep menghasilkan GeoTIFF terinventaris
+  dengan checksum/provenance; audit metadata dan comparator numerik seluruh
+  collection lulus pada toleransi 1e-6. Output raster tetap lokal/diabaikan
+  Git; WP5-3 analytics menunggu persetujuan.
+
 - Menyelesaikan WP5-1 conversion pilot lokal melalui `python/conversion.py` dan
   comparator manifest-scoped. Fixture synthetic 5/5 lulus; satu job T4
   tervalidasi menghasilkan 29 GeoTIFF float32 dua-band dengan mask, transform,

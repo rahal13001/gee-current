@@ -876,7 +876,7 @@ FR-PY-01 sampai FR-PY-17
 | T5-005 | P0 | FR-CONV-05 | Guard tanpa resampling | T5-004 | test | tidak ada resampling diam-diam | `PASS_WITH_NOTES` |
 | T5-006 | P0 | FR-CONV-06 | Metadata timestep/provenance | T4-012 | metadata | waktu dan source checksum lengkap | `PASS_WITH_NOTES` |
 | T5-007 | P0 | FR-CONV-07 | Comparator NetCDF–GeoTIFF | T5-002..T5-006 | JSON comparison report | seluruh timestep dalam toleransi | `PASS_WITH_NOTES` |
-| T5-008 | P0 | Conversion | Konversi source collection inti | T5-007 | 1.125 TIFF timestep atau struktur yang disetujui | seluruh output terinventaris | `NOT_STARTED` |
+| T5-008 | P0 | Conversion | Konversi source collection inti | T5-007 | `outputs/manifests/stage_5_conversion_manifest.json`, audit, comparator | 165 job dan 1.125 output terinventaris, checksum/provenance lengkap | `PASS_WITH_NOTES` |
 
 ## 24.5 Backlog analytics Python
 

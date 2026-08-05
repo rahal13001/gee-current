@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,7 +10,15 @@ import rasterio
 import xarray as xr
 
 from python.checksum import sha256_file
-from python.conversion import ConversionError, compare_job_outputs, config_hash, convert_job
+from python.conversion import (
+    ConversionError,
+    audit_collection_outputs,
+    compare_collection_outputs,
+    compare_job_outputs,
+    config_hash,
+    convert_collection,
+    convert_job,
+)
 
 
 class Stage5ConversionTests(unittest.TestCase):
@@ -177,6 +186,45 @@ class Stage5ConversionTests(unittest.TestCase):
                     geotiff_dir=output_dir,
                     prefix="fixture",
                 )
+
+    def test_collection_conversion_inventory_audit_and_compare(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary)
+            _, entry, config = self._fixture(folder)
+            second_entry = dict(entry)
+            second_entry["job_id"] = "monthly_2020_02"
+            second_entry["plan_name"] = "monthly"
+            manifest = folder / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {"stage": "T4", "entries": [entry, second_entry]},
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            output_root = folder / "collection"
+            conversion = convert_collection(
+                root=folder,
+                manifest_path=manifest,
+                output_root=output_root,
+                config_hash_value=config_hash([config], root=folder),
+                expected_job_count=2,
+                expected_timestep_count=4,
+            )
+            self.assertEqual(conversion["job_count"], 2)
+            self.assertEqual(conversion["timestep_count"], 4)
+            audit = audit_collection_outputs(
+                conversion_report=conversion,
+                output_root=output_root,
+            )
+            self.assertEqual(audit["checked_output_count"], 4)
+            comparison = compare_collection_outputs(
+                root=folder,
+                manifest_path=manifest,
+                output_root=output_root,
+            )
+            self.assertEqual(comparison["file_count"], 4)
+            self.assertLessEqual(comparison["max_absolute_difference"], 1e-6)
 
 
 if __name__ == "__main__":

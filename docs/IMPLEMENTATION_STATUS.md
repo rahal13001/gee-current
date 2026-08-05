@@ -75,10 +75,10 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 
 ## Tahap 5 WP5-1
 
-- Active task: `WP5-1` — conversion pilot lokal.
+- Completed task: `WP5-1` — conversion pilot lokal.
 - Stage: `5` — konversi dan produk Python.
 - Requirement: `FR-CONV-01..07`, `T5-001..T5-007`.
-- Status: `PASS_WITH_NOTES` untuk pilot lokal; T5-008 dan analytics T5 tetap downstream.
+- Status: `PASS_WITH_NOTES` untuk pilot lokal; WP5-2/T5-008 collection selesai dengan `PASS_WITH_NOTES`.
 - Evidence: `outputs/evidence/stage_5/WP5-1_conversion_pilot.result.txt`.
 - T4 dependency diverifikasi dari T4-014: 165/165 file PASS, 0 error, 5
   anomaly non-blocking, manifest downstream ready.
@@ -87,7 +87,27 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 - Open decisions untuk ddof, percentile method, threshold, bins, weighting,
   reference period, trend, dan geometry tetap TBD/BLOCKED sesuai backlog.
 - M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
-- Approval gate berikutnya: berhenti sebelum WP5-2 sampai persetujuan eksplisit pengguna.
+- Approval gate berikutnya: berhenti sebelum WP5-3/analytics sampai persetujuan eksplisit pengguna.
+
+## Tahap 5 WP5-2
+
+- Active task: `WP5-2` / `T5-008` — conversion collection lokal.
+- Scope: 165 entry manifest T4, 1.125 timestep, monthly dan daily_jfm terpisah
+  berdasarkan `plan_name/job_id`.
+- Status: `PASS_WITH_NOTES`.
+- Evidence: `outputs/evidence/stage_5/WP5-2_collection_conversion.result.txt`.
+- Inventory: `outputs/manifests/stage_5_conversion_manifest.json`;
+  audit: `outputs/manifests/stage_5_audit_manifest.json`;
+  numeric comparison: `outputs/manifests/stage_5_collection_comparison.json`.
+- Output lokal: `data/geotiff/stage5_collection` (diabaikan Git); 1.125 TIFF,
+  266,221,706 bytes pada run ini.
+- Audit pascapekerjaan: 165/165 job dan 1.125/1.125 output terinventaris,
+  checksum dan raster metadata lulus; comparator 1.125/1.125 lulus dengan
+  toleransi `1e-6`, maksimum selisih `1.1920928955078125e-07`.
+- Tidak ada GEE, network, authentication, upload, dependency installation,
+  atau perubahan raw/T4. M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
+- Approval gate berikutnya: berhenti sebelum WP5-3/analytics T5-009..T5-027
+  sampai persetujuan eksplisit pengguna.
 
 ## Post-M0 follow-up
 
