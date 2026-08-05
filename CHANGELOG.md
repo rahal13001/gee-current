@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+- Menyelesaikan Tahap 4 T4-009–T4-014 melalui scope `--scope full`: coverage
+  valid, konsistensi `uo`/`vo` mask/time/grid, distribusi per file/periode,
+  validated manifest, laporan PASS/FAIL, dan gate Tahap 4. Validasi 165/165
+  file menghasilkan 0 error dan keputusan `PASS_WITH_NOTES`; lima anomaly
+  encoded-range tetap dicatat tanpa koreksi data. T5 conversion dan operasi
+  cloud tetap downstream.
+- Menyelesaikan Tahap 4 WP-2 melalui scope `--scope wp2`: validasi mask/fill,
+  orientasi koordinat, raw/decoded scale-offset, dan plausibility pada 165 file.
+  Hasilnya 165 PASS, 0 error, dan 5 anomaly encoded-range non-blocking; tidak ada
+  nilai data yang dikoreksi. T4-009 onward tetap pending.
+- Menambahkan validator lokal read-only Tahap 4 WP-1 melalui
+  `python/07_validate_stage4.py` untuk T4-001..T4-004. Fixture unittest nominal,
+  missing `vo`, bad unit, bad depth, missing/duplicate timestamp, monthly, dan
+  leap-year lulus; validasi 165 file aktif menghasilkan 165 PASS dan 0 FAIL.
+  Manifest hanya memuat file PASS. T4-005 onward tetap pending dan gate T4-014
+  diberi scope WP-1 dengan status `PASS_WITH_NOTES`.
 - Menambahkan persiapan executor T3-014 melalui `python/03_download_glorys.py`.
   Executor membangun plan lokal, membentuk subset Copernicus dengan AOI/depth/
   version/part eksplisit, menyiapkan inventory SQLite/CSV, melakukan basic

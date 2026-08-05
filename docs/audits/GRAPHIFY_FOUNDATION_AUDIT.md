@@ -420,3 +420,60 @@ statuses, Graphify was refreshed code-only on 2026-08-05:
 - `graphify export html --graph graphify-out\graph.json`: exit `0`; `graphify-out\graph.html` regenerated.
 - The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
 - Graphify confirms repository structure only; it does not independently validate scientific NetCDF quality or user-managed service execution.
+
+## Post-T4 WP-1 validator refresh
+
+After adding the local read-only Stage 4 WP-1 validator, synthetic fixtures,
+validation manifest, and evidence, Graphify was refreshed code-only on
+2026-08-05. No semantic backend, credential, network, download, upload, or
+Earth Engine operation was used.
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph
+  reported `768` nodes and `1648` edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`;
+  graph contains `768` nodes, `1427` edges, and `71` communities.
+- `graphify diagnose multigraph --graph E:\project\gee-current\graphify-out\graph.json --undirected`:
+  exit `0`; zero missing endpoints, dangling endpoints, self-loops, and
+  collapsed endpoint pairs.
+- `graphify export html --graph E:\project\gee-current\graphify-out\graph.json`:
+  exit `0`; `graphify-out\graph.html` regenerated.
+- The code-only refresh warned that JSON/config files produced zero AST nodes;
+  semantic extraction was not run. Graphify maps code structure and does not
+  replace the 165-file NetCDF validation evidence.
+
+## Final Graphify refresh after T4 WP-2
+
+After adding the WP-2 mask/fill, coordinate, encoding, and plausibility checks,
+Graphify was refreshed code-only on 2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; `779` nodes
+  and `1672` edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`;
+  `779` nodes, `1450` edges, and `74` communities.
+- `graphify diagnose multigraph --graph E:\project\gee-current\graphify-out\graph.json --undirected`:
+  exit `0`; zero missing endpoints, dangling endpoints, self-loops, and
+  collapsed endpoint pairs.
+- `graphify export html --graph E:\project\gee-current\graphify-out\graph.json`:
+  exit `0`; HTML regenerated.
+- JSON/config zero-AST warnings remain expected for this code-only refresh;
+  semantic extraction was not run.
+
+## Final Graphify refresh after T4-009–T4-014
+
+After extending the validator to full Stage 4 coverage, including coverage,
+`uo`/`vo` consistency, distributions, manifest, report, and gate evidence,
+Graphify was refreshed code-only on 2026-08-05. No semantic backend,
+credential, network, download, upload, or Earth Engine operation was used.
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; `801` nodes
+  and `1719` edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`;
+  `801` nodes, `1494` edges, and `72` communities.
+- `graphify diagnose multigraph --graph E:\project\gee-current\graphify-out\graph.json --undirected`:
+  exit `0`; zero missing endpoints, dangling endpoints, self-loops, and
+  collapsed endpoint pairs.
+- `graphify export html --graph E:\project\gee-current\graphify-out\graph.json`:
+  exit `0`; HTML regenerated.
+- JSON/config zero-AST warnings remain expected for this code-only refresh;
+  semantic extraction was not run. Graphify confirms repository structure only
+  and does not replace the 165-file scientific NetCDF evidence.

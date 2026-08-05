@@ -258,7 +258,7 @@ dijalankan; `daily_jfm` adalah batch terpisah T3-015. Kedua batch boleh berbagi
 SQLite inventory yang sama: executor hanya memvalidasi dan memproses job dari
 plan aktif, sementara status plan lain dipertahankan.
 
-## 8. Batas operasi Tahap 4 — belum dimulai
+## 8. Operasi Tahap 4 — validasi lokal selesai
 
 Tahap 4 adalah validasi lokal terhadap 165 file NetCDF yang sudah direkonsiliasi
 oleh T3. Inputnya adalah `data/raw/monthly`, `data/raw/daily_jfm`, SQLite
@@ -275,9 +275,26 @@ Artifact yang direncanakan:
 - `outputs/evidence/stage_4/T4-013_validation_report.result.txt`;
 - `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt`.
 
-Belum ada command T4 yang dijalankan dan belum ada artifact T4 yang dibuat.
-T4 tidak login, tidak mengakses network, tidak mengubah raw NetCDF, dan tidak
-menyentuh GEE Code Editor. Mulai T4 memerlukan persetujuan eksplisit user.
+Scope WP-1, WP-2, dan full memiliki command lokal read-only:
+
+```powershell
+& $PyExe .\python\07_validate_stage4.py --root E:\project\gee-current
+& $PyExe .\python\07_validate_stage4.py --root E:\project\gee-current --scope wp2
+& $PyExe .\python\07_validate_stage4.py --root E:\project\gee-current --scope full
+```
+
+WP-1 menghasilkan `outputs/manifests/stage_4_validated_manifest.json`,
+`outputs/evidence/stage_4/T4-013_validation_report.result.txt`, dan
+`outputs/evidence/stage_4/T4-014_stage4_gate.result.txt`. Validasi aktual
+mencakup 165 file. Scope `full` menghasilkan 165 PASS, 0 error, lima anomaly
+kecil sebagai note non-blocking sesuai kebijakan excursion encoded range, tanpa
+koreksi nilai, serta coverage, konsistensi `uo`/`vo`, dan distribusi per file/
+periode. Manifest hanya memuat file PASS. Flag perubahan distribusi memakai
+aturan QC deskriptif `robust_z > 8` dan delta `> 0,5 m/s`; flag ini non-blocking
+dan tidak mengubah nilai. Coverage dihitung sebagai finite decoded samples
+dibandingkan total samples pada dimensi `time × depth × latitude × longitude`,
+per variabel. T4 tidak login, tidak mengakses network, tidak
+mengubah raw NetCDF atau inventory, dan tidak menyentuh GEE Code Editor.
 
 ## 9. Pola kerja Earth Engine setelah file siap
 

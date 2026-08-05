@@ -827,20 +827,20 @@ FR-VAL-01 sampai FR-VAL-09
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T4-001 | P0 | FR-VAL-01 | Validator variabel dan dimensi | T3-017 | report per file | `uo`,`vo` dan dims benar | `NOT_STARTED` |
-| T4-002 | P0 | FR-VAL-02 | Validator unit | T3-017 | report | unit m/s | `NOT_STARTED` |
-| T4-003 | P0 | FR-VAL-03 | Validator depth | T3-017 | report | target depth tepat | `NOT_STARTED` |
-| T4-004 | P0 | FR-VAL-04 | Validator waktu dan kalender | T3-017 | report | timestamp/count benar | `NOT_STARTED` |
-| T4-005 | P0 | FR-VAL-05 | Validator mask dan fill | T3-017 | report | fill tidak menjadi nol | `NOT_STARTED` |
-| T4-006 | P0 | FR-VAL-06 | Validator coordinate orientation | T3-017 | report | latitude/longitude konsisten | `NOT_STARTED` |
-| T4-007 | P0 | FR-VAL-07 | Validator raw/decoded encoding | T3-017 | report | tidak ada double scale | `NOT_STARTED` |
-| T4-008 | P0 | FR-VAL-08 | Plausibility checks | T4-001..T4-007 | anomaly list | flag tanpa silent correction | `NOT_STARTED` |
-| T4-009 | P0 | Data quality | Valid pixel count dan coverage | T4-005 | coverage table | count/percentage tercatat | `NOT_STARTED` |
-| T4-010 | P0 | Data quality | Konsistensi `uo`–`vo` mask/time/grid | T4-001..T4-006 | comparison | dimensi/coords identik | `NOT_STARTED` |
-| T4-011 | P1 | Data quality | Distribusi per file dan periode | T4-008 | QC tables | perubahan ekstrem terflag | `NOT_STARTED` |
-| T4-012 | P0 | Pipeline | Buat validated manifest | T4-001..T4-011 | `outputs/manifests/stage_4_validated_manifest.json` | hanya PASS masuk downstream | `NOT_STARTED` |
-| T4-013 | P0 | FR-VAL-09 | Laporan PASS/FAIL per file | T4-012 | `outputs/evidence/stage_4/T4-013_validation_report.result.txt` | semua 165 tercakup | `NOT_STARTED` |
-| T4-014 | P0 | Stage gate | Laporan Tahap 4 | T4-013 | `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` | tidak ada blocker kritis | `NOT_STARTED` |
+| T4-001 | P0 | FR-VAL-01 | Validator variabel dan dimensi | T3-017 | report per file | `uo`,`vo` dan dims benar | `PASS_WITH_NOTES` |
+| T4-002 | P0 | FR-VAL-02 | Validator unit | T3-017 | report | unit m/s | `PASS_WITH_NOTES` |
+| T4-003 | P0 | FR-VAL-03 | Validator depth | T3-017 | report | target depth tepat | `PASS_WITH_NOTES` |
+| T4-004 | P0 | FR-VAL-04 | Validator waktu dan kalender | T3-017 | report | timestamp/count benar | `PASS_WITH_NOTES` |
+| T4-005 | P0 | FR-VAL-05 | Validator mask dan fill | T3-017 | report | fill tidak menjadi nol | `PASS_WITH_NOTES` |
+| T4-006 | P0 | FR-VAL-06 | Validator coordinate orientation | T3-017 | report | latitude/longitude konsisten | `PASS_WITH_NOTES` |
+| T4-007 | P0 | FR-VAL-07 | Validator raw/decoded encoding | T3-017 | report | tidak ada double scale | `PASS_WITH_NOTES` |
+| T4-008 | P0 | FR-VAL-08 | Plausibility checks | T4-001..T4-007 | anomaly list | flag tanpa silent correction | `PASS_WITH_NOTES` |
+| T4-009 | P0 | Data quality | Valid pixel count dan coverage | T4-005 | coverage table | count/percentage tercatat | `PASS_WITH_NOTES` |
+| T4-010 | P0 | Data quality | Konsistensi `uo`–`vo` mask/time/grid | T4-001..T4-006 | comparison | dimensi/coords identik | `PASS_WITH_NOTES` |
+| T4-011 | P1 | Data quality | Distribusi per file dan periode | T4-008 | QC tables | perubahan ekstrem terflag | `PASS_WITH_NOTES` |
+| T4-012 | P0 | Pipeline | Buat validated manifest | T4-001..T4-011 | `outputs/manifests/stage_4_validated_manifest.json` | hanya PASS masuk downstream | `PASS_WITH_NOTES` |
+| T4-013 | P0 | FR-VAL-09 | Laporan PASS/FAIL per file | T4-012 | `outputs/evidence/stage_4/T4-013_validation_report.result.txt` | semua 165 tercakup | `PASS_WITH_NOTES` |
+| T4-014 | P0 | Stage gate | Laporan Tahap 4 | T4-013 | `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` | tidak ada blocker kritis | `PASS_WITH_NOTES` |
 
 ---
 

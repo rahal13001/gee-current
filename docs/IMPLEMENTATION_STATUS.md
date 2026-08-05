@@ -44,7 +44,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | Tahap 3 T3-015 daily JFM | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt`; user-managed daily batch terverifikasi 33/33 job dan 993/993 timestep setelah perbaikan batas waktu daily |
 | Tahap 3 T3-016 reconciliation | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-016_inventory_reconciliation.result.txt`; 165/165 file aktif, 1.125 timestep, 165 checksum cocok, 0 partial, dan tiga quarantine artifact sebagai note |
 | Tahap 3 T3-017 stage gate | `PASS_WITH_NOTES` | `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt`; laporan final dan cross-check gate lulus dengan quarantine limitation; T4 belum dimulai |
-| Tahap 4 NetCDF validation | `NOT_STARTED` | Kontrak artifact dan batas operasi local/offline sudah didokumentasikan; belum ada validator atau artifact T4 yang dijalankan |
+| Tahap 4 NetCDF validation | `PASS_WITH_NOTES` | T4-001..T4-014 lulus offline pada 165/165 file; 0 error; 5 anomaly encoded-range non-blocking tercatat; T5 tetap downstream |
 
 ## Foundation task status
 
@@ -100,3 +100,6 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 23. T3-017 stage gate `PASS_WITH_NOTES`: `python/06_generate_stage3_report.py` menghasilkan laporan final dengan decision `PASS_WITH_NOTES`; T4 belum dimulai, M0 tetap `IN_PROGRESS`, dan ADR tetap `PROPOSED`.
 24. AOI aktif diterapkan menjadi `eastern_indonesia_regional_001` dengan user-provided bbox `N=4.265137, W=122.986190, S=-12.191592, E=143.326183`; `pilot_001` tetap terpisah untuk baseline T2, sedangkan polygon/water mask dan download operasional belum dijalankan.
 25. Audit kontrol GitHub remote dan review ADR yang masih `PROPOSED` tetap diperlukan sebelum release.
+26. Tahap 4 WP-1 `PASS_WITH_NOTES`: validator lokal `python/07_validate_stage4.py` memeriksa 165/165 file untuk T4-001..T4-004; 165 PASS, 0 FAIL, dan hanya file PASS masuk manifest.
+27. Tahap 4 WP-2 `PASS_WITH_NOTES`: scope `--scope wp2` memeriksa mask/fill, koordinat, raw/decoded encoding, dan plausibility pada 165/165 file; 165 PASS, 0 error, 5 anomaly non-blocking, tanpa koreksi nilai.
+28. Tahap 4 full `PASS_WITH_NOTES`: scope `--scope full` menyelesaikan T4-009 coverage, T4-010 konsistensi `uo`/`vo`, T4-011 distribusi/QC, T4-012 manifest, T4-013 report, dan T4-014 gate; 165/165 file PASS, 0 error, 5 anomaly non-blocking, dan T5 conversion tetap downstream.

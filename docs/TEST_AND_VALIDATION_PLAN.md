@@ -563,8 +563,8 @@ Evidence tidak boleh memuat:
 | TST-VAL-016 | L1 | FR-VAL-08 | All-NaN file ditolak | SYN-NC-ALLNAN | Validasi. | FAIL no valid pixels. | pytest | Otomatis |
 | TST-VAL-017 | L1 | FR-VAL-08 | Sentinel ekstrem ditolak | SYN-NC-SENTINEL | Sisipkan -32767 setelah decoding manual salah. | FAIL plausibility/sentinel check. | pytest | Otomatis |
 | TST-VAL-018 | L2 | FR-VAL-08 | Distribusi perubahan terflag | SYN-NC-OUTLIER | Sisipkan outlier numerik tanpa mengoreksi. | Flag warning/fail sesuai rule; nilai tidak diperbaiki diam-diam. | pytest/report | Otomatis |
-| TST-VAL-019 | L2 | FR-VAL-09 | Laporan PASS lengkap | SYN-NC-NOMINAL | Jalankan validator. | Report memuat test, count, checksum, config hash, status PASS. | report schema test | Otomatis |
-| TST-VAL-020 | L2 | FR-VAL-09 | Laporan FAIL lengkap | SYN-NC-BAD-DEPTH | Jalankan validator. | Report FAIL memuat reason dan downstream_ready=false. | report schema test | Otomatis |
+| TST-VAL-019 | L2 | FR-VAL-09 | Laporan PASS lengkap | SYN-NC-NOMINAL | Jalankan validator scope full. | Report memuat test, count, checksum, config hash, coverage/distribution, dan status PASS. | report schema test, T4-013 | Otomatis |
+| TST-VAL-020 | L2 | FR-VAL-09 | Laporan FAIL lengkap | SYN-NC-BAD-DEPTH | Jalankan validator dengan fixture gagal. | Report FAIL memuat reason dan gate tidak lulus. | report schema test, T4-014 | Otomatis |
 
 Kontrak output T4 sebelum implementasi:
 
@@ -575,6 +575,9 @@ Kontrak output T4 sebelum implementasi:
 - `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` mencatat keputusan
   gate serta limitation;
 - seluruh validasi T4 berjalan lokal/offline dan tidak mengakses GEE.
+- scope `full` harus menghasilkan 165 file tercakup, coverage per variabel,
+  perbandingan mask/time/grid `uo`â€“`vo`, statistik distribusi per file/periode,
+  dan hanya file PASS yang masuk manifest.
 
 ## Konversi NetCDF–GeoTIFF
 
