@@ -243,6 +243,21 @@ Jangan menjalankan download sebelum T2-025 lulus, plan ditinjau, dan user
 memberikan approval operasional. Pembuatan CSV plan eksplisit, bila sudah
 disetujui, menggunakan `--output` tanpa `--dry-run`.
 
+Executor T3-014 memiliki guard opt-in. Setelah login Copernicus Marine valid,
+metadata aktif diverifikasi, ruang penyimpanan mencukupi, dan user menyetujui
+operasi jaringan, mode aktual bulanan dipanggil dengan:
+
+```powershell
+& $PyExe .\python\03_download_glorys.py `
+  --plan monthly_all `
+  --execute
+```
+
+Tanpa `--execute`, tidak ada request jaringan. `daily_full` tetap tidak boleh
+dijalankan; `daily_jfm` adalah batch terpisah T3-015. Kedua batch boleh berbagi
+SQLite inventory yang sama: executor hanya memvalidasi dan memproses job dari
+plan aktif, sementara status plan lain dipertahankan.
+
 ## 8. Pola kerja Earth Engine setelah file siap
 
 Operasi asset adalah operasi cloud dan dilakukan hanya setelah user menyetujui

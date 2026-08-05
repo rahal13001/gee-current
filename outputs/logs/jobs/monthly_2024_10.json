@@ -1,0 +1,15 @@
+{
+  "events": [
+    {
+      "attempt": 1,
+      "checksum": "03aec6cfceeb9c5128827533f4d8d2cd149a1565ca8d119ea80e87f5ecb93c99",
+      "event": "downloaded",
+      "job_id": "monthly_2024_10",
+      "response_type": "ResponseSubset",
+      "size_bytes": 139262,
+      "status": "ready_for_stage4",
+      "timestep_count": 1
+    }
+  ],
+  "job_id": "monthly_2024_10"
+}

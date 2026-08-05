@@ -135,6 +135,11 @@ CREATE TABLE IF NOT EXISTS download_inventory (
     created_utc TEXT NOT NULL CHECK (length(created_utc) > 0)
 );
 
+CREATE TABLE IF NOT EXISTS inventory_transition_override (
+    job_id TEXT PRIMARY KEY,
+    reason TEXT NOT NULL CHECK (length(reason) > 0)
+);
+
 CREATE TRIGGER IF NOT EXISTS download_inventory_status_transition_guard
 BEFORE UPDATE OF status ON download_inventory
 FOR EACH ROW
@@ -150,7 +155,12 @@ WHEN OLD.status <> NEW.status
     OR (OLD.status = 'failed_retryable' AND NEW.status IN ('retry_wait', 'failed_permanent'))
     OR (OLD.status = 'retry_wait' AND NEW.status = 'downloading')
     OR (OLD.status = 'quarantined' AND NEW.status = 'downloading')
- )
+    OR (OLD.status = 'failed_permanent' AND NEW.status = 'retry_wait'
+        AND EXISTS (
+            SELECT 1 FROM inventory_transition_override
+            WHERE job_id = OLD.job_id
+        ))
+)
 BEGIN
     SELECT RAISE(ABORT, 'illegal inventory status transition');
 END;
@@ -238,6 +248,12 @@ class InventoryStore:
         self._connection = sqlite3.connect(self.database_path)
         self._connection.row_factory = sqlite3.Row
         self._connection.execute("PRAGMA foreign_keys = ON")
+        # Recreate the guard so an inventory database created by an earlier
+        # executor version receives the current manual-retry override rule.
+        # This changes only trigger metadata, never job rows.
+        self._connection.execute(
+            "DROP TRIGGER IF EXISTS download_inventory_status_transition_guard"
+        )
         self._connection.executescript(_SCHEMA_SQL)
         self._connection.commit()
 
@@ -370,6 +386,48 @@ class InventoryStore:
         updated = self.get_job(job_id)
         if updated is None:  # pragma: no cover - protected by the prior lookup
             raise InventoryError(f"inventory job disappeared during transition: {job_id}")
+        return updated
+
+    def requeue_failed_permanent(self, job_id: str, *, reason: str) -> JobRecord:
+        """Manually reopen one permanent failure through an audited override.
+
+        This is not a normal state-machine edge.  The trigger permits the
+        transition only while this method's explicit override marker exists;
+        direct SQL updates and ordinary ``transition`` calls remain rejected.
+        The caller must separately verify that the failed output was
+        quarantined before invoking this repair operation.
+        """
+
+        if not isinstance(reason, str) or not reason:
+            raise InventoryTransitionError("manual retry reason must be non-empty")
+        current = self.get_job(job_id)
+        if current is None:
+            raise InventoryTransitionError(f"unknown inventory job: {job_id}")
+        if current.status != "failed_permanent":
+            raise InventoryTransitionError(
+                f"manual retry requires failed_permanent status: {job_id}"
+            )
+        try:
+            with self.connection:
+                self.connection.execute(
+                    "INSERT OR REPLACE INTO inventory_transition_override (job_id, reason) "
+                    "VALUES (?, ?)",
+                    (job_id, reason),
+                )
+                self.connection.execute(
+                    "UPDATE download_inventory SET status = 'retry_wait', checksum = '' "
+                    "WHERE job_id = ?",
+                    (job_id,),
+                )
+                self.connection.execute(
+                    "DELETE FROM inventory_transition_override WHERE job_id = ?",
+                    (job_id,),
+                )
+        except sqlite3.IntegrityError as exc:
+            raise InventoryTransitionError(f"manual retry rejected: {exc}") from exc
+        updated = self.get_job(job_id)
+        if updated is None:  # pragma: no cover - protected by the prior lookup
+            raise InventoryError(f"inventory job disappeared during manual retry: {job_id}")
         return updated
 
 

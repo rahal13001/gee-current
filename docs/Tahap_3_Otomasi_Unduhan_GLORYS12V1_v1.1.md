@@ -964,6 +964,11 @@ Contoh Februari 2020:
 2020-02-29T23:59:59
 ```
 
+Untuk request Copernicus daily JFM, executor memakai batas operasional pada
+timestamp terakhir `00:00:00` berdasarkan jumlah timestep yang diharapkan.
+Penyesuaian ini mencegah endpoint inklusif menarik timestamp hari pertama bulan
+berikutnya; rentang plan tetap dicatat dengan format tanggal di atas.
+
 ### 19.4 Jumlah timestep yang diharapkan
 
 Bulanan:
@@ -1652,7 +1657,8 @@ python python/03_download_glorys.py `
 
 ```powershell
 python python/03_download_glorys.py `
-  --plan monthly_all
+  --plan monthly_all `
+  --execute
 ```
 
 ### 32.5 Struktur output
@@ -1706,7 +1712,8 @@ python python/03_download_glorys.py `
 
 ```powershell
 python python/03_download_glorys.py `
-  --plan daily_jfm
+  --plan daily_jfm `
+  --execute
 ```
 
 ### 33.5 Struktur output
@@ -1774,8 +1781,8 @@ python python/02_build_download_plan.py --plan daily_jfm
 ### 35.4 Download
 
 ```powershell
-python python/03_download_glorys.py --plan monthly_all
-python python/03_download_glorys.py --plan daily_jfm
+python python/03_download_glorys.py --plan monthly_all --execute
+python python/03_download_glorys.py --plan daily_jfm --execute
 ```
 
 ### 35.5 Integritas
@@ -1926,12 +1933,19 @@ Output:
 
 ### 36.9 `05_reconcile_inventory.py`
 
-Membandingkan:
+Script ini bersifat read-only dan membandingkan:
 
 - database;
 - file sistem;
 - checksum;
-- status.
+- status;
+- file ekstra atau hilang pada `data/raw/monthly` dan `data/raw/daily_jfm`;
+- file tersisa pada `data/partial`;
+- artefak `data/quarantine` sebagai catatan audit tanpa menghapusnya.
+
+Rekonsiliasi tidak mengubah SQLite, status job, file aktif, atau quarantine.
+Exit `0` berarti tidak ada blocker; `PASS_WITH_NOTES` dapat muncul bila artefak
+quarantine lama dipertahankan sebagai evidence.
 
 ### 36.10 `06_generate_stage3_report.py`
 

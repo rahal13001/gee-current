@@ -1,0 +1,37 @@
+{
+  "events": [
+    {
+      "attempt": 1,
+      "decision": "permanent",
+      "error": {
+        "exception_class": "DownloadExecutionError",
+        "message": "timestep mismatch for monthly_2015_01: expected 1, observed 2"
+      },
+      "event": "download_error",
+      "job_id": "monthly_2015_01",
+      "status": "quarantined"
+    },
+    {
+      "attempt": 2,
+      "decision": "permanent",
+      "error": {
+        "exception_class": "DownloadExecutionError",
+        "message": "timestep mismatch for monthly_2015_01: expected 1, observed 2"
+      },
+      "event": "download_error",
+      "job_id": "monthly_2015_01",
+      "status": "quarantined"
+    },
+    {
+      "attempt": 3,
+      "checksum": "54dc9443440af0808f5c6bc62eb5e147117efd302d14bfd7d2bd15c0c37bb1ea",
+      "event": "downloaded",
+      "job_id": "monthly_2015_01",
+      "response_type": "ResponseSubset",
+      "size_bytes": 136239,
+      "status": "ready_for_stage4",
+      "timestep_count": 1
+    }
+  ],
+  "job_id": "monthly_2015_01"
+}

@@ -385,3 +385,26 @@ tests, Graphify was refreshed code-only on 2026-08-05:
 - `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
 - The refresh was offline and code-only. No authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
 - Graphify confirms repository structure only; it does not validate a live Copernicus download, NetCDF contents, or Stage 4 readiness.
+
+The executor was subsequently hardened with the explicit `--execute` gate,
+Copernicus subset argument construction, local NetCDF checks, and operational
+retry/checksum/quarantine paths. A code-only Graphify refresh was run again on
+2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 655 nodes and 1,360 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 655 nodes, 1,190 edges, and 56 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --json`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html`: exit `0`; `graphify-out\graph.html` regenerated.
+- No `--execute` operation was run; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
+
+## Post-T3-016 reconciliation refresh
+
+After adding the read-only filesystem-to-inventory reconciliation command and
+its unit tests, Graphify was refreshed code-only on 2026-08-05:
+
+- `graphify update E:\project\gee-current --no-cluster`: exit `0`; code graph reported 690 nodes and 1,469 edges before clustering.
+- `graphify cluster-only E:\project\gee-current --no-viz --no-label`: exit `0`; graph contains 690 nodes, 1,282 edges, and 56 communities.
+- `graphify diagnose multigraph --graph graphify-out\graph.json --undirected`: exit `0`; 0 missing endpoints, 0 dangling endpoints, 0 self-loops, and 0 collapsed endpoint pairs.
+- `graphify export html --graph graphify-out\graph.json`: exit `0`; `graphify-out\graph.html` regenerated.
+- The refresh was offline and code-only; no authentication, credential read, network, download, upload, overwrite, or Earth Engine runtime action was used.
+- Graphify confirms repository structure only; it does not independently validate the 165 downloaded files or scientific NetCDF quality.

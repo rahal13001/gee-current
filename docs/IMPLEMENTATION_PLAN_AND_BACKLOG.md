@@ -799,7 +799,7 @@ FR-META-02 sampai FR-META-05
 | T3-013 | P0 | Security | Sanitasi log unduhan | FND-016 | `python/log_sanitizer.py`, unit tests, evidence | tidak ada secret | `PASS_WITH_NOTES` |
 | T3-014 | P0 | FR-DL-01 | Jalankan batch bulanan | T3-001..T3-013 | 132 NetCDF | seluruh job status valid | `NOT_STARTED` |
 | T3-015 | P0 | FR-DL-02 | Jalankan batch JFM | T3-001..T3-013 | 33 NetCDF | 993 timestep | `NOT_STARTED` |
-| T3-016 | P0 | Pipeline | Rekonsiliasi filesystem–inventory | T3-014,T3-015 | report | 165 file terhitung | `NOT_STARTED` |
+| T3-016 | P0 | Pipeline | Rekonsiliasi filesystem–inventory | T3-014,T3-015 | `outputs/evidence/stage_3/T3-016_inventory_reconciliation.result.txt` | 165 file terhitung | `NOT_STARTED` |
 | T3-017 | P0 | Stage gate | Laporan Tahap 3 | T3-014..T3-016 | final report | `PASS` berbukti | `NOT_STARTED` |
 
 ---

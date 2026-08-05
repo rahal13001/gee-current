@@ -4,17 +4,20 @@ Repository: E:\project\gee-current
 Scope: offline preparation only; no Copernicus/Earth Engine authentication, network, credential access, or download
 
 Implementation:
-- Added python/03_download_glorys.py as an offline preparation boundary.
+- Added python/03_download_glorys.py as an explicit offline/operational boundary.
 - Local plan generation delegates to the approved python/02_build_download_plan.py.
-- Optional inventory preparation seeds or validates local SQLite/CSV rows and never overwrites mutable state.
-- Actual execution is fail-closed with exit status 3.
+- The operational path builds explicit Copernicus subset arguments for the active regional AOI, depth 0.494025 m, variables uo/vo, and pinned 202311/default dataset.
+- Inventory preparation seeds or validates local SQLite/CSV rows and never overwrites mutable state.
+- Retry, resume, checksum, quarantine, sanitized job logging, and basic NetCDF checks are implemented for the explicit execution path.
+- Actual execution requires the explicit --execute flag and was not run in this session.
 - daily_full remains rejected by the existing plan-builder guard.
 
 Commands and results:
 1. python -m unittest tests.unit.test_stage3_executor_preparation -v
    Exit status: 0
-   Result: 4 tests passed; monthly summary, fail-closed actual mode, daily_full rejection,
-   and inventory seed/revalidation passed offline.
+   Result: 8 tests passed; monthly summary, fail-closed actual mode, daily_full rejection,
+   execute/dry-run mutual guard, subset parameter construction, and inventory
+   seed/revalidation plus legal permanent-failure transitions passed offline.
 
 2. python .\python\03_download_glorys.py --plan monthly_all --dry-run
    Exit status: 0
@@ -31,8 +34,56 @@ Commands and results:
    Exit status: 2
    Result: daily_full rejected before plan execution.
 
+5. Offline inspection of the user-managed output:
+   The Copernicus response contained time coordinates 2015-01-01 and 2015-02-01
+   for monthly_2015_01; the basic check correctly rejected the two-timestep file.
+   The request-boundary fix now sends monthly jobs with start_datetime equal to
+   end_datetime so the requested monthly timestamp is scalar.
+
+6. python .\python\03_download_glorys.py --plan monthly_all --dry-run --execute
+   Exit status: 2
+   Result: --dry-run and --execute rejected as mutually exclusive; no network request was attempted.
+
+7. User-managed command: python python\03_download_glorys.py --plan monthly_all --execute
+   Result: Copernicus selected dataset version 202311/default and reported a 392.50 KB
+   request, then the executor stopped on the illegal transition
+   `downloading -> failed_permanent`. Local inspection found
+   `monthly_2015_01=downloading`, `attempt_count=1`, no partial output file, and
+   one sanitized job log. The transition handler was corrected offline to use
+   `downloading -> failed_retryable -> failed_permanent`.
+
+8. Regression fix after user-managed daily_jfm invocation:
+   The command `python python\03_download_glorys.py --plan daily_jfm --execute`
+   initially stopped before any download with `existing inventory job set does not
+   match the local plan`, because the inventory already contained the completed
+   `monthly_all` batch. The executor was corrected to compare only rows belonging
+   to the active `plan_name` and to process only that plan. A temporary offline
+   regression test seeds monthly_all and daily_jfm in one database; 8/8 executor
+   preparation tests pass. No network request was made by Codex for this fix.
+
+9. User-managed daily_jfm invocation:
+   Copernicus returned a 32-timestep file for `daily_jfm_2015_01` even though the
+   plan expected 31; local inspection showed timestamps `2015-01-01` through
+   `2015-02-01`. The executor correctly quarantined the output and marked the job
+   `failed_permanent` after the configured attempt. The daily request boundary was
+   corrected to `2015-01-31T00:00:00` (generalized as start plus expected timesteps
+   minus one day), with an offline regression assertion. No retry or network request
+   was performed by Codex after the fix.
+
 Limitations:
 - T3-014 actual Copernicus batch has not run and must remain NOT_STARTED.
-- No credentials were read and no network request was attempted.
-- No NetCDF file, checksum, or Stage 4-ready status was produced.
+- Codex did not rerun the failed live request; the user-managed attempt reached
+  Copernicus and exposed an illegal error-state transition, which was corrected
+  offline. No credential was read by Codex.
+- No production NetCDF file, checksum, or Stage 4-ready status was produced by this session.
 - Regional AOI remains the approved local bbox; exact water polygon/mask remains pending.
+- The failed job must be resumed explicitly with `--job-id monthly_2015_01
+  --force-after-quarantine`, then the remaining monthly batch can be resumed
+  with the normal `--execute` command.
+- A shared inventory database is valid for the monthly and daily plans; each
+  execution validates and processes only its requested plan. T3-015 remains a
+  separate user-approved operational step.
+- The quarantined `daily_jfm_2015_01` job requires explicit manual recovery after
+  the corrected executor is available: use `--job-id daily_jfm_2015_01
+  --force-after-quarantine --execute`, then resume the remaining `daily_jfm`
+  jobs with the normal `--plan daily_jfm --execute` command.

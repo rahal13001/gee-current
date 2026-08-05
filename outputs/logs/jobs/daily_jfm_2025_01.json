@@ -1,0 +1,15 @@
+{
+  "events": [
+    {
+      "attempt": 1,
+      "checksum": "44736a275fa0560a44225591d9f213989c5b8d76749719d47641a6af8f6f4726",
+      "event": "downloaded",
+      "job_id": "daily_jfm_2025_01",
+      "response_type": "ResponseSubset",
+      "size_bytes": 3266299,
+      "status": "ready_for_stage4",
+      "timestep_count": 31
+    }
+  ],
+  "job_id": "daily_jfm_2025_01"
+}

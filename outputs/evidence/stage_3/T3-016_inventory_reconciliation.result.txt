@@ -1,0 +1,50 @@
+T3-016 inventory reconciliation evidence
+Date: 2026-08-05
+Repository: E:\project\gee-current
+Scope: local read-only reconciliation; no authentication, credential access, network, download, upload, or file mutation
+
+Implementation:
+- Added python/05_reconcile_inventory.py.
+- The command rebuilds the approved local monthly_all and daily_jfm plans,
+  opens SQLite with mode=ro, compares plan/inventory identity and status,
+  checks active output paths, hashes active files against inventory SHA-256,
+  detects extra/missing NetCDF files, counts partial files, and records
+  quarantine artifacts as non-blocking audit notes.
+- The command does not update inventory status, rewrite CSV, move files, or
+  delete quarantine evidence.
+
+Commands and results:
+1. .\\.venv\\Scripts\\python.exe -m unittest tests.unit.test_stage3_reconcile_inventory -v
+   Exit status: 0
+   Result: 2 tests passed; shared monthly/daily inventory PASS path and
+   missing/extra/checksum mismatch FAIL path were verified offline.
+
+2. .\\.venv\\Scripts\\python.exe .\\python\\05_reconcile_inventory.py --root E:\\project\\gee-current --plan all
+   Exit status: 0
+   Result:
+   stage=T3-016
+   plans=monthly_all,daily_jfm
+   expected_jobs=165
+   inventory_jobs=165
+   ready_jobs=165
+   expected_timesteps=1125
+   active_files=165
+   checksum_matches=165
+   quarantine_files=3
+   partial_files=0
+   issue_count=1
+   issue=NOTE|QUARANTINE_ARTIFACTS|3 quarantined NetCDF artifact(s) retained as audit evidence
+   status=PASS_WITH_NOTES
+
+3. .\\.venv\\Scripts\\python.exe .\\python\\02_build_download_plan.py --root E:\\project\\gee-current --plan daily_jfm --dry-run
+   Exit status: 0
+   Result: 33 jobs and 993 expected daily JFM timesteps; plan identity matches
+   the reconciled inventory scope.
+
+Limitations:
+- Three quarantined NetCDF artifacts from earlier corrected download attempts
+  remain intentionally preserved as audit evidence; they are not active outputs.
+- T3-016 checks filesystem/inventory presence and SHA-256 consistency. Scientific
+  NetCDF validation remains downstream in Stage 4.
+- T3-014 through T3-017 status fields were not changed by this task, per the
+  repository governance constraint.

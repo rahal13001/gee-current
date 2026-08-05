@@ -3,10 +3,27 @@
 ## Unreleased
 
 - Menambahkan persiapan executor T3-014 melalui `python/03_download_glorys.py`.
-  Executor hanya membangun plan lokal, melakukan dry-run, serta seed/validasi
-  inventory SQLite/CSV tanpa menimpa status. Mode aktual fail-closed dengan
-  exit `3`; autentikasi, network, dan download belum dilakukan. T3-014 tetap
-  `NOT_STARTED`.
+  Executor membangun plan lokal, membentuk subset Copernicus dengan AOI/depth/
+  version/part eksplisit, menyiapkan inventory SQLite/CSV, melakukan basic
+  check/checksum/quarantine/logging, dan mendukung retry/resume. Mode aktual
+  hanya aktif dengan `--execute`; autentikasi, network, dan download belum
+  dilakukan. T3-014 tetap `NOT_STARTED`.
+- Memperbaiki batas waktu monthly T3-014 setelah respons Copernicus menghasilkan
+  timestamp bulan berikutnya: subset monthly kini meminta timestamp scalar dengan
+  `start_datetime == end_datetime`. Menambahkan recovery eksplisit untuk job
+  `failed_permanent` setelah quarantine melalui `--job-id --force-after-quarantine`;
+  transisi ilegal normal tetap ditolak.
+- Memperbaiki resume lintas batch T3-014/T3-015: inventory SQLite kini memvalidasi
+  job secara plan-scoped dan executor hanya memproses plan aktif, sehingga 132 job
+  `monthly_all` yang sudah selesai dapat tetap berada dalam database saat
+  `daily_jfm` ditambahkan. Regresi offline lulus dengan 8/8 test.
+- Memperbaiki batas waktu request daily JFM: executor kini mengirim timestamp
+  terakhir pada `00:00:00` berdasarkan jumlah timestep yang diharapkan, sehingga
+  endpoint `23:59:59` tidak lagi menarik hari pertama bulan berikutnya.
+- Menambahkan T3-016 `python/05_reconcile_inventory.py` untuk rekonsiliasi
+  read-only plan, SQLite inventory, file aktif, SHA-256, partial, dan quarantine.
+  Rekonsiliasi aktual menemukan 165/165 file aktif dan checksum cocok; tiga file
+  quarantine lama dipertahankan sebagai audit evidence.
 - Mencatat proposal AOI ekspansi terpisah untuk perairan Papua, Maluku, dan
   Maluku Utara di `docs/AOI_EXPANSION_PROPOSAL.md` dan menerapkan bbox user ke
   `config/study_area.json` sebagai AOI aktif `eastern_indonesia_regional_001`.

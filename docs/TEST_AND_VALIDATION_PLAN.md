@@ -538,6 +538,7 @@ Evidence tidak boleh memuat:
 | TST-DL-013 | L1 | FR-DL-07 | Karantina file rusak | DL-CORRUPT-NC | Basic check file rusak. | File dipindah atomik ke quarantine; reason JSON tersedia. | pytest | Otomatis |
 | TST-DL-014 | L1 | FR-DL-08 | Dry run tidak mengunduh | Valid plan | Jalankan --dry-run. | Request ditampilkan/disimpan; tidak ada NetCDF baru. | pytest/filesystem diff | Otomatis |
 | TST-DL-015 | L1 | FR-DL-09 | Daily full disabled | Config default | Coba menjalankan daily_full tanpa gate. | Command ditolak dan tidak membuat plan/job. | pytest | Otomatis |
+| TST-DL-016 | L1 | Pipeline | Rekonsiliasi filesystem-inventory | 165 active NetCDF + SQLite | Jalankan `python/05_reconcile_inventory.py` read-only. | 165 job/file, 1125 timestep, checksum cocok, partial kosong, quarantine dicatat sebagai note. | evidence/report | Semiotomatis |
 
 ## Validasi NetCDF
 
