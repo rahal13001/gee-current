@@ -8,6 +8,7 @@ the approved derived P90 threshold and static expected-ocean mask.
 from __future__ import annotations
 
 import csv
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from html import escape
@@ -1153,11 +1154,182 @@ def audit_analytics_manifest(manifest_path: str | Path) -> dict[str, Any]:
     }
 
 
+def audit_wp4_products(
+    analytics_manifest_path: str | Path,
+    conversion_manifest_path: str | Path,
+) -> dict[str, Any]:
+    """Audit the climatology, anomaly, and exploratory-trend acceptance gate.
+
+    This is deliberately separate from the broad Stage 5 product audit.  It
+    reconciles T5-020--T5-023 against the converted timestep inventory and
+    checks the method tags that cannot be inferred from a GeoTIFF checksum
+    alone.
+    """
+
+    analytics_path = Path(analytics_manifest_path).resolve()
+    conversion_path = Path(conversion_manifest_path).resolve()
+    analytics_manifest = _safe_json(analytics_path)
+    conversion_manifest = _safe_json(conversion_path)
+    base_audit = audit_analytics_manifest(analytics_path)
+    records = _records_from_conversion_manifest(conversion_manifest)
+    analysis_period = analytics_manifest.get("analysis_period", {})
+    years = [int(year) for year in analysis_period.get("years", [])]
+    if years != list(range(2015, 2026)):
+        raise AnalyticsError("WP5-4 requires the approved 2015-2025 year list")
+    reference_period = f"{years[0]}-{years[-1]}"
+
+    plan_counts = Counter(record["plan_name"] for record in records)
+    monthly_records = [record for record in records if record["plan_name"] == "monthly_all"]
+    daily_records = [record for record in records if record["plan_name"] == "daily_jfm"]
+    expected_monthly = int(analysis_period.get("monthly_count_expected", 132))
+    expected_daily = int(analysis_period.get("daily_jfm_count_expected", 993))
+    if plan_counts != Counter({"monthly_all": expected_monthly, "daily_jfm": expected_daily}):
+        raise AnalyticsError(f"WP5-4 source plan counts mismatch: {dict(plan_counts)}")
+
+    monthly_by_month = Counter(int(record["time"][5:7]) for record in monthly_records)
+    if monthly_by_month != Counter({month: 11 for month in range(1, 13)}):
+        raise AnalyticsError(f"WP5-4 monthly inventory is not 11 frames per month: {dict(monthly_by_month)}")
+    if any(int(record["time"][5:7]) not in {1, 2, 3} for record in daily_records):
+        raise AnalyticsError("WP5-4 daily JFM inventory contains a non-JFM timestep")
+    yearly_monthly = Counter(int(record["time"][:4]) for record in monthly_records)
+    if yearly_monthly != Counter({year: 12 for year in years}):
+        raise AnalyticsError(f"WP5-4 annual monthly inventory mismatch: {dict(yearly_monthly)}")
+
+    products = analytics_manifest.get("products", [])
+    by_type: dict[str, list[dict[str, Any]]] = {}
+    for product in products:
+        if isinstance(product, dict):
+            by_type.setdefault(str(product.get("product_type")), []).append(product)
+
+    monthly_products = by_type.get("monthly_climatology_speed", [])
+    jfm_products = by_type.get("jfm_climatology_speed", [])
+    anomaly_products = by_type.get("speed_anomaly", [])
+    trend_products = by_type.get("exploratory_trend_slope", [])
+    if len(monthly_products) != 12 or {int(item.get("month", -1)) for item in monthly_products} != set(range(1, 13)):
+        raise AnalyticsError("WP5-4 requires exactly one monthly climatology for each month")
+    if len(jfm_products) != 1 or len(anomaly_products) != expected_monthly + expected_daily or len(trend_products) != 1:
+        raise AnalyticsError(
+            "WP5-4 product counts mismatch: "
+            f"monthly={len(monthly_products)}, jfm={len(jfm_products)}, "
+            f"anomaly={len(anomaly_products)}, trend={len(trend_products)}"
+        )
+
+    def tags_for(product: Mapping[str, Any]) -> dict[str, str]:
+        path = Path(str(product["path"])).resolve()
+        with rasterio.open(path) as source:
+            return {str(key): str(value) for key, value in source.tags().items()}
+
+    for product in monthly_products:
+        month = int(product["month"])
+        tags = tags_for(product)
+        required = {
+            "product_type": "monthly_climatology_speed",
+            "month": str(month),
+            "reference_period": reference_period,
+            "weighting": "equal_monthly_frames",
+            "units": "m s-1",
+        }
+        if any(tags.get(key) != value for key, value in required.items()):
+            raise AnalyticsError(f"WP5-4 monthly climatology tags mismatch for month {month}")
+
+    jfm_tags = tags_for(jfm_products[0])
+    if any(
+        jfm_tags.get(key) != value
+        for key, value in {
+            "product_type": "jfm_climatology_speed",
+            "reference_period": reference_period,
+            "weighting": "equal_daily_frames",
+            "units": "m s-1",
+        }.items()
+    ):
+        raise AnalyticsError("WP5-4 JFM climatology tags mismatch")
+
+    expected_anomaly_keys = {
+        (record["plan_name"], record["job_id"], record["time"]) for record in records
+    }
+    actual_anomaly_keys = {
+        (str(product.get("plan_name")), str(product.get("job_id")), str(product.get("time")))
+        for product in anomaly_products
+    }
+    if actual_anomaly_keys != expected_anomaly_keys:
+        raise AnalyticsError("WP5-4 anomaly inventory does not exactly match converted timesteps")
+    for product in anomaly_products:
+        plan_name = str(product["plan_name"])
+        expected_baseline = "monthly_climatology" if plan_name == "monthly_all" else "jfm_climatology"
+        tags = tags_for(product)
+        required = {
+            "product_type": "speed_anomaly",
+            "reference_period": reference_period,
+            "baseline": expected_baseline,
+            "source_time": str(product["time"]),
+            "units": "m s-1",
+        }
+        if any(tags.get(key) != value for key, value in required.items()):
+            raise AnalyticsError(f"WP5-4 anomaly tags mismatch for {product['time']}")
+
+    trend_tags = tags_for(trend_products[0])
+    if any(
+        trend_tags.get(key) != value
+        for key, value in {
+            "product_type": "exploratory_trend_slope",
+            "reference_period": reference_period,
+            "method": "ordinary_least_squares_per_pixel",
+            "interpretation": "exploratory; no inferential claim",
+            "units": "m s-1 year-1",
+        }.items()
+    ):
+        raise AnalyticsError("WP5-4 exploratory trend tags mismatch")
+
+    return {
+        "status": "PASS_WITH_NOTES",
+        "stage": "WP5-4",
+        "tasks": {
+            "T5-020": "PASS_WITH_NOTES",
+            "T5-021": "PASS_WITH_NOTES",
+            "T5-022": "PASS_WITH_NOTES",
+            "T5-023": "PASS_WITH_NOTES",
+        },
+        "analytics_version": analytics_manifest.get("analytics_version"),
+        "source_conversion_manifest": str(conversion_path),
+        "source_conversion_manifest_sha256": sha256_file(conversion_path),
+        "source_frame_counts": {
+            "monthly_all": len(monthly_records),
+            "daily_jfm": len(daily_records),
+            "total": len(records),
+            "monthly_frames_per_month": dict(sorted(monthly_by_month.items())),
+            "monthly_frames_per_year": dict(sorted(yearly_monthly.items())),
+        },
+        "product_counts": {
+            "monthly_climatology_speed": len(monthly_products),
+            "jfm_climatology_speed": len(jfm_products),
+            "speed_anomaly": len(anomaly_products),
+            "exploratory_trend_slope": len(trend_products),
+        },
+        "method_contract": {
+            "reference_period": reference_period,
+            "monthly_weighting": "equal_monthly_frames; 11 frames per calendar month",
+            "jfm_weighting": "equal_daily_frames; 993 daily frames",
+            "anomaly_baselines": {
+                "monthly_all": "monthly_climatology",
+                "daily_jfm": "jfm_climatology",
+            },
+            "trend": "ordinary_least_squares_per_pixel; exploratory only; no inferential or causal claim",
+        },
+        "base_analytics_audit": base_audit,
+        "limitations": [
+            "T5-023 is exploratory and does not establish causality or statistical significance.",
+            "Climatologies and anomalies inherit the validated collection mask and EPSG:4326 grid.",
+            "This WP5-4 audit is local/offline; no Earth Engine upload or cloud computation was performed.",
+        ],
+    }
+
+
 __all__ = [
     "ANALYTICS_VERSION",
     "AnalyticsError",
     "SECTOR_LABELS",
     "audit_analytics_manifest",
+    "audit_wp4_products",
     "direction_sector_array",
     "frame_statistics",
     "mean_components_array",

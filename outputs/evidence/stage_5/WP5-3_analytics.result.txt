@@ -147,4 +147,6 @@ Next gate
   Include analytics code/tests, manifests, evidence, ADR-011, and
   documentation. Do not commit ignored derived raster binaries.
 - No commit was created automatically.
-- Do not begin WP5-4 until explicit user approval.
+- At the time of this WP5-3 evidence capture, WP5-4 was gated on explicit user
+  approval. That approval was subsequently provided; WP5-4 acceptance is
+  recorded in `outputs/evidence/stage_5/WP5-4_climatology_anomaly_trend.result.txt`.
