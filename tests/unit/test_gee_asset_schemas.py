@@ -111,6 +111,7 @@ class GeeAssetSchemaTests(unittest.TestCase):
                 "source_conversion_manifest",
                 "source_conversion_manifest_sha256",
                 "source_config_hash",
+                "derived_checksum",
                 "reference_period",
                 "depth_m",
                 "depth_label",

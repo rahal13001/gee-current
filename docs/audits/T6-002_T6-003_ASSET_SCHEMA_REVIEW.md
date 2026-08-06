@@ -1,7 +1,7 @@
 # T6-002/T6-003 — Review Schema Asset Source dan Derived
 
-Tanggal: 6 Agustus 2026  
-Tahap: 6 — Publikasi aset GEE terpilih  
+Tanggal: 6 Agustus 2026
+Tahap: 6 — Publikasi aset GEE terpilih
 Status: `PASS_WITH_NOTES`
 
 ## Ringkasan
@@ -41,7 +41,7 @@ Keduanya menggunakan struktur manifest yang sudah dicontohkan pada Tahap 2:
   `monthly_climatology_speed`, `jfm_climatology_speed`, `speed`,
   `speed_anomaly`, dan `exploratory_trend_slope`.
 - Provenance wajib mencakup analytics version, source conversion manifest dan
-  SHA-256-nya, source config hash, reference period, period, depth, unit,
+  SHA-256-nya, source config hash, checksum produk derived, reference period, period, depth, unit,
   CRS/grid, mask method/checksum, AOI, status, limitation, dan timestamp.
 - Produk per-frame wajib membawa source time/path/checksum dan job/plan.
 - Tren hanya boleh membawa method `ordinary_least_squares_per_pixel` dan
@@ -67,6 +67,7 @@ atau diubah oleh task ini.
   upload, export, ACL mutation, atau Cloud task.
 - Schema belum membuktikan bahwa manifest diterima oleh Earth Engine atau bahwa
   asset/GCS path benar-benar ada.
-- T6-004 tetap wajib membuat manifest sampel konkret dan memvalidasi sintaksnya.
+- T6-004 sekarang menyediakan manifest sampel konkret dan validasi sintaks/schema
+  offline; artifact dan limitation dicatat pada audit T6-004.
 - T6-005/T6-006 tetap memerlukan approval dan operasi cloud terpisah.
 - `daily_full` tetap disabled; tidak ada keputusan ilmiah yang diubah.

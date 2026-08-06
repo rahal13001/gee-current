@@ -1,0 +1,88 @@
+{
+  "schema_version": "gee-source-asset-1.0",
+  "asset_role": "source",
+  "name": "projects/ee-rahal13001/assets/glorys_current/surface_0p494025m/daily_jfm_2015_2025/glorys12v1_d_20150101_d0p494025m",
+  "tilesets": [
+    {
+      "id": "source",
+      "sources": [
+        {
+          "uris": [
+            "gs://t6-004-sample-bucket/t6-004/source/glorys12v1_daily_201501_d0p494025m_20150101T000000.tif"
+          ]
+        }
+      ]
+    }
+  ],
+  "bands": [
+    {
+      "id": "uo",
+      "tilesetBandIndex": 0,
+      "pyramidingPolicy": "MEAN",
+      "missingData": {
+        "values": [
+          -9999
+        ]
+      }
+    },
+    {
+      "id": "vo",
+      "tilesetBandIndex": 1,
+      "pyramidingPolicy": "MEAN",
+      "missingData": {
+        "values": [
+          -9999
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "product_id": "GLOBAL_MULTIYEAR_PHY_001_030",
+    "dataset_id": "cmems_mod_glo_phy_my_0.083deg_P1D-m",
+    "dataset_version": "202311",
+    "dataset_part": "default",
+    "source_model": "GLORYS12V1",
+    "processing_type": "reanalysis",
+    "temporal_resolution": "daily_mean",
+    "period_type": "daily_jfm",
+    "period_start": "2015-01-01",
+    "period_end": "2015-01-02",
+    "period_end_inclusive": false,
+    "depth_m": 0.494025,
+    "depth_label": "top_model_layer",
+    "uo_units": "m s-1",
+    "vo_units": "m s-1",
+    "direction_convention": "towards_clockwise_from_north",
+    "source_crs": "EPSG:4326",
+    "source_grid": {
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0833282470703125,
+        0.0,
+        122.95833587646484,
+        0.0,
+        -0.08333331346511841,
+        4.291666656732559
+      ],
+      "shape": [
+        198,
+        245
+      ]
+    },
+    "conversion_version": "stage5-conversion-pilot-1.0",
+    "pipeline_version": "stage5-conversion-pilot-1.0",
+    "config_hash": "d13fc7dd55ead5b992f88b7ff89e75a84e75d428f9505380f681c555c3505f39",
+    "source_filename": "glorys12v1_daily_201501_d0p494025m.nc",
+    "source_checksum": "3c6e582bb1b317ab717920995adc8b3074634075fccb5d0cc843087b32aa01a7",
+    "nodata_value": -9999,
+    "mask_policy": "joint_uo_vo_valid",
+    "is_reanalysis": true,
+    "tides_included": false,
+    "data_status": "validated_with_notes",
+    "aoi_id": "eastern_indonesia_regional_001",
+    "usage_limitations": "Selected sample only; native GLORYS12V1 model grid; no tides; not operational or engineering use.",
+    "created_utc": "2026-08-06T00:00:00Z"
+  },
+  "startTime": "2015-01-01T00:00:00Z",
+  "endTime": "2015-01-02T00:00:00Z"
+}

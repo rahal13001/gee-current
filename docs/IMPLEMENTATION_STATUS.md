@@ -6,7 +6,7 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Task: `T6-002/T6-003 — Finalisasi schema asset source dan derived`
+- Task: `T6-004 — Generate manifest sampel source dan derived`
 - Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
@@ -219,8 +219,29 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
   dengan validator JSON Schema lokal; tidak ada dependency yang dipasang.
 - Tidak ada login, credential read, network, Earth Engine runtime, GCS check,
   upload, export, ACL/IAM mutation, atau cloud task.
-- T6-004 tetap menjadi pekerjaan berikutnya untuk membuat manifest sampel;
-  T6-005/T6-006 tetap menunggu approval dan operasi cloud terpisah.
+- T6-005/T6-006 tetap menunggu approval dan operasi cloud terpisah.
+
+## Tahap 6 T6-004
+
+- Active task: `T6-004` — generate manifest sampel source dan derived.
+- Status: `PASS_WITH_NOTES` untuk artifact lokal/offline.
+- Evidence: `docs/audits/T6-004_SAMPLE_MANIFEST_REVIEW.md`.
+- Artifact: satu source daily JFM pada `2015-01-01` dan satu derived `speed`
+  pada timestamp yang sama di `outputs/manifests/stage_6_t6_004/`.
+- Generator: `python/12_create_t6_manifest.py`; implementation:
+  `python/gee_manifest.py`.
+- Test: `python3 -m unittest tests.unit.test_stage6_manifest -v` exit `0`,
+  4 test lulus. Kedua manifest lolos JSON Schema draft 2020-12 dengan
+  `FormatChecker`; checksum lokal dan kesamaan grid source/derived juga lulus.
+- Full `python3 -m pytest -q` belum berjalan karena interpreter Linux ini tidak
+  memiliki module `pytest`; dependency tidak dipasang. Ini dicatat sebagai
+  limitation environment, bukan kegagalan manifest T6-004.
+- Generator menolak bucket kosong, tidak membuat upload commands, dan menulis
+  artifact secara atomik tanpa overwrite.
+- Tidak ada login, credential read, network, GCS existence check, Earth Engine
+  runtime, upload, export, ACL/IAM mutation, atau cloud task.
+- T6-005 adalah pekerjaan berikutnya dan memerlukan bucket nyata, approval,
+  serta gate upload terkontrol.
 
 ## Post-M0 follow-up
 

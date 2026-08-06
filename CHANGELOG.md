@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Menyelesaikan T6-004 secara offline: generator membuat satu manifest source
+  daily JFM dan satu manifest derived `speed`, dengan checksum, grid, waktu
+  end-exclusive, provenance, dan limitation lengkap. URI GCS masih sample;
+  tidak ada autentikasi, upload, atau task GEE.
+
 - Menyelesaikan T6-002/T6-003 secara offline dengan schema manifest source dan
   derived. Kontrak mengunci struktur manifest, band/missing data, metadata PRD,
   provenance, grid/mask, period end-exclusive, lima product type derived lokal,

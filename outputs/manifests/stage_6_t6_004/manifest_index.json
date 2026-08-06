@@ -1,0 +1,24 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "stage": "T6-004",
+  "sample_count": 2,
+  "created_utc": "2026-08-06T00:00:00Z",
+  "gcs_bucket": "t6-004-sample-bucket",
+  "manifests": [
+    {
+      "role": "source",
+      "path": "outputs/manifests/stage_6_t6_004/source_daily_jfm_20150101.json",
+      "sha256": "fb124a41f543a1fe8cc0c295abbde6d2d19b50b6795bd7530f535f1acfe5be06"
+    },
+    {
+      "role": "derived",
+      "path": "outputs/manifests/stage_6_t6_004/derived_speed_daily_jfm_20150101.json",
+      "sha256": "bc5502e15b0c745749410e966d178626ad9848c362c597829a6cf0ee56b23f9b"
+    }
+  ],
+  "limitations": [
+    "GCS bucket is a sample configuration value; its existence was not checked.",
+    "No Earth Engine authentication, upload, export, or cloud task was executed.",
+    "T6-005 remains a separate approved upload gate."
+  ]
+}

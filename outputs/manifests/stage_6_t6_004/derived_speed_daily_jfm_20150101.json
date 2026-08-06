@@ -1,0 +1,79 @@
+{
+  "schema_version": "gee-derived-asset-1.0",
+  "asset_role": "derived",
+  "name": "projects/ee-rahal13001/assets/glorys_current/derived/speed/glorys12v1_speed_20150101_d0p494025m",
+  "tilesets": [
+    {
+      "id": "derived",
+      "sources": [
+        {
+          "uris": [
+            "gs://t6-004-sample-bucket/t6-004/derived/glorys12v1_daily_201501_d0p494025m_20150101T000000_20150101T000000_speed.tif"
+          ]
+        }
+      ]
+    }
+  ],
+  "bands": [
+    {
+      "id": "speed",
+      "tilesetBandIndex": 0,
+      "pyramidingPolicy": "MEAN",
+      "missingData": {
+        "values": [
+          -9999
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "product_id": "GLOBAL_MULTIYEAR_PHY_001_030",
+    "source_model": "GLORYS12V1",
+    "processing_type": "reanalysis",
+    "product_type": "speed",
+    "analytics_version": "stage5-analytics-1.1",
+    "source_conversion_manifest": "outputs/manifests/stage_5_conversion_manifest.json",
+    "source_conversion_manifest_sha256": "0d137d0414e54c0d7c166cd5af8688cffb04564c6e49ef983ae916df57686c0d",
+    "source_config_hash": "a0688b03172bfe85b9b918443439ba01a484d6a7576c5d8b9f14c89d14eb2b7d",
+    "derived_checksum": "62dbbee17000eeaacf8379c22e976eaa7925b5211937385f1e7eb27bcd2ae7fd",
+    "reference_period": "2015-2025",
+    "period_start": "2015-01-01",
+    "period_end": "2015-01-02",
+    "period_end_inclusive": false,
+    "depth_m": 0.494025,
+    "depth_label": "top_model_layer",
+    "units": "m s-1",
+    "source_crs": "EPSG:4326",
+    "source_grid": {
+      "crs": "EPSG:4326",
+      "transform": [
+        0.0833282470703125,
+        0.0,
+        122.95833587646484,
+        0.0,
+        -0.08333331346511841,
+        4.291666656732559
+      ],
+      "shape": [
+        198,
+        245
+      ]
+    },
+    "mask_method": "static_expected_ocean_mask:baseline_valid_pair_from_first_validated_frame",
+    "mask_checksum": "8d914c62b4340d1b5c7dd9d54b7077dbb9e57006b0fee47398236a7425f17f36",
+    "data_status": "validated_with_notes",
+    "aoi_id": "eastern_indonesia_regional_001",
+    "is_reanalysis": true,
+    "tides_included": false,
+    "limitation": "T5-023 trend is exploratory and does not establish causality or statistical significance.; Zonal area is an approximate EPSG:4326 bbox area; exact water polygon is pending.; T5-017 and T5-019 are calculated for the AOI. Zone outputs require user-supplied zone IDs and valid geometries.; The static expected-ocean mask is the baseline valid-pair mask from the validated collection because an exact water polygon was not supplied; valid-area QC detects additional timestep loss against that mask.; Current rose is a research summary and not a safety, operational, or hazard indicator.",
+    "created_utc": "2026-08-06T00:00:00Z",
+    "source_time": "2015-01-01T00:00:00Z",
+    "source_path": "data/geotiff/stage5_collection/daily_jfm/daily_jfm_2015_01/glorys12v1_daily_201501_d0p494025m_20150101T000000.tif",
+    "source_checksum": "e97dfe13b91d309786138e5b1fa41cbaf4bcb4a4fbf12b7fab47a0c6d9be46b1",
+    "plan_name": "daily_jfm",
+    "job_id": "daily_jfm_2015_01",
+    "method": "speed = sqrt(uo^2 + vo^2); source uo/vo joint mask preserved"
+  },
+  "startTime": "2015-01-01T00:00:00Z",
+  "endTime": "2015-01-02T00:00:00Z"
+}
