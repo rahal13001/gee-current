@@ -1,7 +1,7 @@
 stage=T4-013
 scope=FULL
 validation_mode=local_read_only
-command=offline-stage4-full-final-v5
+command=python/07_validate_stage4.py --root E:/project/gee-current
 test_ids=TST-VAL-001..TST-VAL-020
 validation_test_count=20
 fixture_test_count=22
