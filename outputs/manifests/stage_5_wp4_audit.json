@@ -1,0 +1,83 @@
+{
+  "status": "PASS_WITH_NOTES",
+  "stage": "WP5-4",
+  "tasks": {
+    "T5-020": "PASS_WITH_NOTES",
+    "T5-021": "PASS_WITH_NOTES",
+    "T5-022": "PASS_WITH_NOTES",
+    "T5-023": "PASS_WITH_NOTES"
+  },
+  "analytics_version": "stage5-analytics-1.1",
+  "source_conversion_manifest": "E:\\project\\gee-current\\outputs\\manifests\\stage_5_conversion_manifest.json",
+  "source_conversion_manifest_sha256": "0d137d0414e54c0d7c166cd5af8688cffb04564c6e49ef983ae916df57686c0d",
+  "source_frame_counts": {
+    "monthly_all": 132,
+    "daily_jfm": 993,
+    "total": 1125,
+    "monthly_frames_per_month": {
+      "1": 11,
+      "2": 11,
+      "3": 11,
+      "4": 11,
+      "5": 11,
+      "6": 11,
+      "7": 11,
+      "8": 11,
+      "9": 11,
+      "10": 11,
+      "11": 11,
+      "12": 11
+    },
+    "monthly_frames_per_year": {
+      "2015": 12,
+      "2016": 12,
+      "2017": 12,
+      "2018": 12,
+      "2019": 12,
+      "2020": 12,
+      "2021": 12,
+      "2022": 12,
+      "2023": 12,
+      "2024": 12,
+      "2025": 12
+    }
+  },
+  "product_counts": {
+    "monthly_climatology_speed": 12,
+    "jfm_climatology_speed": 1,
+    "speed_anomaly": 1125,
+    "exploratory_trend_slope": 1
+  },
+  "method_contract": {
+    "reference_period": "2015-2025",
+    "monthly_weighting": "equal_monthly_frames; 11 frames per calendar month",
+    "jfm_weighting": "equal_daily_frames; 993 daily frames",
+    "anomaly_baselines": {
+      "monthly_all": "monthly_climatology",
+      "daily_jfm": "jfm_climatology"
+    },
+    "trend": "ordinary_least_squares_per_pixel; exploratory only; no inferential or causal claim"
+  },
+  "base_analytics_audit": {
+    "status": "PASS_WITH_NOTES",
+    "analytics_version": "stage5-analytics-1.1",
+    "product_count": 2264,
+    "checked_raster_count": 2264,
+    "checked_table_count": 4,
+    "checked_figure_count": 2,
+    "checked_mask_count": 2,
+    "frame_count": 1125,
+    "limitations": [
+      "T5-023 trend is exploratory and does not establish causality or statistical significance.",
+      "Zonal area is an approximate EPSG:4326 bbox area; exact water polygon is pending.",
+      "T5-017 and T5-019 are calculated for the AOI. Zone outputs require user-supplied zone IDs and valid geometries.",
+      "The static expected-ocean mask is the baseline valid-pair mask from the validated collection because an exact water polygon was not supplied; valid-area QC detects additional timestep loss against that mask.",
+      "Current rose is a research summary and not a safety, operational, or hazard indicator."
+    ]
+  },
+  "limitations": [
+    "T5-023 is exploratory and does not establish causality or statistical significance.",
+    "Climatologies and anomalies inherit the validated collection mask and EPSG:4326 grid.",
+    "This WP5-4 audit is local/offline; no Earth Engine upload or cloud computation was performed."
+  ]
+}
