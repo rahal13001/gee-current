@@ -3,7 +3,9 @@
 Tanggal audit: 2026-08-06 (Asia/Tokyo)
 Task: `T5-028`
 Scope: M0 governance dan Tahap 5 closeout
-Mode: read-only/offline untuk verifikasi; perubahan hanya pada dokumentasi status dan backlog
+Mode: rekonsiliasi dokumentasi lokal dan evidence user-managed; pytest dipasang user
+pada `.venv` Windows untuk verifikasi test, sedangkan Codex tidak melakukan
+authentication atau operasi cloud
 
 ## Keputusan scope
 
@@ -26,7 +28,7 @@ WP5-5 adalah gate administratif dan reproducibility. Pekerjaan ini tidak menguba
 | Tahap 4 | `PASS_WITH_NOTES` | `outputs/evidence/stage_4/T4-014_stage4_gate.result.txt` | 165/165 PASS, 0 error, 5 anomaly non-blocking |
 | WP5-1..WP5-4 | `PASS_WITH_NOTES` lokal | stage 5 evidence/manifests | Exact water polygon dan zone geometry belum tersedia |
 | T6–T9 | `NOT_STARTED`/`BLOCKED` | backlog dan traceability | Tidak ada upload full collection, GEE module, vector layer, atau App |
-| M0 | `IN_PROGRESS` | `docs/IMPLEMENTATION_STATUS.md` | Belum memenuhi seluruh Definition of Done |
+| M0 | `IN_PROGRESS` | `docs/IMPLEMENTATION_STATUS.md` | T5-028 selesai dengan catatan; Definition of Done M0 dan T6 governance belum selesai |
 
 ## Documentation reconciliation
 
@@ -37,7 +39,8 @@ Perubahan administratif yang dilakukan:
 3. Dokumen Tahap 2 dan Tahap 3 diberi catatan bahwa matriks `status awal` adalah
    baseline historis; status runtime dirujuk dari evidence dan traceability.
 4. Traceability diperbarui untuk T5-028.
-5. Status aktif tetap `IN_PROGRESS`; tidak ada klaim `PASS` baru.
+5. T5-028 ditutup dengan `PASS_WITH_NOTES`; M0 tetap `IN_PROGRESS` karena
+   approval transisi, governance GEE, dan tahap publikasi belum selesai.
 
 ## Offline verification commands
 
@@ -58,7 +61,30 @@ Result:
   `test_stage5_conversion`.
 - Tidak ada dependency yang dipasang.
 
-### Approved Windows environment
+### Approved Windows environment — latest test certification
+
+Command:
+
+```text
+E:\project\gee-current\.venv\Scripts\python.exe --version
+E:\project\gee-current\.venv\Scripts\python.exe -m pip --version
+E:\project\gee-current\.venv\Scripts\python.exe -m pytest --version
+E:\project\gee-current\.venv\Scripts\python.exe -m pip check
+E:\project\gee-current\.venv\Scripts\python.exe -m pytest -q
+```
+
+Result:
+
+- Python `3.12.13`; pip `26.2`; pytest `9.1.1`.
+- `pip check`: exit status `0`, `No broken requirements found`.
+- `pytest -q`: exit status `0`; `116 passed, 29 subtests passed in 8.01s`.
+- pytest, iniconfig, pluggy, dan pygments dipasang oleh user pada environment
+  Windows yang disetujui dan dicatat pada `requirements-lock.txt` menjadi 95
+  package versions.
+- Test ini memverifikasi suite lokal; tidak memverifikasi Copernicus, Earth
+  Engine, upload asset, atau operasi cloud.
+
+### WSL compatibility note
 
 Check:
 
@@ -69,8 +95,9 @@ file .venv/Scripts/python.exe
 
 Result:
 
-- File terdeteksi sebagai Windows PE32+ executable.
-- Tidak dapat dijalankan dari WSL; exit status `1`.
+- File terdeteksi sebagai Windows PE32+ executable dan tidak dapat dijalankan
+  dari WSL; ini bukan kegagalan suite karena sertifikasi terbaru dilakukan pada
+  Windows `.venv` yang sesuai.
 - Tidak ada credential atau environment secret yang dibaca.
 
 ### Current worktree diff
@@ -81,17 +108,18 @@ Command:
 git diff --check
 ```
 
-Result:
+Result dari Windows terbaru:
 
-- Exit status: `2`.
-- 80.820 baris output warning, terutama file evidence/JSON dengan CRLF/BOM
-  pada perubahan lokal.
-- Tidak dilakukan normalisasi otomatis karena worktree berisi perubahan user
-  yang luas; triage harus dilakukan sebelum commit.
+- `git status --short --branch`: exit status `0`; `main` bersih dan sinkron
+  dengan `origin/main`.
+- `git diff --check`: exit status `0`; tidak ada whitespace error.
+- Checkout WSL dapat menampilkan perubahan semu CRLF/BOM pada evidence/log/
+  manifest; gunakan native Windows sebagai sumber kebenaran working tree untuk
+  commit lintas platform.
 
 ### Graphify refresh dan diagnostics
 
-Refresh code-only yang dijalankan setelah dokumentasi final:
+Refresh code-only yang dijalankan setelah dokumentasi dan lock diperbarui:
 
 ```text
 graphify update . --no-cluster
@@ -100,7 +128,7 @@ graphify update . --no-cluster
 Result:
 
 - Exit status: `0`.
-- Raw extraction: 1.019 node dan 2.305 edge.
+- Raw extraction: 1.020 node dan 2.306 edge.
 - Tool memperingatkan 184 source/config file menghasilkan zero AST node; tidak
   ada semantic backend atau network yang digunakan.
 
@@ -110,8 +138,8 @@ Clustering lokal tanpa labeling LLM:
 graphify cluster-only . --no-viz --no-label
 ```
 
-Result: exit status `0`; current report/graph berisi 1.019 node, 2.003 edge,
-dan 77 komunitas.
+Result: exit status `0`; current report/graph berisi 1.020 node, 2.004 edge,
+dan 82 komunitas.
 
 Diagnostics lokal:
 
@@ -119,7 +147,7 @@ Diagnostics lokal:
 graphify diagnose multigraph --graph graphify-out/graph.json --json --undirected
 ```
 
-Result: exit status `0`; current clustered graph memiliki 1.019 node, 2.003
+Result: exit status `0`; current clustered graph memiliki 1.020 node, 2.004
 edge valid, 0 missing endpoint, 0 dangling endpoint, 0 self-loop, dan 0
 collapsed endpoint pair. `graphify-out/GRAPH_REPORT.md` dan
 `graphify-out/GRAPHIFY_DIAGNOSTICS.json` telah disinkronkan.
@@ -134,14 +162,14 @@ Hasil query menunjukkan chain FND → T0 → T1 → T2 → T3 → T4 → T5 dan 
 downstream GEE. Graphify memetakan struktur repository; hasilnya bukan
 validasi ilmiah atau validasi runtime cloud.
 
-## Blockers yang tetap fail-closed
+## Catatan dan batasan fail-closed
 
-1. Full test suite perlu dijalankan pada environment yang kompatibel dan sudah
-   memiliki dependency terkunci; instalasi baru tetap membutuhkan approval.
-2. WP5-5 belum dapat dinyatakan selesai sebelum full test suite dire-sertifikasi
-   pada environment kompatibel.
-3. Exact water polygon, zone ID/geometry, benchmark B2/B3, dan governance GEE
+1. Linux/WSL tidak dapat menjalankan Windows `.venv`; hasil suite yang menjadi
+   evidence berasal dari environment Windows user-managed.
+2. Exact water polygon, zone ID/geometry, benchmark B2/B3, dan governance GEE
    tetap menjadi prasyarat downstream; tidak boleh diisi dengan asumsi.
+3. M0 belum ditutup; T6-001 memerlukan approval transisi terpisah sebelum review
+   governance atau operasi cloud apa pun.
 
 ## Transition gate berikutnya
 
@@ -151,5 +179,5 @@ sebagai upload atau operasi cloud pada sesi Foundation/M0 ini.
 
 ## Status akhir audit
 
-`IN_PROGRESS` — rekonsiliasi dokumentasi dan Graphify sidecar selesai; environment
-test dan gate M0 masih terbuka.
+`PASS_WITH_NOTES` — T5-028 telah direkonsiliasi, suite Windows lulus, diff hygiene
+dan Graphify tervalidasi. M0 dan transisi T6 tetap terbuka.

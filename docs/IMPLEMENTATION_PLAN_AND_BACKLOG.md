@@ -909,7 +909,7 @@ ini tidak mengubah rumus, threshold, dataset, AOI, mask, atau keputusan ilmiah.
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T5-028 | P0 | M0 governance, traceability, Definition of Done | Rekonsiliasi status backlog, evidence, checklist, environment test, dan artefak Graphify; definisikan gate transisi berikutnya | T5-027 | `docs/audits/WP5-5_STATUS_RECONCILIATION.md` | status sumber konsisten, command/exit/evidence/limitations tercatat, blocker tetap fail-closed | `IN_PROGRESS` |
+| T5-028 | P0 | M0 governance, traceability, Definition of Done | Rekonsiliasi status backlog, evidence, checklist, environment test, dan artefak Graphify; definisikan gate transisi berikutnya | T5-027 | `docs/audits/WP5-5_STATUS_RECONCILIATION.md` | status sumber konsisten, command/exit/evidence/limitations tercatat, blocker tetap fail-closed | `PASS_WITH_NOTES` |
 
 ---
 

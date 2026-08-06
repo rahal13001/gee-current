@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Menutup rekonsiliasi T5-028 dengan `PASS_WITH_NOTES`: environment Windows
+  mencatat Python 3.12.13, pytest 9.1.1, `pip check` lulus, dan 116 test serta
+  29 subtest lulus. Dependency test runner direkam dalam lock; Graphify
+  diselaraskan dengan evidence terbaru. T6 tetap memerlukan approval transisi.
+
 - Menambahkan WP5-5/T5-028 sebagai gate administratif untuk rekonsiliasi status,
   evidence, environment test, dan Graphify sebelum transisi ke Tahap 6. Tidak
   ada keputusan ilmiah, data, formula, atau operasi cloud yang diubah.

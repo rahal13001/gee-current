@@ -7,7 +7,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
 - Task: `T5-028 / WP5-5 — Status, evidence, dan transition reconciliation`
-- Status: `IN_PROGRESS`
+- Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
 
@@ -19,7 +19,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | Security baseline | `TESTED` | `tools/security/check_secrets.ps1`, `outputs/evidence/foundation/FND-004.secret-scan.txt` |
 | Graphify verification | `TESTED` | `graphify-out/`, `docs/audits/GRAPHIFY_FOUNDATION_AUDIT.md` |
 | GEEMu verification | `TESTED_WITH_NOTES` | `docs/audits/TOOLS_AND_SKILLS_INVENTORY.md`, `docs/audits/GEEMU_FOUNDATION_RUN.md`; runtime smoke dan login dilaporkan user, tidak diulang |
-| Dependency baseline | `PASS_WITH_NOTES` | `requirements.txt`, `requirements-lock.txt`, dan `outputs/evidence/foundation/FND-006_dependency_lock.result.txt`; berasal dari `.venv` yang disetujui user |
+| Dependency baseline | `PASS_WITH_NOTES` | `requirements.txt`, `requirements-lock.txt`, dan `outputs/evidence/foundation/FND-006_dependency_lock.result.txt`; `.venv` Windows yang disetujui user mencatat pytest untuk test runner |
 | Setup/authentication | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-007_setup_report.md`; dependency dan smoke test dilaporkan user, tidak ada autentikasi ulang |
 | Governance actual Project ID/registration | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-009_governance_record.md`; Project ID dan registrasi nonkomersial dilaporkan user, governance cloud detail belum diaudit |
 | Cloud/EECU review | `PASS_WITH_NOTES` | `outputs/evidence/foundation/FND-010_cost_monitoring_plan.md`; user-managed EECU, quota, billing, IAM, dan resource review tercatat; tidak ada operasi Cloud dijalankan |
@@ -56,7 +56,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 | FND-003 | `IMPLEMENTED` | safe ignore rules added |
 | FND-004 | `TESTED` | offline sanitized scan executed; no value printed |
 | FND-005 | `IMPLEMENTED` | `pyproject.toml` quality/test configuration added; tools not installed |
-| FND-006 | `PASS_WITH_NOTES` | `requirements.txt` dan `requirements-lock.txt` direfresh dari `.venv` yang disetujui user; Python 3.12.13, 91 paket tercatat, `pip check` exit 0; clean-room reinstall belum dijalankan |
+| FND-006 | `PASS_WITH_NOTES` | `requirements.txt` dan `requirements-lock.txt` direfresh dari `.venv` yang disetujui user; Python 3.12.13, 95 paket tercatat termasuk pytest 9.1.1, `pip check` exit 0; clean-room reinstall belum dijalankan |
 | FND-007 | `PASS_WITH_NOTES` | user melaporkan `.venv`, `earthengine-api 1.7.37`, `copernicusmarine 2.4.1`, login Copernicus, OAuth Earth Engine, dan smoke test `ee.Number(1).getInfo() = 1`; tidak diulang dan tidak membaca credential |
 | FND-008 | `IMPLEMENTED` | user-login/Codex-use policy recorded; no auth operation performed |
 | FND-009 | `PASS_WITH_NOTES` | tujuan nonkomersial, Project ID `ee-rahal13001`, dan registrasi nonkomersial dilaporkan user; exact tier, billing, IAM, EECU, dan asset root tidak diklaim |
@@ -167,22 +167,25 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 
 - Active task: `T5-028` — rekonsiliasi status, evidence, environment, dan
   transition gate.
-- Status: `IN_PROGRESS`.
+- Status: `PASS_WITH_NOTES`.
 - Evidence: `docs/audits/WP5-5_STATUS_RECONCILIATION.md`.
 - Scope: menyelaraskan backlog dengan status aktual, menandai checklist historis
   Tahap 2–3 agar tidak dibaca sebagai status runtime, memeriksa test command pada
   environment yang tersedia, dan merekonsiliasi artefak Graphify.
-- Batasan: tidak ada instalasi dependency, network, authentication, upload,
-  perubahan raw/T4, perubahan formula, atau perubahan keputusan ilmiah.
-- Blocker saat ini: interpreter Linux tidak memiliki `numpy`; `.venv/Scripts/python.exe`
-  adalah executable Windows dan tidak dapat dijalankan pada WSL. Graphify telah
-  diregenerasi offline dan sidecar berada pada satu generasi.
-- Next gate: setelah T5-028 selesai dan approval terpisah, barulah T6 governance
-  dan publikasi aset GEE dapat direncanakan.
+- Batasan: pytest dipasang oleh user pada `.venv` Windows untuk verifikasi test;
+  tidak ada authentication, upload, perubahan raw/T4, perubahan formula, atau
+  perubahan keputusan ilmiah.
+- Verifikasi terbaru pada `.venv` Windows: Python `3.12.13`, pytest `9.1.1`,
+  `pip check` exit `0`, dan `python -m pytest -q` exit `0` dengan 116 test serta
+  29 subtest lulus dalam 8,01 detik.
+- Linux tetap tidak dapat menjalankan executable Windows `.venv`; Graphify
+  diperbarui offline dan sidecar berada pada satu generasi.
+- Next gate: setelah approval transisi terpisah, T6-001 dapat dimulai sebagai
+  review governance dan schema; upload atau operasi cloud tetap belum dimulai.
 
 ## Post-M0 follow-up
 
-1. Dependency environment telah disetujui dan lock telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.
+1. Dependency environment telah disetujui dan lock 95 paket telah direkam; clean-room reinstall tetap menjadi validasi lanjutan.
 2. Monitoring Cloud/EECU, billing, IAM, dan resource aktif telah dicatat melalui proses user-managed; FND-010 `PASS_WITH_NOTES`, tanpa operasi Cloud.
 3. Tahap 0 active metadata gate `PASS_WITH_NOTES`: user-managed product/daily/monthly describe, real 50-level extraction, dan sanitized material-change comparison sudah dicatat; raw NetCDF validation tetap downstream.
 4. Tahap 1 config baseline `PASS_WITH_NOTES`: konfigurasi AOI/periode/depth/statistik/asset, cross-file loader validation, formula/statistics baseline, schema, dan guardrail tervalidasi offline; ddof/metode persentil, exact polygon/mask, benchmark, dan pilot operasional belum ditetapkan atau dijalankan.
