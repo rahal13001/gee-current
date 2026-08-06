@@ -1,0 +1,415 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/glorys-current/gee-derived-asset.schema.json",
+  "title": "GLORYS12V1 GEE derived asset manifest",
+  "description": "Offline contract for a selected precomputed derived asset. It does not upload or inspect Earth Engine.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "asset_role",
+    "name",
+    "tilesets",
+    "bands",
+    "properties",
+    "startTime",
+    "endTime"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "gee-derived-asset-1.0"
+    },
+    "asset_role": {
+      "const": "derived"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^projects/[^/]+/assets/[^/]+/.+"
+    },
+    "tilesets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/tileset"
+        }
+      ],
+      "items": false
+    },
+    "bands": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/derived_band"
+        }
+      ],
+      "items": false
+    },
+    "properties": {
+      "$ref": "#/$defs/derived_properties"
+    },
+    "startTime": {
+      "$ref": "#/$defs/utc_datetime"
+    },
+    "endTime": {
+      "$ref": "#/$defs/utc_datetime"
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "properties": {
+            "properties": {
+              "properties": {
+                "product_type": {
+                  "const": "monthly_climatology_speed"
+                },
+                "units": {
+                  "const": "m s-1"
+                },
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                }
+              },
+              "required": ["month", "weighting"]
+            }
+          }
+        },
+        {
+          "properties": {
+            "properties": {
+              "properties": {
+                "product_type": {
+                  "const": "jfm_climatology_speed"
+                },
+                "units": {
+                  "const": "m s-1"
+                }
+              },
+              "required": ["weighting"]
+            }
+          }
+        },
+        {
+          "properties": {
+            "properties": {
+              "properties": {
+                "product_type": {
+                  "const": "speed"
+                },
+                "units": {
+                  "const": "m s-1"
+                }
+              },
+              "required": ["source_time", "source_path", "plan_name", "job_id", "source_checksum"]
+            }
+          }
+        },
+        {
+          "properties": {
+            "properties": {
+              "properties": {
+                "product_type": {
+                  "const": "speed_anomaly"
+                },
+                "units": {
+                  "const": "m s-1"
+                }
+              },
+              "required": ["source_time", "baseline", "plan_name", "job_id", "source_checksum"]
+            }
+          }
+        },
+        {
+          "properties": {
+            "properties": {
+              "properties": {
+                "product_type": {
+                  "const": "exploratory_trend_slope"
+                },
+                "units": {
+                  "const": "m s-1 year-1"
+                },
+                "method": {
+                  "const": "ordinary_least_squares_per_pixel"
+                },
+                "interpretation": {
+                  "const": "exploratory_no_inferential_or_causal_claim"
+                }
+              },
+              "required": ["reference_period", "method", "interpretation"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "utc_datetime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "tileset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sources"],
+      "properties": {
+        "id": {
+          "const": "derived"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["uris"],
+            "properties": {
+              "uris": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^gs://.+"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "derived_band": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "tilesetBandIndex", "pyramidingPolicy", "missingData"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{1,63}$"
+        },
+        "tilesetBandIndex": {
+          "const": 0
+        },
+        "pyramidingPolicy": {
+          "const": "MEAN"
+        },
+        "missingData": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["values"],
+          "properties": {
+            "values": {
+              "const": [-9999]
+            }
+          }
+        }
+      }
+    },
+    "grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crs", "transform", "shape"],
+      "properties": {
+        "crs": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transform": {
+          "type": "array",
+          "prefixItems": [
+            {"type": "number"},
+            {"type": "number"},
+            {"type": "number"},
+            {"type": "number"},
+            {"type": "number"},
+            {"type": "number"}
+          ],
+          "items": false
+        },
+        "shape": {
+          "type": "array",
+          "prefixItems": [
+            {"type": "integer", "minimum": 1},
+            {"type": "integer", "minimum": 1}
+          ],
+          "items": false
+        }
+      }
+    },
+    "derived_properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product_id",
+        "source_model",
+        "processing_type",
+        "product_type",
+        "analytics_version",
+        "source_conversion_manifest",
+        "source_conversion_manifest_sha256",
+        "source_config_hash",
+        "reference_period",
+        "period_start",
+        "period_end",
+        "period_end_inclusive",
+        "depth_m",
+        "depth_label",
+        "units",
+        "source_crs",
+        "source_grid",
+        "mask_method",
+        "mask_checksum",
+        "data_status",
+        "aoi_id",
+        "is_reanalysis",
+        "tides_included",
+        "limitation",
+        "created_utc"
+      ],
+      "properties": {
+        "product_id": {
+          "const": "GLOBAL_MULTIYEAR_PHY_001_030"
+        },
+        "source_model": {
+          "const": "GLORYS12V1"
+        },
+        "processing_type": {
+          "const": "reanalysis"
+        },
+        "product_type": {
+          "enum": [
+            "monthly_climatology_speed",
+            "jfm_climatology_speed",
+            "speed",
+            "speed_anomaly",
+            "exploratory_trend_slope"
+          ]
+        },
+        "analytics_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_conversion_manifest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_conversion_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_config_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "reference_period": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{4}$"
+        },
+        "period_start": {
+          "$ref": "#/$defs/date"
+        },
+        "period_end": {
+          "$ref": "#/$defs/date"
+        },
+        "period_end_inclusive": {
+          "const": false
+        },
+        "depth_m": {
+          "const": 0.494025
+        },
+        "depth_label": {
+          "const": "top_model_layer"
+        },
+        "units": {
+          "enum": ["m s-1", "m s-1 year-1"]
+        },
+        "source_crs": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_grid": {
+          "$ref": "#/$defs/grid"
+        },
+        "mask_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mask_checksum": {
+          "$ref": "#/$defs/sha256"
+        },
+        "data_status": {
+          "enum": ["validated", "validated_with_notes", "pending_validation"]
+        },
+        "aoi_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "is_reanalysis": {
+          "const": true
+        },
+        "tides_included": {
+          "const": false
+        },
+        "limitation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_utc": {
+          "$ref": "#/$defs/utc_datetime"
+        },
+        "month": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "weighting": {
+          "type": "string",
+          "enum": ["equal_frames", "equal_daily_frames"]
+        },
+        "source_time": {
+          "$ref": "#/$defs/utc_datetime"
+        },
+        "source_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_checksum": {
+          "$ref": "#/$defs/sha256"
+        },
+        "plan_name": {
+          "type": "string",
+          "enum": ["daily_jfm", "monthly_all"]
+        },
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interpretation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

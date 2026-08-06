@@ -932,8 +932,8 @@ Mengunggah hanya aset yang dibutuhkan untuk pendidikan, penelitian, dan App, den
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
 | T6-001 | P0 | Governance | Review Project ID, tier, IAM | FND-009,T5-027 | `docs/audits/T6-001_GEE_GOVERNANCE_REVIEW.md` | project benar; limitations dan user-managed evidence dicatat | `PASS_WITH_NOTES` |
-| T6-002 | P0 | Model data | Finalisasi asset schema source | T5-006 | schema | seluruh properti PRD tersedia | `NOT_STARTED` |
-| T6-003 | P0 | Model data | Finalisasi asset schema derived | T5-025 | schema | derivation metadata lengkap | `NOT_STARTED` |
+| T6-002 | P0 | Model data | Finalisasi asset schema source | T5-006 | `config/gee_source_asset.schema.json`, `docs/audits/T6-002_T6-003_ASSET_SCHEMA_REVIEW.md` | seluruh properti PRD tersedia; `uo`/`vo`, waktu end-exclusive, provenance, grid, mask, dan limitations terkunci | `PASS_WITH_NOTES` |
+| T6-003 | P0 | Model data | Finalisasi asset schema derived | T5-025 | `config/gee_derived_asset.schema.json`, `docs/audits/T6-002_T6-003_ASSET_SCHEMA_REVIEW.md` | derivation metadata lengkap; product type, provenance, reference period, method, mask, unit, dan limitation terkunci | `PASS_WITH_NOTES` |
 | T6-004 | P0 | Upload | Generate manifest sampel | T6-002 | manifests | valid secara sintaks | `NOT_STARTED` |
 | T6-005 | P0 | Upload | Upload sampel terkontrol | T6-001,T6-004 | sample assets | approval dan task success | `NOT_STARTED` |
 | T6-006 | P0 | Validation | Validasi band/time/mask/projection sampel | T6-005 | GEE report | cocok sumber | `NOT_STARTED` |

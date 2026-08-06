@@ -1,12 +1,12 @@
 # IMPLEMENTATION_STATUS.md
 
-Tanggal baseline: 2026-08-04 (Asia/Jayapura)
+Tanggal baseline: 2026-08-06 (Asia/Jayapura)
 
 ## Active task
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Task: `T6-001 — Review governance Google Earth Engine`
+- Task: `T6-002/T6-003 — Finalisasi schema asset source dan derived`
 - Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
@@ -199,8 +199,28 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   batas quota/billing aktif. Browser/runtime tidak digunakan.
 - Tidak ada credential, network, upload, export, ACL/IAM mutation, atau cloud
   task yang dijalankan.
-- Rekomendasi berikutnya: T6-002 finalisasi schema source dan T6-003
-  finalisasi schema derived; keduanya belum dianggap selesai.
+
+## Tahap 6 T6-002/T6-003
+
+- Active tasks: `T6-002` — finalisasi schema source dan `T6-003` — finalisasi
+  schema derived.
+- Status: `PASS_WITH_NOTES` untuk kontrak offline.
+- Evidence: `docs/audits/T6-002_T6-003_ASSET_SCHEMA_REVIEW.md`.
+- Source schema: `config/gee_source_asset.schema.json` mengunci manifest dua
+  band berurutan `uo`/`vo`, `MEAN`, missing value `-9999`, metadata PRD,
+  provenance, grid/mask, pemisahan daily JFM/monthly all, dan period
+  end-exclusive.
+- Derived schema: `config/gee_derived_asset.schema.json` mengunci satu band,
+  provenance analytics/conversion, reference period, method, mask/checksum,
+  unit, depth, CRS/grid, limitation, dan lima product type yang ada pada
+  manifest analytics lokal.
+- Test: `python3 -m unittest tests.unit.test_gee_asset_schemas -v` exit `0`,
+  5 test lulus. Dokumen schema dan fixture source/derived juga diperiksa
+  dengan validator JSON Schema lokal; tidak ada dependency yang dipasang.
+- Tidak ada login, credential read, network, Earth Engine runtime, GCS check,
+  upload, export, ACL/IAM mutation, atau cloud task.
+- T6-004 tetap menjadi pekerjaan berikutnya untuk membuat manifest sampel;
+  T6-005/T6-006 tetap menunggu approval dan operasi cloud terpisah.
 
 ## Post-M0 follow-up
 

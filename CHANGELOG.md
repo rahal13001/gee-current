@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Menyelesaikan T6-002/T6-003 secara offline dengan schema manifest source dan
+  derived. Kontrak mengunci struktur manifest, band/missing data, metadata PRD,
+  provenance, grid/mask, period end-exclusive, lima product type derived lokal,
+  dan limitations; tidak ada operasi GEE atau cloud.
+
 - Menyelesaikan T6-001 sebagai review governance GEE read-only dengan
   `PASS_WITH_NOTES`: Project ID dan prefix asset root konsisten secara lokal,
   evidence user-managed dipisahkan dari temuan yang belum terverifikasi, dan
