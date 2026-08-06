@@ -931,7 +931,7 @@ Mengunggah hanya aset yang dibutuhkan untuk pendidikan, penelitian, dan App, den
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| T6-001 | P0 | Governance | Review Project ID, tier, IAM | FND-009,T5-027 | review | project benar | `NOT_STARTED` |
+| T6-001 | P0 | Governance | Review Project ID, tier, IAM | FND-009,T5-027 | `docs/audits/T6-001_GEE_GOVERNANCE_REVIEW.md` | project benar; limitations dan user-managed evidence dicatat | `PASS_WITH_NOTES` |
 | T6-002 | P0 | Model data | Finalisasi asset schema source | T5-006 | schema | seluruh properti PRD tersedia | `NOT_STARTED` |
 | T6-003 | P0 | Model data | Finalisasi asset schema derived | T5-025 | schema | derivation metadata lengkap | `NOT_STARTED` |
 | T6-004 | P0 | Upload | Generate manifest sampel | T6-002 | manifests | valid secara sintaks | `NOT_STARTED` |

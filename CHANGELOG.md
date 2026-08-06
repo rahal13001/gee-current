@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Menyelesaikan T6-001 sebagai review governance GEE read-only dengan
+  `PASS_WITH_NOTES`: Project ID dan prefix asset root konsisten secara lokal,
+  evidence user-managed dipisahkan dari temuan yang belum terverifikasi, dan
+  tidak ada login, credential read, network, upload, export, atau task cloud.
+  T6-002/T6-003 direkomendasikan sebagai pekerjaan schema berikutnya.
+
 - Menutup rekonsiliasi T5-028 dengan `PASS_WITH_NOTES`: environment Windows
   mencatat Python 3.12.13, pytest 9.1.1, `pip check` lulus, dan 116 test serta
   29 subtest lulus. Dependency test runner direkam dalam lock; Graphify

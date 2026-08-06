@@ -6,7 +6,7 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Task: `T5-028 / WP5-5 — Status, evidence, dan transition reconciliation`
+- Task: `T6-001 — Review governance Google Earth Engine`
 - Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
@@ -180,8 +180,27 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   29 subtest lulus dalam 8,01 detik.
 - Linux tetap tidak dapat menjalankan executable Windows `.venv`; Graphify
   diperbarui offline dan sidecar berada pada satu generasi.
-- Next gate: setelah approval transisi terpisah, T6-001 dapat dimulai sebagai
-  review governance dan schema; upload atau operasi cloud tetap belum dimulai.
+- Transition note: T6-001 kemudian dilakukan sebagai review governance
+  read-only; upload atau operasi cloud tetap belum dimulai.
+
+## Tahap 6 T6-001
+
+- Active task: `T6-001` — review Project ID, tier, IAM, asset root, dan batas
+  biaya secara read-only.
+- Status: `PASS_WITH_NOTES`.
+- Evidence: `docs/audits/T6-001_GEE_GOVERNANCE_REVIEW.md`.
+- Repository-observed: Project ID `ee-rahal13001` dan asset root
+  `projects/ee-rahal13001/assets/glorys_current` konsisten dengan prefix
+  project pada konfigurasi lokal.
+- User-reported: registrasi nonkomersial, IAM `Owner`, tidak ada billing
+  account tertaut, EECU/quota/tasks `0`, dan resource review 6 record pada
+  2026-08-03.
+- Not verified: exact tier, least-privilege IAM, live asset root/ACL, serta
+  batas quota/billing aktif. Browser/runtime tidak digunakan.
+- Tidak ada credential, network, upload, export, ACL/IAM mutation, atau cloud
+  task yang dijalankan.
+- Rekomendasi berikutnya: T6-002 finalisasi schema source dan T6-003
+  finalisasi schema derived; keduanya belum dianggap selesai.
 
 ## Post-M0 follow-up
 
