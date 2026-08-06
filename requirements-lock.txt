@@ -1,5 +1,5 @@
 # Foundation/M0 dependency lock snapshot.
-# Source: existing local .venv; refreshed after user-approved one-time conversion dependency installation.
+# Source: existing local .venv; refreshed after user-approved conversion and test-runner dependency installation.
 # Python baseline: 3.12.13
 affine==2.4.0
 annotated-types==0.8.0
@@ -33,6 +33,7 @@ h5netcdf==1.8.1
 h5py==3.16.0
 httplib2==0.32.0
 idna==3.18
+iniconfig==2.3.0
 jmespath==1.1.0
 locket==1.0.0
 numcodecs==0.16.5
@@ -41,6 +42,7 @@ packaging==26.2
 pandas==3.0.5
 partd==1.4.2
 pip==26.2
+pluggy==1.6.0
 proto-plus==1.28.2
 protobuf==7.35.1
 pyarrow==25.0.0
@@ -49,7 +51,9 @@ pyasn1-modules==0.4.2
 pycparser==3.0
 pydantic==2.13.4
 pydantic-core==2.46.4
+pygments==2.20.0
 pyparsing==3.3.2
+pytest==9.1.1
 pyproj==3.7.2
 pystac==1.15.2
 pystac-core==1.15.2
