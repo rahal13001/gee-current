@@ -7,7 +7,7 @@
 **Kedalaman target:** lapisan model teratas, sekitar 0,494025 m  
 **Variabel:** `uo` dan `vo`  
 **Tanggal penyusunan:** 29 Juli 2026  
-**Status dokumen:** Panduan implementasi dan paket uji; pilot pada data asli belum dijalankan  
+**Status dokumen:** Panduan implementasi dan paket uji; matriks di dokumen ini adalah baseline/status awal. Status pelaksanaan aktual dirujuk dari `docs/IMPLEMENTATION_STATUS.md` dan evidence Tahap 2.
 **Ketergantungan:** Tahap 0 dan Tahap 1  
 **Ruang lingkup:** Arus laut saja  
 **Klasifikasi penggunaan:** Pendidikan dan penelitian nonkomersial  
@@ -16,26 +16,49 @@
 
 ---
 
+## Catatan rekonsiliasi pelaksanaan
+
+Dokumen ini ditulis sebelum pilot asli dijalankan. Karena itu, label `status
+awal` dan kalimat historis seperti “belum dijalankan” dipertahankan sebagai
+baseline desain, bukan sebagai status runtime terkini.
+
+Status aktual yang dapat dibuktikan saat ini:
+
+- T2-001..T2-017: `PASS_WITH_NOTES` berdasarkan evidence lokal dan user-managed.
+- Pilot Februari 2020: 29 timestep, konversi GeoTIFF, validasi mask, dan
+  reference-point comparison tercatat.
+- B2/T2-018 dan B3/T2-019: `NOT_STARTED`; asset JFM/full-series dan benchmark
+  yang diperlukan belum tersedia.
+- T2-020..T2-025: belum menjadi gate lengkap; tidak boleh dianggap lulus hanya
+  karena T2-014..T2-017 telah tersedia.
+
+Rujukan status: `docs/IMPLEMENTATION_STATUS.md`,
+`docs/REQUIREMENTS_TRACEABILITY.md`, dan
+`outputs/evidence/stage_2/T2-014_016_gee_validation.result.txt`.
+
+---
+
 ## Daftar isi
 
-1. [Kedudukan Tahap 2](#1-kedudukan-tahap-2)
-2. [Status yang harus dipahami](#2-status-yang-harus-dipahami)
-3. [Tujuan dan hasil yang diharapkan](#3-tujuan-dan-hasil-yang-diharapkan)
-4. [Mengapa Februari 2020 dipilih](#4-mengapa-februari-2020-dipilih)
-5. [Prasyarat dan input yang belum tersedia](#5-prasyarat-dan-input-yang-belum-tersedia)
-6. [Kriteria penghentian](#6-kriteria-penghentian)
-7. [Arsitektur pilot](#7-arsitektur-pilot)
-8. [Struktur direktori](#8-struktur-direktori)
-9. [Persiapan lingkungan](#9-persiapan-lingkungan)
-10. [Pengamanan kredensial](#10-pengamanan-kredensial)
-11. [Konfigurasi wilayah pilot](#11-konfigurasi-wilayah-pilot)
-12. [Urutan eksekusi](#12-urutan-eksekusi)
-13. [Langkah 0 — Preflight](#13-langkah-0--preflight)
-14. [Langkah 1 — Verifikasi metadata aktif](#14-langkah-1--verifikasi-metadata-aktif)
-15. [Langkah 2 — Unduh NetCDF pilot](#15-langkah-2--unduh-netcdf-pilot)
-16. [Langkah 3 — Validasi NetCDF](#16-langkah-3--validasi-netcdf)
-17. [Langkah 4 — Konversi menjadi 29 GeoTIFF](#17-langkah-4--konversi-menjadi-29-geotiff)
-18. [Langkah 5 — Validasi GeoTIFF](#18-langkah-5--validasi-geotiff)
+1. [Catatan rekonsiliasi pelaksanaan](#catatan-rekonsiliasi-pelaksanaan)
+2. [Kedudukan Tahap 2](#1-kedudukan-tahap-2)
+3. [Status yang harus dipahami](#2-status-yang-harus-dipahami)
+4. [Tujuan dan hasil yang diharapkan](#3-tujuan-dan-hasil-yang-diharapkan)
+5. [Mengapa Februari 2020 dipilih](#4-mengapa-februari-2020-dipilih)
+6. [Prasyarat dan input yang belum tersedia](#5-prasyarat-dan-input-yang-belum-tersedia)
+7. [Kriteria penghentian](#6-kriteria-penghentian)
+8. [Arsitektur pilot](#7-arsitektur-pilot)
+9. [Struktur direktori](#8-struktur-direktori)
+10. [Persiapan lingkungan](#9-persiapan-lingkungan)
+11. [Pengamanan kredensial](#10-pengamanan-kredensial)
+12. [Konfigurasi wilayah pilot](#11-konfigurasi-wilayah-pilot)
+13. [Urutan eksekusi](#12-urutan-eksekusi)
+14. [Langkah 0 — Preflight](#13-langkah-0--preflight)
+15. [Langkah 1 — Verifikasi metadata aktif](#14-langkah-1--verifikasi-metadata-aktif)
+16. [Langkah 2 — Unduh NetCDF pilot](#15-langkah-2--unduh-netcdf-pilot)
+17. [Langkah 3 — Validasi NetCDF](#16-langkah-3--validasi-netcdf)
+18. [Langkah 4 — Konversi menjadi 29 GeoTIFF](#17-langkah-4--konversi-menjadi-29-geotiff)
+19. [Langkah 5 — Validasi GeoTIFF](#18-langkah-5--validasi-geotiff)
 19. [Langkah 6 — Buat titik referensi](#19-langkah-6--buat-titik-referensi)
 20. [Langkah 7 — Unggah ke Earth Engine](#20-langkah-7--unggah-ke-earth-engine)
 21. [Langkah 8 — Uji arah kardinal di GEE](#21-langkah-8--uji-arah-kardinal-di-gee)

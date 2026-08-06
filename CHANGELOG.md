@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Menambahkan WP5-5/T5-028 sebagai gate administratif untuk rekonsiliasi status,
+  evidence, environment test, dan Graphify sebelum transisi ke Tahap 6. Tidak
+  ada keputusan ilmiah, data, formula, atau operasi cloud yang diubah.
+
+- Menyelesaikan WP5-4/T5-020..T5-023 melalui audit penerimaan offline yang
+  merekonsiliasi 132 frame monthly dan 993 frame JFM, memverifikasi 12
+  klimatologi bulanan, 1 klimatologi JFM, 1.125 anomali, dan 1 tren OLS
+  eksploratif, serta mencatat weighting, baseline, reference period, checksum,
+  schema, dan provenance pada manifest WP5-4.
+
 - Memperbarui WP5-3 analytics lokal berdasarkan keputusan ahli: threshold global
   AOI P90 per analysis plan, valid-area QC 0,95, current rose 16 sektor
   `towards` dengan global quantile bins, tabel threshold/rose, dan 2 SVG AOI.

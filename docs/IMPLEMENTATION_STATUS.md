@@ -6,9 +6,10 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
+- Task: `T5-028 / WP5-5 — Status, evidence, dan transition reconciliation`
 - Status: `IN_PROGRESS`
 - Owner: Codex under user scope and approval gates
-- Stage 0–3: dokumenter tersedia; tidak ada klaim kelulusan operasional
+- Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
 
 ## Ringkasan evidence
 
@@ -107,7 +108,8 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   toleransi `1e-6`, maksimum selisih `1.1920928955078125e-07`.
 - Tidak ada GEE, network, authentication, upload, dependency installation,
   atau perubahan raw/T4. M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
-- Approval gate berikutnya: berhenti sebelum WP5-4 sampai persetujuan eksplisit pengguna.
+- Pada saat WP5-2 selesai, approval gate berikutnya adalah WP5-3; WP5-3 dan
+  WP5-4 kemudian dimulai setelah persetujuan eksplisit pengguna.
 
 ## Tahap 5 WP5-3
 
@@ -134,7 +136,49 @@ Tanggal baseline: 2026-08-04 (Asia/Jayapura)
   exact water polygon serta zona belum tersedia sehingga produk zona belum
   dibuat.
 - M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
-- Approval gate berikutnya: berhenti sebelum WP5-4 sampai persetujuan eksplisit pengguna.
+- WP5-4 kemudian dimulai setelah persetujuan eksplisit pengguna.
+
+## Tahap 5 WP5-4
+
+- Active task: `WP5-4` / `T5-020..T5-023` — acceptance audit klimatologi,
+  anomali, dan tren eksploratif lokal.
+- Status: `PASS_WITH_NOTES`.
+- Evidence: `outputs/evidence/stage_5/WP5-4_climatology_anomaly_trend.result.txt`.
+- Audit terfokus: `outputs/manifests/stage_5_wp4_audit.json` melalui
+  `python/11_audit_stage5_wp4.py`.
+- Rekonsiliasi sumber: 132 frame `monthly_all` (11 frame untuk setiap bulan,
+  12 frame untuk setiap tahun) + 993 frame `daily_jfm` = 1.125 timestep.
+- Produk yang diverifikasi: 12 monthly climatologies, 1 JFM climatology,
+  1.125 speed anomalies, dan 1 exploratory OLS slope raster.
+- Kontrak metode terverifikasi: reference `2015-2025`; weighting bulanan
+  equal-monthly-frame; weighting JFM equal-daily-frame; baseline anomali
+  monthly/JFM sesuai plan; tren OLS per pixel hanya eksploratif tanpa klaim
+  inferensial atau kausal.
+- Audit dasar juga memverifikasi 2.264 raster, 4 tabel, 2 SVG, 2 static mask,
+  checksum, schema, CRS EPSG:4326, NoData, analytics version, dan config hash.
+- Batasan: lokal/offline; raster mewarisi mask/grid tervalidasi; tren bukan
+  bukti kausalitas/signifikansi; exact water polygon dan produk zona tetap
+  menunggu geometri yang disediakan pengguna.
+- M0 tetap `IN_PROGRESS` dan ADR tetap `PROPOSED`.
+- WP5-5 telah disetujui untuk dikerjakan sebagai rekonsiliasi administratif;
+  pekerjaan itu tidak mengubah keputusan ilmiah.
+
+## Tahap 5 WP5-5
+
+- Active task: `T5-028` — rekonsiliasi status, evidence, environment, dan
+  transition gate.
+- Status: `IN_PROGRESS`.
+- Evidence: `docs/audits/WP5-5_STATUS_RECONCILIATION.md`.
+- Scope: menyelaraskan backlog dengan status aktual, menandai checklist historis
+  Tahap 2–3 agar tidak dibaca sebagai status runtime, memeriksa test command pada
+  environment yang tersedia, dan merekonsiliasi artefak Graphify.
+- Batasan: tidak ada instalasi dependency, network, authentication, upload,
+  perubahan raw/T4, perubahan formula, atau perubahan keputusan ilmiah.
+- Blocker saat ini: interpreter Linux tidak memiliki `numpy`; `.venv/Scripts/python.exe`
+  adalah executable Windows dan tidak dapat dijalankan pada WSL. Graphify telah
+  diregenerasi offline dan sidecar berada pada satu generasi.
+- Next gate: setelah T5-028 selesai dan approval terpisah, barulah T6 governance
+  dan publikasi aset GEE dapat direncanakan.
 
 ## Post-M0 follow-up
 

@@ -595,26 +595,26 @@ Membuat repository yang aman, reproducible, dapat ditelusuri, dan siap digunakan
 
 | Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
 |---|---:|---|---|---|---|---|---|
-| FND-001 | P0 | PRD §19 | Buat struktur repository baseline | — | struktur folder | sesuai PRD; tidak ada data besar di Git | `NOT_STARTED` |
-| FND-002 | P0 | AGENTS | Pasang `AGENTS.md` di root | FND-001 | file root | Codex mendeteksi instruksi | `NOT_STARTED` |
-| FND-003 | P0 | SEC-010 | Buat `.gitignore` aman | FND-001 | `.gitignore` | credential/data patterns terlindungi | `NOT_STARTED` |
-| FND-004 | P0 | FR-CONF-06, SEC-001 | Jalankan baseline secret review | FND-003 | security report | tidak ada secret aktif | `NOT_STARTED` |
-| FND-005 | P0 | PRD §19 | Buat `pyproject.toml` dan quality tool config | FND-001 | config tooling | command formatter/lint/test terdokumentasi | `NOT_STARTED` |
-| FND-006 | P0 | Reproducibility | Buat `requirements.txt` dan lock | FND-005 | requirements lock | environment dapat direplikasi | `NOT_STARTED` |
-| FND-007 | P0 | Setup | Jalankan setup dan authentication checklist | FND-006 | setup report | status `PASS` | `NOT_STARTED` |
-| FND-008 | P0 | SEC-002–005 | Terapkan user-login, Codex-use | FND-007 | auth evidence aman | Codex tidak menerima secret | `NOT_STARTED` |
-| FND-009 | P0 | GOV-01–03 | Catat tujuan nonkomersial, Project ID, tier | FND-007 | governance record | data aktual tersedia | `NOT_STARTED` |
-| FND-010 | P0 | GOV-04–05 | Siapkan monitoring EECU dan biaya Cloud | FND-009 | monitoring plan | layanan aktif diketahui | `NOT_STARTED` |
-| FND-011 | P0 | PRD §27 | Buat `docs/IMPLEMENTATION_STATUS.md` | FND-001 | status file | seluruh tahap berstatus awal benar | `NOT_STARTED` |
-| FND-012 | P0 | PRD §28 | Buat `docs/REQUIREMENTS_TRACEABILITY.md` | FND-011 | traceability table | semua requirement PRD tercantum | `NOT_STARTED` |
-| FND-013 | P0 | Validation | Buat `TEST_AND_VALIDATION_PLAN.md` | FND-012 | test plan | test ID dan evidence mapping tersedia | `NOT_STARTED` |
-| FND-014 | P1 | ADR-001–010 | Buat ADR baseline dari keputusan PRD | FND-012 | `docs/adr/` | 10 keputusan tercatat | `NOT_STARTED` |
-| FND-015 | P1 | Maintainability | Buat `CHANGELOG.md` | FND-001 | changelog | format perubahan tersedia | `NOT_STARTED` |
-| FND-016 | P1 | Security | Buat script baseline secret check | FND-003 | test/security script | tidak mencetak nilai suspect | `NOT_STARTED` |
-| FND-017 | P1 | Reproducibility | Buat command runner/Makefile/PowerShell entrypoint | FND-005 | task commands | setup, lint, test dapat dijalankan konsisten | `NOT_STARTED` |
-| FND-018 | P1 | Governance | Buat evidence directory dan naming standard | FND-011 | `outputs/evidence/` spec | bukti dapat ditelusuri | `NOT_STARTED` |
-| FND-019 | P1 | Security | Review GitHub push protection/secret scanning | FND-004 | review record | status fitur dicatat | `NOT_STARTED` |
-| FND-020 | P1 | Documentation | Salin PRD dan Tahap 0–3 versi aktif ke lokasi resmi | FND-001 | docs baseline | versi tidak ambigu | `NOT_STARTED` |
+| FND-001 | P0 | PRD §19 | Buat struktur repository baseline | — | struktur folder | sesuai PRD; tidak ada data besar di Git | `IMPLEMENTED` |
+| FND-002 | P0 | AGENTS | Pasang `AGENTS.md` di root | FND-001 | file root | Codex mendeteksi instruksi | `IMPLEMENTED` |
+| FND-003 | P0 | SEC-010 | Buat `.gitignore` aman | FND-001 | `.gitignore` | credential/data patterns terlindungi | `IMPLEMENTED` |
+| FND-004 | P0 | FR-CONF-06, SEC-001 | Jalankan baseline secret review | FND-003 | security report | tidak ada secret aktif | `TESTED` |
+| FND-005 | P0 | PRD §19 | Buat `pyproject.toml` dan quality tool config | FND-001 | config tooling | command formatter/lint/test terdokumentasi | `IMPLEMENTED` |
+| FND-006 | P0 | Reproducibility | Buat `requirements.txt` dan lock | FND-005 | requirements lock | environment dapat direplikasi | `PASS_WITH_NOTES` |
+| FND-007 | P0 | Setup | Jalankan setup dan authentication checklist | FND-006 | setup report | status `PASS` | `PASS_WITH_NOTES` |
+| FND-008 | P0 | SEC-002–005 | Terapkan user-login, Codex-use | FND-007 | auth evidence aman | Codex tidak menerima secret | `IMPLEMENTED` |
+| FND-009 | P0 | GOV-01–03 | Catat tujuan nonkomersial, Project ID, tier | FND-007 | governance record | data aktual tersedia | `PASS_WITH_NOTES` |
+| FND-010 | P0 | GOV-04–05 | Siapkan monitoring EECU dan biaya Cloud | FND-009 | monitoring plan | layanan aktif diketahui | `PASS_WITH_NOTES` |
+| FND-011 | P0 | PRD §27 | Buat `docs/IMPLEMENTATION_STATUS.md` | FND-001 | status file | seluruh tahap berstatus awal benar | `IMPLEMENTED` |
+| FND-012 | P0 | PRD §28 | Buat `docs/REQUIREMENTS_TRACEABILITY.md` | FND-011 | traceability table | semua requirement PRD tercantum | `IMPLEMENTED` |
+| FND-013 | P0 | Validation | Buat `TEST_AND_VALIDATION_PLAN.md` | FND-012 | test plan | test ID dan evidence mapping tersedia | `IMPLEMENTED` |
+| FND-014 | P1 | ADR-001–010 | Buat ADR baseline dari keputusan PRD | FND-012 | `docs/adr/` | 10 keputusan tercatat | `IMPLEMENTED` |
+| FND-015 | P1 | Maintainability | Buat `CHANGELOG.md` | FND-001 | changelog | format perubahan tersedia | `IMPLEMENTED` |
+| FND-016 | P1 | Security | Buat script baseline secret check | FND-003 | test/security script | tidak mencetak nilai suspect | `TESTED` |
+| FND-017 | P1 | Reproducibility | Buat command runner/Makefile/PowerShell entrypoint | FND-005 | task commands | setup, lint, test dapat dijalankan konsisten | `IMPLEMENTED` |
+| FND-018 | P1 | Governance | Buat evidence directory dan naming standard | FND-011 | `outputs/evidence/` spec | bukti dapat ditelusuri | `IMPLEMENTED` |
+| FND-019 | P1 | Security | Review GitHub push protection/secret scanning | FND-004 | review record | status fitur dicatat | `PASS_WITH_NOTES` |
+| FND-020 | P1 | Documentation | Salin PRD dan Tahap 0–3 versi aktif ke lokasi resmi | FND-001 | docs baseline | versi tidak ambigu | `PASS_WITH_NOTES` |
 
 ---
 
@@ -893,14 +893,23 @@ FR-PY-01 sampai FR-PY-17
 | T5-017 | P1 | FR-PY-09 | Threshold exceedance | T1-004,T5-009,T5-011,T5-012,T5-016 | `data/validated/stage5_analytics/tables/threshold_exceedance.csv`, `config/statistics.json` | Global AOI P90 per analysis plan; `>`; valid-area QC 0,95; missing timesteps recorded | `PASS_WITH_NOTES` |
 | T5-018 | P0 | FR-PY-10 | Direction sectors 16 arah | T5-013 | `python/analytics.py`, tests | 16 toward sectors with north wrap and zero-vector exclusion | `PASS_WITH_NOTES` |
 | T5-019 | P1 | FR-PY-11 | Current rose | T5-017,T5-018 | `data/validated/stage5_analytics/tables/current_rose_long.csv`, `data/validated/stage5_analytics/tables/current_rose_summary.csv`, `data/validated/stage5_analytics/figures/current_rose_*.svg` | AOI output; 16 towards sectors; global P25/P50/P75/P90 bins; zero/missing and sparse classes recorded; zones pending valid geometry | `PASS_WITH_NOTES` |
-| T5-020 | P0 | FR-PY-12 | Monthly climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology`, analytics manifest | 12 monthly speed climatologies, reference 2015–2025 | `PASS_WITH_NOTES` |
-| T5-021 | P0 | FR-PY-13 | JFM climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology/jfm_speed.tif`, analytics manifest | 993 daily frames, equal-daily weighting recorded | `PASS_WITH_NOTES` |
-| T5-022 | P0 | FR-PY-14 | Anomalies | T5-020,T5-021 | `data/validated/stage5_analytics/anomaly`, analytics manifest | 1,125 speed anomalies, reference period explicit | `PASS_WITH_NOTES` |
-| T5-023 | P2 | FR-PY-15 | Trend exploration | T5-020,T5-021 | `data/validated/stage5_analytics/trend`, analytics manifest | exploratory OLS slope only; no inferential/causal claim | `PASS_WITH_NOTES` |
+| T5-020 | P0 | FR-PY-12 | Monthly climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology`, analytics manifest, `outputs/manifests/stage_5_wp4_audit.json` | 12 monthly speed climatologies, reference 2015–2025, 11 equal monthly frames per month | `PASS_WITH_NOTES` |
+| T5-021 | P0 | FR-PY-13 | JFM climatology | T5-009..T5-014 | `data/validated/stage5_analytics/climatology/jfm_speed.tif`, analytics manifest, `outputs/manifests/stage_5_wp4_audit.json` | 993 daily frames, equal-daily weighting recorded | `PASS_WITH_NOTES` |
+| T5-022 | P0 | FR-PY-14 | Anomalies | T5-020,T5-021 | `data/validated/stage5_analytics/anomaly`, analytics manifest, `outputs/manifests/stage_5_wp4_audit.json` | 1,125 speed anomalies, reference period and baseline explicit per plan | `PASS_WITH_NOTES` |
+| T5-023 | P2 | FR-PY-15 | Trend exploration | T5-020,T5-021 | `data/validated/stage5_analytics/trend`, analytics manifest, `outputs/manifests/stage_5_wp4_audit.json` | exploratory OLS slope only; no inferential/causal claim | `PASS_WITH_NOTES` |
 | T5-024 | P0 | FR-PY-16 | Zonal tables | T2-001,T5-009..T5-016 | `data/validated/stage5_analytics/tables/timestep_speed_statistics.csv` | 1,125 rows with valid count and approximate bbox area | `PASS_WITH_NOTES` |
 | T5-025 | P0 | FR-PY-17 | Precomputed raster products | T5-010..T5-024 | analytics manifest/audit | 2,264 derived rasters plus 2 auditable static masks, with metadata/checksums | `PASS_WITH_NOTES` |
 | T5-026 | P0 | Provenance | Product manifest dan checksums | T5-008,T5-025 | `outputs/manifests/stage_5_analytics_manifest.json`, `outputs/manifests/stage_5_analytics_audit.json` | all derived products and table traceable | `PASS_WITH_NOTES` |
-| T5-027 | P0 | Stage gate | Laporan Tahap 5 | T5-001..T5-026 | `outputs/evidence/stage_5/WP5-3_analytics.result.txt` | executable analytics PASS_WITH_NOTES; T5-017/T5-019 AOI products complete; zone products await geometry | `PASS_WITH_NOTES` |
+| T5-027 | P0 | Stage gate | Laporan Tahap 5 | T5-001..T5-026 | `outputs/evidence/stage_5/WP5-3_analytics.result.txt`, `outputs/evidence/stage_5/WP5-4_climatology_anomaly_trend.result.txt` | executable analytics and WP5-4 acceptance audit PASS_WITH_NOTES; AOI products complete; zone products await geometry | `PASS_WITH_NOTES` |
+
+## 24.6 Work package WP5-5 — Rekonsiliasi dan transition gate
+
+WP5-5 adalah pekerjaan administratif dan reproducibility closeout. Work package
+ini tidak mengubah rumus, threshold, dataset, AOI, mask, atau keputusan ilmiah.
+
+| Task ID | Pri | Requirement | Pekerjaan | Dependency | Output/evidence | Acceptance | Status |
+|---|---:|---|---|---|---|---|---|
+| T5-028 | P0 | M0 governance, traceability, Definition of Done | Rekonsiliasi status backlog, evidence, checklist, environment test, dan artefak Graphify; definisikan gate transisi berikutnya | T5-027 | `docs/audits/WP5-5_STATUS_RECONCILIATION.md` | status sumber konsisten, command/exit/evidence/limitations tercatat, blocker tetap fail-closed | `IN_PROGRESS` |
 
 ---
 
@@ -1586,6 +1595,7 @@ flowchart TD
 | Versi | Tanggal | Perubahan |
 |---|---|---|
 | 1.0 | 31 Juli 2026 | Rencana implementasi dan backlog lengkap: foundation, Tahap 0–10, dokumentasi, requirement mapping, milestone, dependency, acceptance, open decisions, deferred scope, evidence, Codex workflow, dan Mermaid |
+| 1.1 | 6 Agustus 2026 | Menambahkan WP5-5 sebagai gate administratif untuk rekonsiliasi status, evidence, environment, dan Graphify sebelum transisi ke Tahap 6; tidak mengubah keputusan ilmiah |
 
 ---
 

@@ -16,25 +16,47 @@
 
 ---
 
+## Catatan rekonsiliasi pelaksanaan
+
+Checklist dan matriks penerimaan pada dokumen ini adalah baseline implementasi
+Tahap 3. Label `Belum`/`Belum dinilai` pada matriks awal tidak boleh dibaca
+sebagai status runtime setelah evidence berikut tersedia.
+
+Status aktual yang dapat dibuktikan saat ini:
+
+- T3-001..T3-013: `PASS_WITH_NOTES` melalui pemeriksaan offline dan unit test.
+- T3-014 dan T3-015: batch user-managed tercatat menghasilkan 132 job bulanan,
+  33 job JFM, dan 1.125 timestep.
+- T3-016: rekonsiliasi mencatat 165 file aktif, 165 checksum cocok, 0 partial,
+  serta 3 artefak quarantine historis sebagai note non-blocking.
+- T3-017: gate Tahap 3 `PASS_WITH_NOTES`.
+- `daily_full` tetap dinonaktifkan dan tidak boleh diaktifkan tanpa approval.
+
+Evidence normatif: `outputs/evidence/stage_3/T3-017_stage3_gate.result.txt`
+dan `docs/IMPLEMENTATION_STATUS.md`.
+
+---
+
 ## Daftar isi
 
-1. [Kedudukan Tahap 3](#1-kedudukan-tahap-3)
-2. [Status pelaksanaan yang harus dipahami](#2-status-pelaksanaan-yang-harus-dipahami)
-3. [Hubungan dengan Tahap 0–2](#3-hubungan-dengan-tahap-02)
-4. [Tujuan Tahap 3](#4-tujuan-tahap-3)
-5. [Hasil yang harus dicapai](#5-hasil-yang-harus-dicapai)
-6. [Ruang lingkup](#6-ruang-lingkup)
-7. [Hal yang tidak dikerjakan pada Tahap 3](#7-hal-yang-tidak-dikerjakan-pada-tahap-3)
-8. [Prasyarat dan gerbang masuk](#8-prasyarat-dan-gerbang-masuk)
-9. [Keputusan yang diwarisi dari Tahap 0–2](#9-keputusan-yang-diwarisi-dari-tahap-02)
-10. [Rencana unduhan utama](#10-rencana-unduhan-utama)
-11. [Perhitungan periode dan jumlah data](#11-perhitungan-periode-dan-jumlah-data)
-12. [Granularitas file NetCDF](#12-granularitas-file-netcdf)
-13. [Arsitektur otomasi](#13-arsitektur-otomasi)
-14. [Struktur direktori](#14-struktur-direktori)
-15. [Pengendalian versi lingkungan](#15-pengendalian-versi-lingkungan)
-16. [Pengamanan kredensial](#16-pengamanan-kredensial)
-17. [Konfigurasi utama](#17-konfigurasi-utama)
+1. [Catatan rekonsiliasi pelaksanaan](#catatan-rekonsiliasi-pelaksanaan)
+2. [Kedudukan Tahap 3](#1-kedudukan-tahap-3)
+3. [Status pelaksanaan yang harus dipahami](#2-status-pelaksanaan-yang-harus-dipahami)
+4. [Hubungan dengan Tahap 0–2](#3-hubungan-dengan-tahap-02)
+5. [Tujuan Tahap 3](#4-tujuan-tahap-3)
+6. [Hasil yang harus dicapai](#5-hasil-yang-harus-dicapai)
+7. [Ruang lingkup](#6-ruang-lingkup)
+8. [Hal yang tidak dikerjakan pada Tahap 3](#7-hal-yang-tidak-dikerjakan-pada-tahap-3)
+9. [Prasyarat dan gerbang masuk](#8-prasyarat-dan-gerbang-masuk)
+10. [Keputusan yang diwarisi dari Tahap 0–2](#9-keputusan-yang-diwarisi-dari-tahap-02)
+11. [Rencana unduhan utama](#10-rencana-unduhan-utama)
+12. [Perhitungan periode dan jumlah data](#11-perhitungan-periode-dan-jumlah-data)
+13. [Granularitas file NetCDF](#12-granularitas-file-netcdf)
+14. [Arsitektur otomasi](#13-arsitektur-otomasi)
+15. [Struktur direktori](#14-struktur-direktori)
+16. [Pengendalian versi lingkungan](#15-pengendalian-versi-lingkungan)
+17. [Pengamanan kredensial](#16-pengamanan-kredensial)
+18. [Konfigurasi utama](#17-konfigurasi-utama)
 18. [Konfigurasi rencana unduhan](#18-konfigurasi-rencana-unduhan)
 19. [Pembuatan download plan](#19-pembuatan-download-plan)
 20. [Inventory dan state machine](#20-inventory-dan-state-machine)
