@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Menyelesaikan T6-007/T6-008 secara offline dengan publish manifest inti:
+  1.125 source frame (`132 monthly_all + 993 daily_jfm`) dan 1.138 derived
+  (`1.125 speed + 12 monthly climatology + 1 JFM climatology`). Checksum
+  seluruh aset terpilih diverifikasi terhadap manifest Stage 5, target ID
+  derived diberi namespace plan untuk mencegah benturan, sedangkan anomaly,
+  trend, dan static mask ditunda eksplisit. Tidak ada bucket, upload, ACL, atau
+  task cloud yang dijalankan.
+
 - Menyelesaikan koreksi runtime T6-006 pada sampel GEE: dua aset `_fixed`
   tervalidasi, lalu dua ID kanonis lama yang salah dihapus dan dibuat ulang
   dengan band source `uo`/`vo` serta derived `speed`. Dua task rekreasi

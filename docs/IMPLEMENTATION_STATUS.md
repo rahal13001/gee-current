@@ -1,12 +1,12 @@
 # IMPLEMENTATION_STATUS.md
 
-Tanggal baseline: 2026-08-06 (Asia/Jayapura)
+Tanggal baseline: 2026-08-07 (Asia/Jayapura)
 
 ## Active task
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Task: `T6-006 — Validasi runtime dan koreksi band sampel`
+- Task: `T6-007/T6-008 — Seleksi publish manifest source dan derived`
 - Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
@@ -202,7 +202,7 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
 
 ## Tahap 6 T6-002/T6-003
 
-- Active tasks: `T6-002` — finalisasi schema source dan `T6-003` — finalisasi
+- Completed tasks: `T6-002` — finalisasi schema source dan `T6-003` — finalisasi
   schema derived.
 - Status: `PASS_WITH_NOTES` untuk kontrak offline.
 - Evidence: `docs/audits/T6-002_T6-003_ASSET_SCHEMA_REVIEW.md`.
@@ -226,7 +226,7 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
 
 ## Tahap 6 T6-005/T6-006
 
-- Active task: `T6-006` — validasi band, waktu, mask, projection, dan formula
+- Completed task: `T6-006` — validasi band, waktu, mask, projection, dan formula
   pada sample asset hasil koreksi.
 - Status: `PASS_WITH_NOTES`.
 - Evidence: `docs/audits/T6-006_RUNTIME_VALIDATION.md`, console/task snapshots,
@@ -257,8 +257,28 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
   artifact secara atomik tanpa overwrite.
 - Tidak ada login, credential read, network, GCS existence check, Earth Engine
   runtime, upload, export, ACL/IAM mutation, atau cloud task.
-- T6-005/T6-006 dibahas pada bagian runtime correction di atas; T6-007 menjadi
-  pekerjaan berikutnya dan tetap memerlukan publish-on-demand selection.
+- T6-005/T6-006 dibahas pada bagian runtime correction di atas.
+
+## Tahap 6 T6-007/T6-008
+
+- Completed tasks: `T6-007/T6-008` — seleksi source dan derived inti untuk
+  publish-on-demand.
+- Status: `PASS_WITH_NOTES` untuk manifest lokal/offline.
+- Evidence: `docs/audits/T6-007_T6-008_PUBLISH_MANIFEST_REVIEW.md`.
+- Artifact: `outputs/manifests/stage_6_publish/t6_007_t6_008_publish_manifest.json`;
+  SHA-256 `8c08e879d46a5f3fc71d37acb5062aea49c9ef9dba9eab4d026a88b6869ae3c6`.
+- Seleksi: 1.125 source (`132 monthly_all + 993 daily_jfm`) dan 1.138
+  derived (`1.125 speed + 12 monthly climatology + 1 JFM climatology`).
+- `speed_anomaly` 1.125, trend eksploratif 1, dan dua static mask tidak
+  dihapus; semuanya ditunda dengan alasan eksplisit. Target derived speed
+  diberi namespace plan untuk mencegah benturan ID.
+- Generator memverifikasi checksum lokal seluruh aset terpilih terhadap
+  manifest Stage 5, uniqueness target ID, input status/count, dan schema.
+  `python3 -m unittest tests.unit.test_stage6_publish_manifest -v` exit `0`;
+  3 test lulus.
+- Tidak ada login, credential read, network, GCS check, upload, export,
+  ACL/IAM mutation, atau cloud task. T6-009/T6-010 tetap menunggu keputusan
+  staging/bucket dan approval upload.
 
 ## Post-M0 follow-up
 

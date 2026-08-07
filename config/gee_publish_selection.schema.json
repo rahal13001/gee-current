@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/glorys-current/gee-publish-selection.schema.json",
+  "title": "Offline GEE publish selection manifest",
+  "description": "Selection and provenance contract for T6-007/T6-008; it does not upload assets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "stage", "created_utc", "project_id", "asset_root",
+    "selection_policy", "inputs", "source", "derived", "deferred", "staging", "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "gee-publish-selection-1.0"},
+    "status": {"enum": ["PASS", "PASS_WITH_NOTES"]},
+    "stage": {"const": "T6-007/T6-008"},
+    "created_utc": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "project_id": {"type": "string", "minLength": 1},
+    "asset_root": {"type": "string", "pattern": "^projects/[^/]+/assets/.+"},
+    "selection_policy": {"$ref": "#/$defs/policy"},
+    "inputs": {"type": "array", "minItems": 5, "items": {"$ref": "#/$defs/input"}},
+    "source": {"$ref": "#/$defs/selection"},
+    "derived": {"$ref": "#/$defs/selection"},
+    "deferred": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/deferred"}},
+    "staging": {"$ref": "#/$defs/staging"},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "source", "derived", "daily_full", "reason"],
+      "properties": {
+        "mode": {"const": "core_implementation_publish_on_demand"},
+        "source": {"type": "string", "minLength": 1},
+        "derived": {"type": "string", "minLength": 1},
+        "daily_full": {"const": "disabled"},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "status"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["PASS", "PASS_WITH_NOTES"]}
+      }
+    },
+    "group": {
+      "type": "object", "additionalProperties": false,
+      "required": ["count", "reason"],
+      "properties": {"count": {"type": "integer", "minimum": 1}, "reason": {"type": "string", "minLength": 1}}
+    },
+    "selection": {
+      "type": "object", "additionalProperties": false,
+      "required": ["selected_count", "groups", "assets"],
+      "properties": {
+        "selected_count": {"type": "integer", "minimum": 1},
+        "groups": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/group"}},
+        "assets": {"type": "array", "minItems": 1, "items": {"type": "object", "minProperties": 1}}
+      }
+    },
+    "deferred": {
+      "type": "object", "additionalProperties": false,
+      "required": ["category", "local_count", "reason"],
+      "properties": {"category": {"type": "string", "minLength": 1}, "local_count": {"type": "integer", "minimum": 0}, "reason": {"type": "string", "minLength": 1}}
+    },
+    "staging": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "gcs_bucket", "upload_commands_generated", "note"],
+      "properties": {
+        "status": {"const": "NOT_CONFIGURED"},
+        "gcs_bucket": {"type": ["string", "null"]},
+        "upload_commands_generated": {"const": false},
+        "note": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

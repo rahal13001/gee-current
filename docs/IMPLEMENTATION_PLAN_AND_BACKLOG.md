@@ -937,8 +937,8 @@ Mengunggah hanya aset yang dibutuhkan untuk pendidikan, penelitian, dan App, den
 | T6-004 | P0 | Upload | Generate manifest sampel | T6-002,T6-003 | `outputs/manifests/stage_6_t6_004/`, `docs/audits/T6-004_SAMPLE_MANIFEST_REVIEW.md` | 1 source + 1 derived manifest valid secara sintaks/schema; checksum, waktu, band, grid, provenance, dan limitation lengkap | `PASS_WITH_NOTES` |
 | T6-005 | P0 | Upload | Upload/ekspor sampel terkontrol | T6-001,T6-004 | `tools/gee_export_t6_006_corrected_assets.js`, `tools/gee_replace_t6_006_original_assets.js`, `docs/audits/T6-006_RUNTIME_VALIDATION.md` | dua target `_fixed` tervalidasi dan dua ID kanonis direkreasi dari target tersebut | `PASS_WITH_NOTES` |
 | T6-006 | P0 | Validation | Validasi band/time/mask/projection sampel dan koreksi kontrak band | T6-005 | `tools/gee_validate_t6_006_recreated_assets.js`, `docs/audits/T6-006_RUNTIME_VALIDATION.md` | source `uo`/`vo`, derived `speed`, waktu/grid/mask/formula cocok pada ID kanonis | `PASS_WITH_NOTES` |
-| T6-007 | P0 | Publish-on-demand | Pilih daftar source assets inti | T5-026,T6-006 | publish manifest | alasan setiap aset | `NOT_STARTED` |
-| T6-008 | P0 | Publish-on-demand | Pilih derived products untuk GEE | T5-025,T6-006 | publish manifest | hanya produk kebutuhan | `NOT_STARTED` |
+| T6-007 | P0 | Publish-on-demand | Pilih daftar source assets inti | T5-026,T6-006 | `outputs/manifests/stage_6_publish/t6_007_t6_008_publish_manifest.json`, audit | 1.125 source frame dipilih dengan alasan per kelompok dan checksum | `PASS_WITH_NOTES` |
+| T6-008 | P0 | Publish-on-demand | Pilih derived products untuk GEE | T5-025,T6-006 | `outputs/manifests/stage_6_publish/t6_007_t6_008_publish_manifest.json`, audit | 1.138 derived inti dipilih; anomali/tren ditunda eksplisit | `PASS_WITH_NOTES` |
 | T6-009 | P0 | Upload | Batch upload source terpilih | T6-007 | assets/inventory | task status lengkap | `NOT_STARTED` |
 | T6-010 | P0 | Upload | Batch upload derived terpilih | T6-008 | assets/inventory | metadata lengkap | `NOT_STARTED` |
 | T6-011 | P0 | Validation | Rekonsiliasi local–GEE checksum/metadata | T6-009,T6-010 | report | jumlah dan metadata cocok | `NOT_STARTED` |
@@ -1150,7 +1150,7 @@ Open decision tidak boleh diisi oleh Codex tanpa data atau persetujuan.
 | OD-005 | Speed bins final | T5-019 | `RESOLVED` — global AOI P25/P50/P75/P90, 16 towards sectors, zero epsilon 1e-6 m s-1 |
 | OD-006 | Minimum valid percentage | T4/T5 | `RESOLVED` — minimum valid area fraction 0,95 terhadap static expected-ocean mask |
 | OD-007 | Numerical tolerance final setelah float32 | T2/T5/T10 | Baseline 1e-6, perlu konfirmasi pilot |
-| OD-008 | Daftar derived assets yang dipublikasikan | T6-008 | `OPEN` |
+| OD-008 | Daftar derived assets yang dipublikasikan | T6-008 | `RESOLVED_WITH_NOTES` — speed 1.125 + monthly climatology 12 + JFM climatology 1; anomaly/trend deferred |
 | OD-009 | Batas AOI interaktif | T1-011/T2 benchmark | `OPEN` |
 | OD-010 | Batas periode interaktif final | T1-011/T2 benchmark | `OPEN` |
 | OD-011 | External observations untuk validasi | T10-020 | `OPEN` |
