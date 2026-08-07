@@ -6,7 +6,7 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
 
 - Epic: `FND — Foundation, governance, dan repository`
 - Milestone: `M0 — Repository Ready`
-- Task: `T6-004 — Generate manifest sampel source dan derived`
+- Task: `T6-006 — Validasi runtime dan koreksi band sampel`
 - Status: `PASS_WITH_NOTES`
 - Owner: Codex under user scope and approval gates
 - Stage 0–5: evidence tersedia dengan status `PASS_WITH_NOTES`; M0 belum ditutup
@@ -219,11 +219,28 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
   dengan validator JSON Schema lokal; tidak ada dependency yang dipasang.
 - Tidak ada login, credential read, network, Earth Engine runtime, GCS check,
   upload, export, ACL/IAM mutation, atau cloud task.
-- T6-005/T6-006 tetap menunggu approval dan operasi cloud terpisah.
+- T6-005/T6-006 kemudian dijalankan pada sampel terkontrol melalui browser GEE.
+  Aset awal ditemukan memiliki nama band runtime `b1`/`b2` dan `b1`, sehingga
+  dua target `_fixed` dibuat dan divalidasi. Setelah approval eksplisit, dua ID
+  kanonis lama dihapus dan dibuat ulang dari target tervalidasi tersebut.
+
+## Tahap 6 T6-005/T6-006
+
+- Active task: `T6-006` — validasi band, waktu, mask, projection, dan formula
+  pada sample asset hasil koreksi.
+- Status: `PASS_WITH_NOTES`.
+- Evidence: `docs/audits/T6-006_RUNTIME_VALIDATION.md`, console/task snapshots,
+  dan screenshot `outputs/evidence/stage_6/T6-006_recreated_original_runtime.png`.
+- Task Manager GEE menunjukkan `t6_006_source_recreated_original_id` dan
+  `t6_006_derived_recreated_original_id` berstatus `completed`.
+- Target kanonis tanpa suffix sekarang memakai source `uo`/`vo` dan derived
+  `speed`; waktu, grid, mask, dan `speed=sqrt(uo^2+vo^2)` telah direkonsiliasi.
+- Target `_fixed` dipertahankan sebagai rollback/evidence; `daily_full` dan
+  batch upload tetap disabled.
 
 ## Tahap 6 T6-004
 
-- Active task: `T6-004` — generate manifest sampel source dan derived.
+- Completed task: `T6-004` — generate manifest sampel source dan derived.
 - Status: `PASS_WITH_NOTES` untuk artifact lokal/offline.
 - Evidence: `docs/audits/T6-004_SAMPLE_MANIFEST_REVIEW.md`.
 - Artifact: satu source daily JFM pada `2015-01-01` dan satu derived `speed`
@@ -240,8 +257,8 @@ Tanggal baseline: 2026-08-06 (Asia/Jayapura)
   artifact secara atomik tanpa overwrite.
 - Tidak ada login, credential read, network, GCS existence check, Earth Engine
   runtime, upload, export, ACL/IAM mutation, atau cloud task.
-- T6-005 adalah pekerjaan berikutnya dan memerlukan bucket nyata, approval,
-  serta gate upload terkontrol.
+- T6-005/T6-006 dibahas pada bagian runtime correction di atas; T6-007 menjadi
+  pekerjaan berikutnya dan tetap memerlukan publish-on-demand selection.
 
 ## Post-M0 follow-up
 

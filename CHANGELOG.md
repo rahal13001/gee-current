@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Menyelesaikan koreksi runtime T6-006 pada sampel GEE: dua aset `_fixed`
+  tervalidasi, lalu dua ID kanonis lama yang salah dihapus dan dibuat ulang
+  dengan band source `uo`/`vo` serta derived `speed`. Dua task rekreasi
+  berstatus `completed`; `_fixed` dipertahankan sebagai rollback/evidence dan
+  `daily_full` tetap tidak diaktifkan.
+
 - Menyelesaikan T6-004 secara offline: generator membuat satu manifest source
   daily JFM dan satu manifest derived `speed`, dengan checksum, grid, waktu
   end-exclusive, provenance, dan limitation lengkap. URI GCS masih sample;

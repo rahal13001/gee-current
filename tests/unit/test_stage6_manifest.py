@@ -21,11 +21,13 @@ class Stage6ManifestTests(unittest.TestCase):
         source = samples["source"]
         derived = samples["derived"]
         self.assertEqual(source["asset_role"], "source")
+        self.assertTrue(source["name"].endswith("glorys12v1_d_20150101_d0p494025m"))
         self.assertEqual(source["bands"][0]["id"], "uo")
         self.assertEqual(source["bands"][1]["id"], "vo")
         self.assertEqual(source["properties"]["period_end_inclusive"], False)
         self.assertEqual(source["properties"]["source_filename"], "glorys12v1_daily_201501_d0p494025m.nc")
         self.assertEqual(derived["asset_role"], "derived")
+        self.assertTrue(derived["name"].endswith("glorys12v1_speed_20150101_d0p494025m"))
         self.assertEqual(derived["properties"]["product_type"], "speed")
         self.assertEqual(derived["properties"]["plan_name"], "daily_jfm")
         self.assertEqual(derived["properties"]["units"], "m s-1")
