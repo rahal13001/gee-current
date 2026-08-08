@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Memperbaiki pipeline publish manifest GEE agar setiap derived `speed` membawa
+  `startTime`/`endTime` UTC end-exclusive yang sama dengan source. Mismatch waktu
+  source–derived kini ditolak; manifest tersimpan diregenerasi tanpa upload atau
+  task cloud.
+
 - Menyelesaikan T6-007/T6-008 secara offline dengan publish manifest inti:
   1.125 source frame (`132 monthly_all + 993 daily_jfm`) dan 1.138 derived
   (`1.125 speed + 12 monthly climatology + 1 JFM climatology`). Checksum

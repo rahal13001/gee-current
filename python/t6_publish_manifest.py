@@ -173,8 +173,12 @@ def _speed_asset(*, root: Path, naming: Mapping[str, Any], product: Mapping[str,
     source_path = _relative_path(root, _repo_path(root, _text(product, "source_path")))
     if source_path != source["source_path"]:
         raise ManifestError(f"speed/source path mismatch for {product.get('time')}")
+    time_value = _text(product, "time")
+    if time_value != source["time"]:
+        raise ManifestError(f"speed/source time mismatch for {time_value}")
+    start_time, end_time = _period(time_value, plan_name)
     speed_collection = f"{_text(naming['paths'], 'derived')}/speed/{plan_name}"
-    parsed = datetime.fromisoformat(_text(product, "time"))
+    parsed = datetime.fromisoformat(time_value)
     stem = f"glorys12v1_speed_{parsed:%Y%m%d}_d0p494025m"
     return {
         "asset_role": "derived",
@@ -182,7 +186,9 @@ def _speed_asset(*, root: Path, naming: Mapping[str, Any], product: Mapping[str,
         "product_type": "speed",
         "plan_name": plan_name,
         "job_id": _text(product, "job_id"),
-        "time": _text(product, "time"),
+        "time": time_value,
+        "startTime": start_time,
+        "endTime": end_time,
         "source_path": source_path,
         "source_sha256": source["source_sha256"],
         "derived_path": relative_path,

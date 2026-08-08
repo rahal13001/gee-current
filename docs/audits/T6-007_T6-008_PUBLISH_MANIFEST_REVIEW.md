@@ -27,12 +27,14 @@ mask juga tetap menjadi artefak QC lokal.
 Target asset derived `speed` diberi namespace `daily_jfm` atau `monthly_all`
 untuk mencegah benturan ID pada tanggal yang sama. Dua ID kanonis sampel
 T6-006 tetap merupakan alias legacy yang sudah divalidasi dan tidak diubah oleh
-manifest ini.
+manifest ini. Setiap source dan derived `speed` juga membawa `startTime` dan
+`endTime` UTC dengan batas akhir eksklusif; derived `speed` harus memakai window
+waktu yang sama dengan source terkait.
 
 ## Evidence dan pemeriksaan
 
 Manifest: `outputs/manifests/stage_6_publish/t6_007_t6_008_publish_manifest.json`  
-SHA-256 manifest: `8c08e879d46a5f3fc71d37acb5062aea49c9ef9dba9eab4d026a88b6869ae3c6`
+SHA-256 manifest: `8c459823fd687af0483e5058f7be889d8011dd8af965c4922e6ceafee2427113`
 
 Command generator:
 
@@ -49,7 +51,7 @@ Unit/schema test:
 ```text
 python3 -m unittest tests.unit.test_stage6_publish_manifest -v
 exit 0
-Ran 3 tests in 262.112s — OK
+Ran 4 tests in 274.165s — OK
 ```
 
 Pemeriksaan tersebut memverifikasi bahwa:
@@ -59,6 +61,11 @@ Pemeriksaan tersebut memverifikasi bahwa:
 - source tetap dua band `uo`/`vo`, `float32`, `EPSG:4326`, NoData `-9999`,
   dan resampling `none`;
 - setiap speed mempunyai source path yang cocok;
+- setiap source dan derived `speed` mempunyai window `startTime`/`endTime` UTC
+  end-exclusive yang konsisten; April 2015 diverifikasi sebagai
+  `2015-04-01T00:00:00Z` sampai `2015-05-01T00:00:00Z`;
+- schema publish mewajibkan window waktu untuk source dan derived `speed`,
+  serta test negatif memastikan field tersebut tidak boleh hilang;
 - seluruh target asset ID unik;
 - input evidence Stage 5 berstatus `PASS_WITH_NOTES` dan cakupannya adalah
   165 job, 1.125 frame, serta 2.264 derived products;

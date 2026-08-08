@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import json
 import unittest
+from copy import deepcopy
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 
 from python.t6_publish_manifest import ManifestError, build_publish_manifest, write_publish_manifest
 
@@ -40,10 +41,38 @@ class Stage6PublishManifestTests(unittest.TestCase):
         self.assertEqual(deferred["exploratory_trend_slope"], 1)
         self.assertFalse(manifest["staging"]["upload_commands_generated"])
 
+    def test_monthly_source_and_speed_carry_explicit_exclusive_time_window(self) -> None:
+        manifest = self.manifest
+        monthly_source = next(
+            asset
+            for asset in manifest["source"]["assets"]
+            if asset["job_id"] == "monthly_2015_04"
+        )
+        monthly_speed = next(
+            asset
+            for asset in manifest["derived"]["assets"]
+            if asset["product_type"] == "speed" and asset["job_id"] == "monthly_2015_04"
+        )
+
+        expected = {
+            "startTime": "2015-04-01T00:00:00Z",
+            "endTime": "2015-05-01T00:00:00Z",
+        }
+        self.assertEqual({key: monthly_source[key] for key in expected}, expected)
+        self.assertEqual({key: monthly_speed[key] for key in expected}, expected)
+
     def test_manifest_matches_schema_and_write_refuses_overwrite(self) -> None:
         manifest = self.manifest
         schema = json.loads((ROOT / "config/gee_publish_selection.schema.json").read_text(encoding="utf-8"))
-        Draft202012Validator(schema, format_checker=FormatChecker()).validate(manifest)
+        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        validator.validate(manifest)
+        invalid = deepcopy(manifest)
+        speed_asset = next(
+            asset for asset in invalid["derived"]["assets"] if asset["product_type"] == "speed"
+        )
+        speed_asset.pop("startTime")
+        with self.assertRaises(ValidationError):
+            validator.validate(invalid)
         with TemporaryDirectory(dir=ROOT / "outputs") as temporary:
             output_dir = Path(temporary) / "stage_6_publish"
             result = write_publish_manifest(ROOT, output_dir=output_dir, created_utc="2026-08-07T00:00:00Z")

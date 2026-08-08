@@ -266,7 +266,7 @@ Tanggal baseline: 2026-08-07 (Asia/Jayapura)
 - Status: `PASS_WITH_NOTES` untuk manifest lokal/offline.
 - Evidence: `docs/audits/T6-007_T6-008_PUBLISH_MANIFEST_REVIEW.md`.
 - Artifact: `outputs/manifests/stage_6_publish/t6_007_t6_008_publish_manifest.json`;
-  SHA-256 `8c08e879d46a5f3fc71d37acb5062aea49c9ef9dba9eab4d026a88b6869ae3c6`.
+  SHA-256 `8c459823fd687af0483e5058f7be889d8011dd8af965c4922e6ceafee2427113`.
 - Seleksi: 1.125 source (`132 monthly_all + 993 daily_jfm`) dan 1.138
   derived (`1.125 speed + 12 monthly climatology + 1 JFM climatology`).
 - `speed_anomaly` 1.125, trend eksploratif 1, dan dua static mask tidak
@@ -275,7 +275,9 @@ Tanggal baseline: 2026-08-07 (Asia/Jayapura)
 - Generator memverifikasi checksum lokal seluruh aset terpilih terhadap
   manifest Stage 5, uniqueness target ID, input status/count, dan schema.
   `python3 -m unittest tests.unit.test_stage6_publish_manifest -v` exit `0`;
-  3 test lulus.
+  4 test lulus. Setiap source dan derived `speed` sekarang membawa
+  `startTime`/`endTime` UTC end-exclusive yang konsisten; mismatch waktu
+  source–derived ditolak.
 - Tidak ada login, credential read, network, GCS check, upload, export,
   ACL/IAM mutation, atau cloud task. T6-009/T6-010 tetap menunggu keputusan
   staging/bucket dan approval upload.
